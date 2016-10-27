@@ -4,5 +4,5 @@ execute immediate ('drop table ' || i.table_name || 'cascade constraints');
 end loop;
 end;
 /
-@DDL.sql
-@TestRelationsInsertFile.sql
+@ddl2.sql
+@testinsertrelations.sql

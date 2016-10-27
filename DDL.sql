@@ -26,7 +26,9 @@ create table job
   type varchar(15),
   pay_rate varchar(10),
   pay_type varchar(8),
-  primary key (job_code)
+  c_code char(7),
+  primary key (job_code),
+  foreign key (c_code) references company
   );
   
 create table section
