@@ -11,20 +11,20 @@ insert into knowledge_skills values ('3000000', 'Programming I', 'Has basic expe
 insert into knowledge_skills values ('3200000', 'Programming II', 'Has advanced experience with programming', 'advanced');
 insert into knowledge_skills values ('3300000', 'Assembly Programming', 'Has skill with LC3 assembly language', null);
 insert into knowledge_skills values ('3310000', 'Database Management', 'Has skill managing databases', null);
-insert into knowledge_skills values('4100000', 'Intermediate Photography', 'Has solid skills in photography', 'medium');
-insert into knowledge_skills values('4110000', 'Intermediate Photoshop', 'Has solid skills in Photoshop', 'medium');
-insert into knowledge_skills values('4200000', 'Advanced Photography', 'Has advanced skills in photography', 'advanced');
-insert into knowledge_skills values('4210000', 'Advanced Photoshop', 'Has advanced skill with Photoshop', 'advanced');
-insert into knowledge_skills values('4300000', 'Portrait Photography', 'Has experience in portrait photography', null);
-insert into knowledge_skills values('4310000', 'Landscape Photography', 'Has experience in landscape photography', null);
-insert into knowledge_skills values('5000000', 'Computer Maintenance', 'Has experience fixing computers', null);
-insert into knowledge_skills values('5100000', 'Computer Engineering', 'Has experience designing computers', null);
-insert into knowledge_skills values('6000000', 'Beginner Marketing', 'Has beginner marketing skills','beginner');
-insert into knowledge_skills values('6100000', 'Intermediate Marketing', 'Has intermediate marketing experience', 'medium');
-insert into knowledge_skills values('6200000', 'Senior Marketing', 'Has advanced skills in marketing', 'advanced');
-insert into knowledge_skills values('7300000', 'Electrical Engineering', 'Has experience with phone sales', null);
-insert into knowledge_skills values('7310000', 'Mechanical Engineering', 'Has experience with online sales', null);
-insert into knowledge_skills values('7320000', 'Chemical Engineering', 'Has retail experience', null);
+insert into knowledge_skills values ('4100000', 'Intermediate Photography', 'Has solid skills in photography', 'medium');
+insert into knowledge_skills values ('4110000', 'Intermediate Photoshop', 'Has solid skills in Photoshop', 'medium');
+insert into knowledge_skills values ('4200000', 'Advanced Photography', 'Has advanced skills in photography', 'advanced');
+insert into knowledge_skills values ('4210000', 'Advanced Photoshop', 'Has advanced skill with Photoshop', 'advanced');
+insert into knowledge_skills values ('4300000', 'Portrait Photography', 'Has experience in portrait photography', null);
+insert into knowledge_skills values ('4310000', 'Landscape Photography', 'Has experience in landscape photography', null);
+insert into knowledge_skills values ('5000000', 'Computer Maintenance', 'Has experience fixing computers', null);
+insert into knowledge_skills values ('5100000', 'Computer Engineering', 'Has experience designing computers', null);
+insert into knowledge_skills values ('6000000', 'Beginner Marketing', 'Has beginner marketing skills','beginner');
+insert into knowledge_skills values ('6100000', 'Intermediate Marketing', 'Has intermediate marketing experience', 'medium');
+insert into knowledge_skills values ('6200000', 'Senior Marketing', 'Has advanced skills in marketing', 'advanced');
+insert into knowledge_skills values ('7300000', 'Electrical Engineering', 'Has experience with phone sales', null);
+insert into knowledge_skills values ('7310000', 'Mechanical Engineering', 'Has experience with online sales', null);
+insert into knowledge_skills values ('7320000', 'Chemical Engineering', 'Has retail experience', null);
 insert into knowledge_skills values ('8000000', 'Political Science I', 'Has studied Political Science at an introductory level.', 'beginner');
 insert into knowledge_skills values ('8100000', 'Political Science II', 'Has studied Political Science at an intermediate level.', 'medium');
 insert into knowledge_skills values ('8270000', 'Political Science III', 'Has studied Political Science at an advanced level.', 'advanced');
@@ -204,14 +204,6 @@ insert into phone_num values ('3969507', 'home', '5049857742');
 insert into phone_num values ('7097613', 'home', '5049857842');
 insert into phone_num values ('6425296', 'home', '5049817942');
 insert into phone_num values ('2222222', 'home', '5043333333');
-
-
-insert into company values('1001001', 'Entergy', 'www.entergy.com', '2613446', '8008008');
-insert into company values('4004004', 'Deveny Communications', 'www.deveny.com', '9438497', '8888888');
-insert into company values('6006700', 'Generic Office Suites', 'www.ges.com', '4207725', '0910101');
-insert into company values('8008600', 'Baker Securities', 'www.bs.com', null, null);
-insert into company values('7456309', 'SRA', 'www.sra.com', '8385614', '0463521');
-insert into company values('0937492', 'The New York Times', 'www.nytimes.com', '1272127', '8888888');
 
 
 insert into person values ('1018256', 'Clinton', 'Hillary', 'female', 'hclinton@uno.edu', '9388550', '2222222');
@@ -566,3 +558,11 @@ insert into jp_skill values ('600', '7310000');
 insert into jp_skill values ('700', '7320000');
 insert into jp_skill values ('701', '8000000');
 insert into jp_skill values ('666', '6666666');
+
+
+insert into company values('1001001', 'Entergy', 'www.entergy.com', '2613446', '8008008');
+insert into company values('4004004', 'Deveny Communications', 'www.deveny.com', '9438497', '8888888');
+insert into company values('6006700', 'Generic Office Suites', 'www.ges.com', '4207725', '0910101'); 
+insert into company values('8008600', 'Baker Securities', 'www.bs.com', '2866266', '0876512');
+insert into company values('7456309', 'SRA', 'www.sra.com', '8385614', '0463521');
+insert into company values('0937492', 'The New York Times', 'www.nytimes.com', '1272127', '0876124');

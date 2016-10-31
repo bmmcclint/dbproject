@@ -19,7 +19,7 @@ create table company(
   comp_code char(7),
   comp_name varchar(30) not null,
   website varchar(20),
-  addr_code char(7),
+  addr_code char(10),
   phone_num_code char(10),
   primary key (comp_code),
   foreign key (addr_code) references address,
@@ -56,7 +56,8 @@ create table job(
   start_date varchar(40),
   end_date varchar(40),
   primary key (job_code),
-  foreign key (comp_code) references company
+  foreign key (comp_code) references company,
+  foreign key (jp_code) references job_profile
 );
 
 create table specialty(
@@ -78,6 +79,30 @@ create table person_phone(
   primary key (person_code, phone_num_code),
   foreign key (person_code) references person,
   foreign key (phone_num_code) references phone_num
+);
+
+create table comp_phone(
+  comp_code char(7),
+  phone_num_code char(10),
+  primary key (comp_code, phone_num_code),
+  foreign key (comp_code) references company,
+  foreign key (phone_num_code) references phone_num
+);
+
+create table person_addr(
+  person_code char(7),
+  addr_code char(7),
+  primary key (person_code, addr_code),
+  foreign key (person_code) references person,
+  foreign key (addr_code) references address
+);
+
+create table comp_addr(
+  comp_code char(7),
+  addr_code char(7),
+  primary key (comp_code, addr_code),
+  foreign key (comp_code) references company,
+  foreign key (addr_code) references address
 );
   
 create table knowledge_skills(
@@ -177,5 +202,13 @@ create table employment(
   job_code char(7),
   primary key (person_code, job_code),
   foreign key (person_code) references person,
+  foreign key (job_code) references job
+);
+
+create table pays(
+  comp_code char(7),
+  job_code char(7),
+  primary key (comp_code, job_code),
+  foreign key (comp_code) references company,
   foreign key (job_code) references job
 );
