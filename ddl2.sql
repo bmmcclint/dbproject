@@ -147,7 +147,7 @@ create table section(
   year number,
   format_code char(7),
   cost varchar(10),
-  primary key (sec_code, year),
+  primary key (sec_code),
   foreign key (course_code) references course,
   foreign key (format_code) references format
 );
@@ -190,7 +190,7 @@ create table attends(
   person_code char(7),
   year number,
   primary key (sec_code, person_code, year),
-  foreign key (sec_code, year) references section,
+  foreign key (sec_code) references section,
   foreign key (person_code) references person
 );
   

@@ -49,7 +49,7 @@ drop table person_addr cascade constraints;
 select * from job;
 
 select last_name, first_name
-from person natural join employment natural join job
+from person natural join employment natural join job natural join company
 where comp_code = '1001001';
 
 select * from job;
@@ -58,7 +58,7 @@ select first_name, last_name,  person_code
 from person;
 
 select last_name, first_name
-from employment natural join job natural join person
+from person natural join employment natural join job
 where comp_code = '1001001';
 
 select * from employment;
@@ -87,3 +87,36 @@ where comp_code = '1001001';
 
 select last_name, first_name
 from person natural join employment natural join job;
+
+select last_name, first_name
+from person natural join employment
+where job_code = '6001001';
+
+select ks_code
+from person_ks
+where person_code = '1014890';
+
+select * 
+from course;
+
+select ks_name
+from JOB_SKILL natural join KNOWLEDGE_SKILLS
+where job_code = '2101001';
+
+select distinct ks_code
+from person_ks;
+
+select person_code, ks_code
+from person_ks;
+
+select * 
+from person;
+
+commit;
+
+select username, command, status
+from v$session
+where username != null;
+
+set autocommit on;
+show autocommit;
