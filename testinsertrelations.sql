@@ -201,36 +201,6 @@ insert into company_specialty values('s05', '7456309');
 insert into company_specialty values('s06', '0937492');
 
 
-insert into employment values ('1018256', TO_DATE('2014-11-11', 'yyyy-mm-dd'), null, '1001001');
-insert into employment values ('1046773', TO_DATE('2013-10-21', 'yyyy-mm-dd'), null, '1001001');
-insert into employment values ('1046823', TO_DATE('2011-09-02', 'yyyy-mm-dd'), null, '2001001');
-insert into employment values ('1024701', TO_DATE('2008-03-04', 'yyyy-mm-dd'), null, '3001001');
-insert into employment values ('1047996', TO_DATE('2014-11-11', 'yyyy-mm-dd'), null, '4001001');
-insert into employment values ('1146769', TO_DATE('2014-11-11', 'yyyy-mm-dd'), null, '4001002');
-insert into employment values ('1357909', TO_DATE('2014-11-11', 'yyyy-mm-dd'), null, '4001003');
-insert into employment values ('1536512', TO_DATE('2014-11-11', 'yyyy-mm-dd'), null, '5001001');
-insert into employment values ('2165778', TO_DATE('2014-11-11', 'yyyy-mm-dd'), null, '6001001');
-insert into employment values ('4676745', TO_DATE('2012-02-02', 'yyyy-mm-dd'), null, '6001002');
-insert into employment values ('3767726', TO_DATE('2012-02-11', 'yyyy-mm-dd'), null, '7001001');
-insert into employment values ('2355612', TO_DATE('2012-03-04', 'yyyy-mm-dd'), null, '7001003');
-insert into employment values ('3556834', TO_DATE('2009-01-11', 'yyyy-mm-dd'), null, '7001004');
-insert into employment values ('9574856', TO_DATE('1999-07-07', 'yyyy-mm-dd'), null, '7001002');
-insert into employment values ('1003232', TO_DATE('1999-08-15', 'yyyy-mm-dd'), null, '8001001');
-insert into employment values ('1004135', TO_DATE('1999-10-10', 'yyyy-mm-dd'), null, '8001002');
-insert into employment values ('1005841', TO_DATE('2013-12-22', 'yyyy-mm-dd'), TO_DATE('2012-08-14', 'yyyy-mm-dd'), '9001001');
-insert into employment values ('1006907', TO_DATE('2013-12-22', 'yyyy-mm-dd'), TO_DATE('2012-08-14', 'yyyy-mm-dd'), '9001002');
-insert into employment values ('1007234', TO_DATE('2012-06-16', 'yyyy-mm-dd'), TO_DATE('2012-08-14', 'yyyy-mm-dd'), '1101001');
-insert into employment values ('1008087', TO_DATE('2011-06-03', 'yyyy-mm-dd'), TO_DATE('2012-08-14', 'yyyy-mm-dd'), '1201001');
-insert into employment values ('1009451', TO_DATE('2011-11-23', 'yyyy-mm-dd'), TO_DATE('2012-08-14', 'yyyy-mm-dd'), '1201002');
-insert into employment values ('1010120', TO_DATE('2011-11-23', 'yyyy-mm-dd'), TO_DATE('2012-08-14', 'yyyy-mm-dd'), '2101001');
-insert into employment values ('1011084', TO_DATE('1995-05-16', 'yyyy-mm-dd'), TO_DATE('2012-08-14', 'yyyy-mm-dd'), '3101001');
-insert into employment values ('1012765', TO_DATE('1996-07-25', 'yyyy-mm-dd'), TO_DATE('2012-08-14', 'yyyy-mm-dd'), '3101002');
-insert into employment values ('1013098', TO_DATE('1997-10-25', 'yyyy-mm-dd'), TO_DATE('2012-08-14', 'yyyy-mm-dd'), '3101003');
-insert into employment values ('1014890', TO_DATE('2000-01-29', 'yyyy-mm-dd'), TO_DATE('2012-08-14', 'yyyy-mm-dd'), '3201001');
-insert into employment values ('1015076', TO_DATE('2001-09-18', 'yyyy-mm-dd'), TO_DATE('2012-08-14', 'yyyy-mm-dd'), '3201002');
-insert into employment values ('1017145', TO_DATE('2002-06-14', 'yyyy-mm-dd'), TO_DATE('2012-08-14', 'yyyy-mm-dd'), '3201003');
-
-
 insert into person_phone values ('1018256', '7846535');
 insert into person_phone values ('1046773', '7654321');
 insert into person_phone values ('1046823', '9765201');
