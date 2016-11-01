@@ -1,3 +1,26 @@
+delete from address;
+delete from company;
+delete from company_specialty;
+delete from course;
+delete from course_skill;
+delete from employment;
+delete from format;
+delete from job;
+delete from job_profile;
+delete from jp_skill;
+delete from knowledge_skills;
+delete from person;
+delete from person_ks;
+delete from person_phone;
+delete from phone_num;
+delete from specialty;
+delete from attends;
+delete from job_skill;
+delete from offers;
+delete from section;
+delete from comp_addr;
+delete from comp_phone;
+delete from person_addr;
 drop table address cascade constraints;
 drop table company cascade constraints;
 drop table company_specialty cascade constraints;
@@ -21,7 +44,7 @@ drop table section cascade constraints;
 drop table comp_addr cascade constraints;
 drop table comp_phone cascade constraints;
 drop table person_addr cascade constraints;
-drop table pays cascade constraints;
+
 
 select * from job;
 
@@ -61,3 +84,6 @@ select * from company;
 select last_name 
 from person natural join employment natural join job
 where comp_code = '1001001';
+
+select last_name, first_name
+from person natural join employment natural join job;

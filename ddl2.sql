@@ -9,7 +9,7 @@ create table address (
 );
 
 create table phone_num(
-  phone_num_code char(10),
+  phone_num_code char(7),
   phone_type varchar(10),
   phone_num char(10),
   primary key (phone_num_code)
@@ -19,8 +19,8 @@ create table company(
   comp_code char(7),
   comp_name varchar(30) not null,
   website varchar(20),
-  addr_code char(10),
-  phone_num_code char(10),
+  addr_code char(7),
+  phone_num_code char(7),
   primary key (comp_code),
   foreign key (addr_code) references address,
   foreign key (phone_num_code) references phone_num
@@ -40,7 +40,7 @@ create table person(
   gender varchar(6) not null,
   email varchar(20),
   addr_code char(7),
-  phone_num_code char(10),
+  phone_num_code char(7),
   primary key (person_code),
   foreign key (addr_code) references address,
   foreign key (phone_num_code) references phone_num
@@ -75,7 +75,7 @@ create table company_specialty(
   
 create table person_phone(
   person_code char(7),
-  phone_num_code char(10),
+  phone_num_code char(7),
   primary key (person_code, phone_num_code),
   foreign key (person_code) references person,
   foreign key (phone_num_code) references phone_num
@@ -83,7 +83,7 @@ create table person_phone(
 
 create table comp_phone(
   comp_code char(7),
-  phone_num_code char(10),
+  phone_num_code char(7),
   primary key (comp_code, phone_num_code),
   foreign key (comp_code) references company,
   foreign key (phone_num_code) references phone_num
@@ -135,8 +135,7 @@ create table course(
   course_description varchar(100),
   course_level varchar(8),
   course_status varchar(15),
-  cost varchar(10),
-  duration varchar(2),
+  cost number,
   primary key (course_code)
 );
   
@@ -145,10 +144,10 @@ create table section(
   course_code char(7),
   semester varchar(6),
     check (semester in ('Fall', 'Winter', 'Spring', 'Summer')),
-  year varchar(4),
+  year number,
   format_code char(7),
   cost varchar(10),
-  primary key (sec_code),
+  primary key (sec_code, year),
   foreign key (course_code) references course,
   foreign key (format_code) references format
 );
@@ -156,7 +155,7 @@ create table section(
 create table offers(
   sec_code char(7),
   comp_code char(7),
-  year char(4),
+  year number,
   primary key (sec_code, comp_code),
   foreign key (sec_code) references section,
   foreign key (comp_code) references company
@@ -189,9 +188,9 @@ create table jp_skill(
 create table attends(
   sec_code char(7),
   person_code char(7),
-  year varchar(4),
-  primary key (sec_code, person_code),
-  foreign key (sec_code) references section,
+  year number,
+  primary key (sec_code, person_code, year),
+  foreign key (sec_code, year) references section,
   foreign key (person_code) references person
 );
   
@@ -202,13 +201,5 @@ create table employment(
   job_code char(7),
   primary key (person_code, job_code),
   foreign key (person_code) references person,
-  foreign key (job_code) references job
-);
-
-create table pays(
-  comp_code char(7),
-  job_code char(7),
-  primary key (comp_code, job_code),
-  foreign key (comp_code) references company,
   foreign key (job_code) references job
 );
