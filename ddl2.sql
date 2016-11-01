@@ -196,9 +196,9 @@ create table attends(
   
 create table employment(
   person_code char(7),
+  job_code char(7),
   start_date varchar(12) not null,
   end_date varchar(12),
-  job_code char(7),
   primary key (person_code, job_code),
   foreign key (person_code) references person,
   foreign key (job_code) references job
