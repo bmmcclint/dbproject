@@ -4,7 +4,7 @@ from person inner join employment on person.PERSON_CODE = employment.PERSON_CODE
 where comp_code = '1001001';
 
 /* 2. List a company's staff by salary in descending order.*/
-select last_name, first_name, pay_rate
+select distinct last_name, first_name, pay_rate
 from person inner join employment on person.PERSON_CODE = employment.PERSON_CODE inner join job on employment.JOB_CODE = job.JOB_CODE
 where comp_code = '1001001' and pay_type = 'salary' 
 order by(pay_rate) desc;
@@ -25,6 +25,7 @@ wage as (
 
 cost as 
   ((select * from salary) union (select * from wage))
+  
 select comp_code, sum(worker_salary) as total_cost
 from cost
 group by comp_code
@@ -32,37 +33,24 @@ order by total_cost desc;
 
 /*4. Find all the jobs a person is currently holding and worked in the past.*/
 select job_code
-from employment natural join person 
+from employment natural join person
 where person_code = '1018256';
 
 /*5. List a person's knowledge skills in a readable format.*/
 select ks_name
 from person_ks natural join knowledge_skills
-where person_code = '1536512';
+where person_code = '1536512'
+order by knowledge_skills.KS_NAME asc;
 
-/*6. list the skill gap of a worker between his/her job(s) and skill(s).*/
-/*BROKENT*/
-with person_current_jobs as (
-select job_code, jp_code
-from employment natural join job 
-where person_code = '1047996') 
-(select ks_code
-from person_current_jobs natural join job_skill union
-select ks_code
-from person_current_jobs natural join jp_skill) minus
-select ks_code
-from person_ks
-where person_code = '1047996';
+/*6. list the skill gap of a worker between his/her job(s) and his/her skill(s).*/
 
 /*7. List the required knowledge skills of a job profile in a readable format.*/
-select ks_name
-from job_profile natural join KNOWLEDGE_SKILLS
-where jp_code = '100';
+
 
 /*8. List a person's missing knowledge skills for a specific job in a readable
 format.*/
 select ks_name
-from knowledge_skills natural join
+from skills natural join
   ((select ks_code
     from knowledge_skills natural join job
     where job_code = '2001001')
@@ -77,51 +65,7 @@ where person_code = '1014890');
 
 /*9. List the course (course id and title) that each alone teaches all 
 the missing knowledge skill for a person to pursue a specicific job.*/
-with needed_skills as (
-select ks_code
-from job_skill natural join job where jp_code = 101
-minus
-select ks_code
-from person_ks
-where person_code = '1047996'
-),
-course_sets as (
-select course_code as A, null as B, null as C
-from course
-union
-select A.course_code as A, B.course_code as B, null as C
-from course A, course B
-where A.course_code < B.course_code
-union
-select A.course_code as A, B.course_code as B, C.course_code as C
-from course A, course B, course C
-where A.course_code < B.course_code and B.course_code < C.course_code )
-,
-course_set_skills as (
-select A, B, C, ks_code
-from course_skill, course_sets
-where course_sets.A = course_skill.course_code or
-course_sets.B = course_skill.course_code or
-course_sets.C = course_skill.course_code ),
-satisfactory_sets as (
-select *
-from (
-(select A, B, C from course_set_skills) minus
-(select A, B, C
-from (select A, B, C, ks_code from(select A, B, C
-from course_set_skills),
-(select *
-from needed_skills) minus
-select A, B, C, ks_code from course_set_skills) ) ) ) ,
-element_count as ( select A, B, C ,
-case
-when B is null then 1 when C is null then 2
-else 3
-end as number_of_courses
-from satisfactory_sets)
-select A, B, C, number_of_courses
-from element_count
-where number_of_courses = (select min(number_of_courses) from element_count);
+
 
 /*10. Suppose the skill gap for a  worker and the requirement of a desired job 
 can be covered byone course. Find the "quickest" solution for this worker. Show 
