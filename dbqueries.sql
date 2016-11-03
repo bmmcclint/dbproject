@@ -38,30 +38,35 @@ where person_code = '1018256';
 
 /*5. List a person's knowledge skills in a readable format.*/
 select ks_name
-from person_ks natural join knowledge_skills
+from person_skill natural join skills
 where person_code = '1536512'
-order by knowledge_skills.KS_NAME asc;
+order by skills.KS_NAME asc;
 
 /*6. list the skill gap of a worker between his/her job(s) and his/her skill(s).*/
 
-/*7. List the required knowledge skills of a job profile in a readable format.*/
 
+/*7. List the required knowledge skills of a job profile in a readable format.*/
+select ks_name
+from skills inner join JP_SKILL on skills.KS_CODE = JP_SKILL.KS_CODE
+where JP_SKILL.JP_CODE = '100';
 
 /*8. List a person's missing knowledge skills for a specific job in a readable
 format.*/
+with has_skill as (
+  select ks_code
+  from person_skill
+  where person_code = '1024701'),
+
+required_skill as (
+  select ks_code
+  from job_skill
+  where job_code = '3001001'),
+  
+skill_gap as (
+  (select * from has_skill) union (select * from required_skill))
+  
 select ks_name
-from skills natural join
-  ((select ks_code
-    from knowledge_skills natural join job
-    where job_code = '2001001')
-    union
-    select ks_code
-    from jp_skill natural join job
-    where job_code = '2001001')
-    minus
-    (select ks_code
-    from person_ks
-where person_code = '1014890');
+from skill_gap natural join skills;
 
 /*9. List the course (course id and title) that each alone teaches all 
 the missing knowledge skill for a person to pursue a specicific job.*/
@@ -69,7 +74,7 @@ the missing knowledge skill for a person to pursue a specicific job.*/
 
 /*10. Suppose the skill gap for a  worker and the requirement of a desired job 
 can be covered byone course. Find the "quickest" solution for this worker. Show 
-the course, section information and the completeion dat.*/
+the course, section information and the completeion date.*/
 
 
 /*11. Find the cheapest course to make up one's skill gap by showing the course 
@@ -113,7 +118,7 @@ that lists the people's ids and the number of missing skills for the people who
 miss only up to k skills in the ascending order of missing skils.*/
 
 
-/*21. In an local or national crisis, we need to find all the people who once 
+/*21. In a local or national crisis, we need to find all the people who once 
 held a job of the special job-profile identifier.*/
 
 
