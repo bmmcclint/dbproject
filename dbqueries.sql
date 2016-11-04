@@ -43,7 +43,29 @@ where person_code = '1536512'
 order by skills.KS_NAME asc;
 
 /*6. list the skill gap of a worker between his/her job(s) and his/her skill(s).*/
+with person_skills as (
+  select ks_code, ks_level
+  from person_skill natural join skills
+  where person_code = '1024701'),
 
+person_jobs as (
+  select job_code
+  from job natural join employment
+  where person_code = '1024701'),
+  
+job_skills as (
+  select ks_code
+  from job_skill natural join person_jobs),
+  
+skill_gap as (
+  (select ks_code
+  from person_skills)
+    minus
+  (select ks_code
+  from job_skills))
+  
+select distinct ks_level
+from skills natural join skill_gap;
 
 /*7. List the required knowledge skills of a job profile in a readable format.*/
 select ks_name
