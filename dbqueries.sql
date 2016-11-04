@@ -137,7 +137,20 @@ skill qualifications.*/
 
 /*15. List all the names along with the emails of the persons who are qualified 
 for a job profile.*/
+with required_skills as (
+  select ks_code
+  from jp_skill
+  where jp_code = '510')
 
+select last_name, first_name, email 
+from person P
+where not exists (
+  select * 
+  from required_skills 
+    minus
+  select ks_code
+  from person_skill
+  where P.person_code = person_code);
 
 /*16. When a company cannot find any qualified person for a job, a secondary 
 solution is to find a person who is almost qualified to the job. Make a 
