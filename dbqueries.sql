@@ -182,7 +182,42 @@ order by num_missing desc;
 
 /*17. List the skillID and the number of people in the missing-one list for a 
 given job profile in the ascending order of the people counts.*/
-
+with skill_codes as (
+  select ks_code
+  from jp_skill
+  where jp_code = '100'),
+  
+missing_one (person_code, num_missing) as (
+  select person_code, count(ks_code)
+  from person P, (
+    select *
+    from skill_codes) SC
+  where SC.ks_code in (
+    select *
+    from skill_codes
+      minus
+    select ks_code
+    from person_skill
+    where person_code = P.person_code)
+  group by person_code),
+  
+person_missing_one (person_code) as (
+  select person_code
+  from missing_one
+  where num_missing = 1)
+  
+select ks_code, count(person_code) as num_persons_missing
+from person_missing_one P, (
+  select *
+  from skill_codes) SC
+  where SC.ks_code in (
+    select *
+    from skill_codes
+      minus
+    select ks_code
+    from person_skill
+    where person_code = P.person_code)
+  group by ks_code;
 
 /*18. Suppose there is a new job profile that has nobody qualified. list the 
 persons who miss the least number of skills and reports the "least number".*/
