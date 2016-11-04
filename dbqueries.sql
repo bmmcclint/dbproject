@@ -140,7 +140,7 @@ for a job profile.*/
 with required_skills as (
   select ks_code
   from jp_skill
-  where jp_code = '510')
+  where jp_code = '100')
 
 select last_name, first_name, email 
 from person P
