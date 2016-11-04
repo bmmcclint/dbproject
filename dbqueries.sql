@@ -70,7 +70,25 @@ from skill_gap natural join skills;
 
 /*9. List the course (course id and title) that each alone teaches all 
 the missing knowledge skill for a person to pursue a specicific job.*/
+with required_skills as (
+  select ks_code, ks_name
+  from job_skill natural join skills
+  where job_code = '3101001'),
 
+current_skills as (
+  select ks_code, ks_name
+  from person_skill natural join skills
+  where person_code = '1357909'),
+
+needed_course as (
+  (select * from required_skills) minus (select * from current_skills)),
+  
+missing_skill as (  
+  select ks_code
+  from needed_course)
+  
+select course_code, course_title
+from missing_skill natural join course_skill natural join course;
 
 /*10. Suppose the skill gap for a  worker and the requirement of a desired job 
 can be covered byone course. Find the "quickest" solution for this worker. Show 
