@@ -113,7 +113,7 @@ select course_code, course_title
 from missing_skill natural join course_skill natural join course;
 
 /*10. Suppose the skill gap for a  worker and the requirement of a desired job 
-can be covered byone course. Find the "quickest" solution for this worker. Show 
+can be covered by one course. Find the "quickest" solution for this worker. Show 
 the course, section information and the completeion date.*/
 
 
@@ -156,6 +156,26 @@ persons who miss the least number of skills and reports the "least number".*/
 /*19. For a specified job profile and a given small number k, 'make a missing-k" 
 that lists the people's ids and the number of missing skills for the people who 
 miss only up to k skills in the ascending order of missing skils.*/
+WITH skill_codes as (
+  SELECT ks_code
+  FROM jp_skill
+  WHERE jp_code = '200'),
+
+missing_skills (person_code, num_missing) as (
+  SELECT person_code, COUNT(ks_code) FROM person P, 
+  (SELECT *
+    FROM skill_codes) J WHERE J.ks_code IN (
+      SELECT *
+      FROM skill_codes 
+        MINUS
+      SELECT ks_code
+      FROM person_skill
+      WHERE person_code = P.person_code)
+      GROUP BY person_code) 
+
+SELECT person_code, num_missing FROM missing_skills
+WHERE num_missing <= 3
+ORDER BY num_missing DESC;
 
 
 /*21. In a local or national crisis, we need to find all the people who once 
