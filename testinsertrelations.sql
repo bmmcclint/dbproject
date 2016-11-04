@@ -320,6 +320,7 @@ insert into skills values ('1220000', 'Graphic Design III', 'Has studied GD at a
 insert into skills values ('6666666', 'Impossible Skill', 'Has done the impossible.', 'advanced');
 
 
+set autocommit on;
 insert into person_skill values ('1018256', '1000000');
 insert into person_skill values ('1046773', '1200000');
 insert into person_skill values ('1046823', '1310000');
@@ -547,7 +548,6 @@ insert into offers values ('4310060', '4004004', 2014);
 insert into offers values ('4320070', '8008600', 2014);
 
 
-set autocommit on;
 insert into job_skill values ('1001001', '8270000');
 insert into job_skill values ('1001002', '8000000');
 insert into job_skill values ('2001001', '7770000');
