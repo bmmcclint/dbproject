@@ -234,7 +234,29 @@ from person_missing_one P, (
 
 /*18. Suppose there is a new job profile that has nobody qualified. list the 
 persons who miss the least number of skills and reports the "least number".*/
+with needed_skills as (
+  select ks_code
+  from jp_skill
+  where jp_code = '302'),
 
+missing_skill (person_code, num_missing) as ((
+  select person_code, count(ks_code)
+  from person p, needed_skills
+  where ks_code in ((
+    select ks_code
+    from needed_skills)
+      minus
+    (select ks_code
+    from person_skill
+    where person_code = P.person_code))
+  group by person_code))
+  
+select person_code, num_missing as smallest
+from missing_skill
+where num_missing = (
+  select min(num_missing)
+  from missing_skill)
+order by person_code asc;
 
 /*19. For a specified job profile and a given small number k, 'make a missing-k" 
 that lists the people's ids and the number of missing skills for the people who 
