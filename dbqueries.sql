@@ -363,8 +363,8 @@ with employer_count as (
 	from job inner join employment on job.job_code = employment.job_code
 	where status = 'employed'
 	group by comp_code)
-select comp_code, num_employees
-from employer_count
+select comp_code, comp_name, num_employees
+from employer_count natural join company 
 order by (num_employees) desc;
 
 
