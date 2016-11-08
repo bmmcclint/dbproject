@@ -105,20 +105,20 @@ create table comp_addr(
   foreign key (addr_code) references address
 );
   
-create table knowledge_skills(
+create table skills(
   ks_code char(7),
   ks_name varchar(50),
   ks_description varchar(100),
-  ks_level varchar(8),
+  ks_level varchar(8) not null,
   primary key (ks_code)
 );
   
-create table person_ks(
+create table person_skill(
   person_code char(7),
   ks_code char(7),
   primary key (person_code, ks_code),
   foreign key (person_code) references person,
-  foreign key (ks_code) references knowledge_skills
+  foreign key (ks_code) references skills
 );
   
 create table format(
@@ -143,8 +143,8 @@ create table section(
   sec_code char(7),
   course_code char(7),
   semester varchar(6),
-    check (semester in ('Fall', 'Winter', 'Spring', 'Summer')),
   year number,
+  complete_date varchar(40), 
   format_code char(7),
   cost varchar(10),
   primary key (sec_code),
@@ -166,7 +166,7 @@ create table job_skill(
   ks_code char(7),
   primary key (job_code, ks_code),
   foreign key (job_code) references job,
-  foreign key (ks_code) references knowledge_skills
+  foreign key (ks_code) references skills
 );
   
 create table course_skill(
@@ -174,7 +174,7 @@ create table course_skill(
   ks_code char(7),
   primary key (course_code, ks_code),
   foreign key (course_code) references course,
-  foreign key (ks_code) references knowledge_skills
+  foreign key (ks_code) references skills
 );
   
 create table jp_skill(
@@ -182,7 +182,7 @@ create table jp_skill(
   ks_code char(7),
   primary key (jp_code, ks_code),
   foreign key (jp_code) references job_profile,
-  foreign key (ks_code) references knowledge_skills
+  foreign key (ks_code) references skills
 );
   
 create table attends(
@@ -199,7 +199,10 @@ create table employment(
   job_code char(7),
   start_date varchar(12) not null,
   end_date varchar(12),
+  status varchar(20),
   primary key (person_code, job_code),
   foreign key (person_code) references person,
   foreign key (job_code) references job
 );
+set autocommit on;
+show autocommit;
