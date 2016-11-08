@@ -129,7 +129,20 @@ order of the ascenfing order of the course sets' total cost.*/
 
 
 /*13. List all the job profiles that a person is qualified for.*/
-
+with person_skills as (
+  select ks_code
+  from person_skill
+  where person_code = '2165778')
+  
+select jp_code, jp_title
+from job_profile J
+where not exists (  
+  select ks_code
+  from jp_skill
+  where J.jp_code = jp_skill.jp_code
+    minus
+  select *
+  from person_skills);
 
 /*14. Find the job with the highest pay rate for a person according to their 
 skill qualifications.*/
@@ -142,7 +155,7 @@ with required_skills as (
   from jp_skill
   where jp_code = '100')
 
-select last_name, first_name, email 
+select last_name, first_name, email, PERSON_CODE 
 from person P
 where not exists (
   select * 
