@@ -1,11 +1,13 @@
 /* 1. List a company's workers by names*/
 select last_name, first_name
-from person inner join employment on person.PERSON_CODE = employment.PERSON_CODE inner join job on employment.JOB_CODE = job.JOB_CODE  
+from person inner join employment on person.person_code = employment.person_code
+  inner join job on employment.job_code = job.job_code  
 where comp_code = '1001001';
 
 /* 2. List a company's staff by salary in descending order.*/
 select distinct last_name, first_name, pay_rate
-from person inner join employment on person.PERSON_CODE = employment.PERSON_CODE inner join job on employment.JOB_CODE = job.JOB_CODE
+from person inner join employment on person.person_code = employment.person_code
+  inner join job on employment.job_ode = job.job_code
 where comp_code = '1001001' and pay_type = 'salary' 
 order by(pay_rate) desc;
 
@@ -13,15 +15,15 @@ order by(pay_rate) desc;
 in descending order. */
 with salary as (
   select comp_code, sum(pay_rate) worker_salary
-  from job inner join employment on job.JOB_CODE = employment.JOB_CODE
+  from job inner join employment on job.job_code = employment.job_code
   where pay_type = 'salary'
-  group by (job.COMP_CODE)),
+  group by (job.comp_code)),
 
 wage as (
   select comp_code, sum(pay_rate*1920) worker_salary
-  from job inner join employment on job.JOB_CODE = employment.JOB_CODE
+  from job inner join employment on job.job_code = employment.job_code
   where pay_type = 'wages'
-  group by (job.COMP_CODE)),
+  group by (job.comp_code)),
 
 cost as 
   ((select * from salary) union (select * from wage))
@@ -119,7 +121,25 @@ the course, section information and the completeion date.*/
 
 /*11. Find the cheapest course to make up one's skill gap by showing the course 
 to take and the cost (of the section proce).*/
-
+select course_code, course_title, cost
+from course natural join section natural join course_skill
+where ks_code in (
+  select ks_code
+  from jp_skill natural join skills natural join job
+  where ks_code not in (
+    select ks_code
+    from job_profile natural join person_skill
+    where person_code = '1017145'))
+  and cost = (
+    select min(cost)
+    from course natural join section natural join course_skill
+    where ks_code in (
+      select ks_code
+      from jp_skill natural join skills natural join job
+      where ks_code not in (
+        select ks_code
+        from job_profile natural join person_skill
+        where person_code = '1017145')));
 
 /*12. If query 9 returns nothing, find the course sets that their combination 
 covers all the missing knowledge skills for a person to pursue a specific job. 
@@ -360,3 +380,7 @@ for this job profile.*/
 /*27. Find the courses that can help most jobless people find a job by training 
 them toward the job profile that have the most openings due to lack of qualified 
 workers.*/
+
+/*28. List all the courses directly or indirectly required, that person has to 
+take in order to be qualified for a job of the given profile, according to his/
+her skills possessed and courses taken.*/
