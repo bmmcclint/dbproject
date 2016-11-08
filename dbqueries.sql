@@ -358,6 +358,15 @@ profile identifier.*/
 
 /*23. Find out the biggest employer in terms of number of employees ir the total 
 amount of salaries and wages paid to the emloyees.*/
+with employer_count as (
+  select comp_code, count(pay_rate) as num_employees
+	from job inner join employment on job.job_code = employment.job_code
+	where status = 'employed'
+	group by comp_code)
+select comp_code, num_employees
+from employer_count
+order by (num_employees) desc;
+
 
 
 /*24. Find out the job distribution among business sectors; find out the biggest 
