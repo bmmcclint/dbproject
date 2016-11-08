@@ -264,7 +264,7 @@ miss only up to k skills in the ascending order of missing skils.*/
 with skill_list as (
   select ks_code 
   from jp_skill
-  where jp_code = '200'),
+  where jp_code = '100'),
   
 missing_skills (person_code, num_missing) as (
   select person_code, count(ks_code)
@@ -290,7 +290,42 @@ order by num_missing desc;
 Question 19. Find every skill that is need by at least one person in the given 
 missing-k list. List each skillID and the number of people who need it in the 
 descending order of the people.*/
-
+with skill_codes as (
+  select ks_code
+  from jp_skill
+  where jp_code = '100'),
+  
+missing_skills (person_code, num_missing) as (
+  select person_code, count(ks_code)
+  from person p, (
+    select *
+    from skill_codes) j
+  where j.ks_code in (
+    select *
+    from skill_codes
+      minus
+    select ks_code
+    from person_skill
+    where person_code = p.person_code)
+  group by person_code),
+  
+missing_one (person_code) as (
+  select person_code
+  from missing_skills
+  where num_missing = 1)
+  
+select ks_code, count(person_code) as num_missing_one 
+from missing_one p, (
+  select *
+  from skill_codes) j
+where j.ks_code in (
+  select *
+  from skill_codes
+    minus
+  select ks_code 
+  from person_skill
+  where person_code = p.person_code)
+group by ks_code;
 
 /*21. In a local or national crisis, we need to find all the people who once 
 held a job of the special job-profile identifier.*/
