@@ -71,8 +71,8 @@ from skills natural join skill_gap;
 
 /*7. List the required knowledge skills of a job profile in a readable format.*/
 select ks_name
-from skills inner join JP_SKILL on skills.KS_CODE = JP_SKILL.KS_CODE
-where JP_SKILL.JP_CODE = '100';
+from skills inner join JP_SKILL on skills.ks_code = jp_skill.ks_code
+where jp_skill.jp_code = '100';
 
 /*8. List a person's missing knowledge skills for a specific job in a readable
 format.*/
@@ -305,7 +305,6 @@ from missing_skills
 where num_missing <= 3
 order by num_missing desc;
 
-
 /*20. Given a job profile and its corresponding missing-k list specified in 
 Question 19. Find every skill that is need by at least one person in the given 
 missing-k list. List each skillID and the number of people who need it in the 
@@ -349,7 +348,9 @@ group by ks_code;
 
 /*21. In a local or national crisis, we need to find all the people who once 
 held a job of the special job-profile identifier.*/
-
+select last_name, first_name, email
+from person inner join employment on person.PERSON_CODE = employment.person_code 
+where job_code = '9876543';
 
 /*22. Find all the unemployed people who have once held a job of the given job- 
 profile identifier.*/
