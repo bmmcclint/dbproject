@@ -167,8 +167,64 @@ covers all the missing knowledge skills for a person to pursue a specific job.
 The considered course will not include more than three courses. If multiple 
 course sets are found, list the course sets (with their course ifs) in the 
 order of the ascenfing order of the course sets' total cost.*/
-
-
+with set_of_jobs as (
+  select ks_code, job_code
+  from job_skill natural join job
+  where jp_code = '666'),
+  
+course_sets as (
+  select course_code as a, null as b, null as c
+  from course 
+    union
+  select a.course_code as a, b.course_code as b, null as c
+  from course a, course b
+  where a.course_code < b.course_code
+    union
+  select a.course_code as a, b.course_code b, c.course_code as c
+  from course a, course b, course c
+  where a.course_code < b.course_code
+    and b.course_code < c.course_code),
+    
+course_sets_skills as (
+  select a, b, c, ks_code
+  from course_skill, course_sets
+  where course_sets.a = course_skill.course_code
+    or course_sets.b = course_skill.course_code
+    or course_sets.c = course_skill.course_code),
+    
+good_set as (
+  select *
+  from (
+    (select a, b, c
+    from course_sets_skills)
+      minus
+    (select a, b, c
+    from (
+      select a, b, c, ks_code
+      from (
+        select a, b, c
+        from course_sets_skills),
+      (select *
+      from set_of_jobs)
+        minus
+      select a, b, c, ks_code
+      from course_sets_skills)))),
+      
+count as (
+  select a, b, c, 
+    case
+      when b is null then 1
+      when c is null then 2
+      else 3
+    end as num_courses
+  from good_set)
+  
+select a, b, c, num_courses
+from count
+where num_courses = (
+  select min(num_courses)
+  from count);
+  
 /*13. List all the job profiles that a person is qualified for.*/
 with person_skills as (
   select ks_code
