@@ -549,6 +549,92 @@ where unqualified = max_unqualified;
 /*27. Find the courses that can help most jobless people find a job by training 
 them toward the job profile that have the most openings due to lack of qualified 
 workers.*/
+with unemployed as (
+  select distinct person_code
+  from employment
+  where status = 'unemployed'),
+  
+employed as (
+  select distinct person_code
+  from employment
+  where status = 'employed'),
+  
+openings as (
+  select distinct job_code
+  from (
+    select job_code
+    from unemployed natural join employment
+      minus
+    select job_code
+    from employed natural join employment)),
+    
+num_of_profiles as (
+  select jp_code, count(job_code) as num_openings
+  from openings natural join job
+  group by jp_code),
+    
+qualified as (
+  select jp_code, count(person_code) as num_qualified
+  from num_of_profiles j, person p
+  where not exists (
+    select ks_code
+    from num_of_profiles natural join jp_skill
+    where j.jp_code = jp_code
+      minus
+    select distinct ks_code
+    from num_of_profiles natural join jp_skill natural join person_skill
+    where p.person_code = person_code)
+  group by jp_code),
+  
+lacking as (
+  select jp_code, (num_openings - num_qualified) as lacking_qualification
+  from qualified natural join num_of_profiles),
+  
+max_lacking as (
+  select max(lacking_qualification) as max_lackings
+  from lacking),
+  
+max_lacking_ as (
+  select jp_code
+  from lacking, max_lacking
+  where lacking_qualification = max_lackings),
+  
+course_sets as (
+  select course_code as a, null as b, null as c
+  from course 
+    union
+  select a.course_code as a, b.course_code as b, null as c
+  from course a, course b
+  where a.course_code < b.course_code
+    union
+  select a.course_code as a, b.course_code b, c.course_code as c
+  from course a, course b, course c
+  where a.course_code < b.course_code
+    and b.course_code < c.course_code),
+    
+course_sets_skills as (
+  select a, b, c, ks_code
+  from course_skill, course_sets
+  where course_sets.a = course_skill.course_code
+    or course_sets.b = course_skill.course_code
+    or course_sets.c = course_skill.course_code)
+    
+select *
+from (
+  (select a, b, c, jp_code
+  from course_sets_skills, max_lacking_)
+    minus
+  (select a, b, c, jp_code
+  from (
+    select a, b, c, jp_code, ks_code
+    from (
+      select a, b, c
+      from course_sets_skills),
+    (select jp_code, ks_code
+    from max_lacking_ natural join jp_skill)
+      minus
+    select a, b, c, jp_code, ks_code
+    from course_sets_skills, max_lacking_)));
 
 /*28. List all the courses directly or indirectly required, that person has to 
 take in order to be qualified for a job of the given profile, according to his/
