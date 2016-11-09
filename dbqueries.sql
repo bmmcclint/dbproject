@@ -117,7 +117,28 @@ from missing_skill natural join course_skill natural join course;
 /*10. Suppose the skill gap for a  worker and the requirement of a desired job 
 can be covered by one course. Find the "quickest" solution for this worker. Show 
 the course, section information and the completeion date.*/
-
+with needed_skills as (
+  (select ks_code
+  from jp_skill natural join job_profile
+  where jp_code = '300')
+    minus
+  (select ks_code
+  from person_skill
+  where person_code = '6969696')),
+  
+course_skills as (
+  select distinct c.course_code
+  from course c
+  where not exists (
+    select ks_code
+    from needed_skills
+      minus
+    select ks_code
+    from course_skill natural join course
+    where course_code = c.course_code))
+    
+select course_code
+from course_skills;
 
 /*11. Find the cheapest course to make up one's skill gap by showing the course 
 to take and the cost (of the section proce).*/
