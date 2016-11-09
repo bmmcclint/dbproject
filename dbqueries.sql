@@ -243,7 +243,44 @@ where not exists (
 
 /*14. Find the job with the highest pay rate for a person according to their 
 skill qualifications.*/
-
+with person_skills as (
+  select ks_Code
+  from person_skill
+  where person_code = '6969696'),
+  
+qualifications as (
+  select jp_code, jp_title
+  from job_profile j
+  where not exists (
+    select ks_code 
+    from jp_skill
+    where j.jp_code = jp_code
+      minus
+    select ks_code
+    from person_skills)),
+    
+job_qualifications as (
+  select distinct job_code
+  from qualifications natural join job),
+  
+pay as (
+  select distinct job_code, ( 
+    case 
+      when pay_type = 'salary' then pay_rate 
+      when pay_type = 'wage' then pay_rate
+      else null
+    end) as max_pay
+  from job_qualifications natural join job),
+  
+max as (
+  select max(max_pay)
+  from pay)
+  
+select job_code, max_pay
+from pay
+where max_pay = (
+  select *
+  from max);
 
 /*15. List all the names along with the emails of the persons who are qualified 
 for a job profile.*/
