@@ -497,7 +497,54 @@ there are many qualified jobless people. Then trainiing connot help fill up this
 type of job. What we want to find is such a job profile that has the largest 
 difference between vacancies and the number of jobless people who are wualified 
 for this job profile.*/
+with unemployed as (
+  select distinct person_code
+  from employment
+  where status = 'unemployed'),
+  
+employed as (
+  select distinct person_code 
+  from employment
+  where status = 'employed'),
 
+openings as (
+  select distinct job_code
+  from (
+    select job_code
+    from unemployed natural join employment
+      minus
+    select job_code
+    from employed natural join employment)),
+    
+num_of_profiles as (
+  select jp_code, count(job_code) as num_of_openings
+  from openings natural join job
+  group by jp_code),
+  
+people_qualified as(
+  select jp_code, count(person_code) as num_qualified
+  from num_of_profiles j, person p
+  where not exists (
+    select ks_code
+    from num_of_profiles natural join jp_skill
+    where j.jp_code = jp_code
+      minus
+    select distinct ks_code
+    from num_of_profiles natural join jp_skill natural join person_skill
+    where p.person_code = person_code)
+  group by jp_code),
+  
+missing_skill as (
+  select jp_code, (num_of_openings - num_qualified) as unqualified
+  from people_qualified natural join num_of_profiles),
+  
+max_missing as (
+  select max(unqualified) as max_unqualified
+  from missing_skill)
+  
+select jp_code
+from missing_skill, max_missing
+where unqualified = max_unqualified;
 
 /*27. Find the courses that can help most jobless people find a job by training 
 them toward the job profile that have the most openings due to lack of qualified 
