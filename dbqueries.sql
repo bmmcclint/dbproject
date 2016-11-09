@@ -7,7 +7,7 @@ where comp_code = '1001001';
 /* 2. List a company's staff by salary in descending order.*/
 select distinct last_name, first_name, pay_rate
 from person inner join employment on person.person_code = employment.person_code
-  inner join job on employment.job_ode = job.job_code
+  inner join job on employment.job_code = job.job_code
 where comp_code = '1001001' and pay_type = 'salary' 
 order by(pay_rate) desc;
 
@@ -71,7 +71,7 @@ from skills natural join skill_gap;
 
 /*7. List the required knowledge skills of a job profile in a readable format.*/
 select ks_name
-from skills inner join JP_SKILL on skills.ks_code = jp_skill.ks_code
+from skills inner join jp_skill on skills.ks_code = jp_skill.ks_code
 where jp_skill.jp_code = '100';
 
 /*8. List a person's missing knowledge skills for a specific job in a readable
@@ -354,7 +354,19 @@ where job_code = '9876543';
 
 /*22. Find all the unemployed people who have once held a job of the given job- 
 profile identifier.*/
-
+with unemployed as(
+	select person_code
+	from person
+	minus
+	select distinct person_code
+	from employment
+	where status = 'employed'
+)
+select distinct last_name, first_name, job_code, jp_code
+from person inner join unemployed on person.PERSON_CODE = unemployed.person_code
+  natural join job
+where jp_code = '300'
+order by person.LAST_NAME asc;
 
 /*23. Find out the biggest employer in terms of number of employees ir the total 
 amount of salaries and wages paid to the emloyees.*/
@@ -366,8 +378,6 @@ with employer_count as (
 select comp_code, comp_name, num_employees
 from employer_count natural join company 
 order by (num_employees) desc;
-
-
 
 /*24. Find out the job distribution among business sectors; find out the biggest 
 sector in terms of number of employees or the total amount of salaries and wages 
