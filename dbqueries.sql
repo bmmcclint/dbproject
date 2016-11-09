@@ -639,3 +639,32 @@ from (
 /*28. List all the courses directly or indirectly required, that person has to 
 take in order to be qualified for a job of the given profile, according to his/
 her skills possessed and courses taken.*/
+with person_skills as (
+  select ks_code
+  from person_skill
+  where person_code = '6969696'),
+  
+person_courses as (
+  select ks_code 
+  from attends natural join person_skill
+  where person_code = '6969696'),
+  
+skills_needed as (
+  select ks_code
+  from jp_skill
+  where jp_code = '701'
+    minus
+  select ks_code
+  from person_skills),
+  
+courses_needed as (
+  select course_code
+  from skills_needed natural join course_skill)
+  
+select distinct course_code
+from courses_needed c
+where not exists (
+  select course_code
+  from person_courses
+  where c.course_code = course_code);
+  
