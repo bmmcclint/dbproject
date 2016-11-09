@@ -459,7 +459,27 @@ order by (num_employees) desc;
 /*24. Find out the job distribution among business sectors; find out the biggest 
 sector in terms of number of employees or the total amount of salaries and wages 
 paid to employees.*/
+with num_employees as (
+  select count(pay_rate) as employee_count, comp_code
+  from job natural join employment
+  where status = 'employed'
+  group by comp_code),
+  
+employees_per_sector as (
+  select primary_sector, sum(employee_count) as sector_count
+  from num_employees natural join company
+  group by primary_sector),
+  
+majority_count as (
+  select max(sector_count) as biggest_sector
+  from employees_per_sector)
+  
+select primary_sector
+from majority_count, employees_per_sector
+where biggest_sector = sector_count;
 
+select primary_sector 
+from company;
 
 /*25. Find out the ratio between the people whose earnings increase and those 
 whose earning decrease; find the average rate of earning improvement for the 
