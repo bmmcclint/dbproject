@@ -387,7 +387,32 @@ paid to employees.*/
 /*25. Find out the ratio between the people whose earnings increase and those 
 whose earning decrease; find the average rate of earning improvement for the 
 workers in a specific business sector.*/
-
+with old_salary as (
+  select distinct max(pay_rate) as old_pay, person_code
+  from employment natural join job natural join company
+  where status = 'unemploed' 
+    and primary_sector = 'tourism'
+  group by person_code),
+    
+present_salary as (
+  select distinct max(pay_rate) as present_pay, person_code
+  from employment natural join job natural join company
+  where status = 'employed' 
+    and primary_sector = 'tourssm'
+  group by person_code),
+  
+people_decrease as (
+  select count(person_code) as decline
+  from old_salary natural join present_Salary
+  where present_pay < old_pay),
+  
+people_increase as (
+  select count(person_code) as incline
+  from old_salary natural join present_salary
+  where present_pay > old_pay)
+  
+select sum(incline) inc_ratio, sum(decline) as dec_ratio
+from people_increase natural join people_decrease;
 
 /*26. Find the job profiles that have the most openings due to lack of qualified 
 workers. If there are many opening jobs of a job profile but at the same time 
