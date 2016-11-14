@@ -22,7 +22,7 @@ public class TableUpdate {
   
   public TableUpdate (String host, String port, String sID, String username, 
           String password) throws SQLException {
-    conn = new DBConnection(host, port, sID).getDBConnection(username, password);
+    conn = new dbaccess(host, port, sID).getDBConnection(username, password);
     ti = new TableInfo(conn);
   }
   
@@ -128,7 +128,7 @@ public class TableUpdate {
       System.exit(1);
     }
     
-    DBConnection tc = new DBConnection("XE");
+    dbaccess tc = new dbaccess("test");
     Connection conn = tc.getDBConnection(args[2], args[3]);
     TableUpdate tu = new TableUpdate(conn);
     int rowIns = tu.copyTable(args[0], args[1]);

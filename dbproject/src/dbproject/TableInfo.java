@@ -25,16 +25,30 @@ public class TableInfo {
   private final Connection conn;
   private final String host = "windowsplex.mynetgear.com";
   private final String port = "1521";
-  private final String sID = "XE";
+  private final String sID = "test";
   
+  private static String username = "brandon";
+  private static String password = "Obeytdojtyl7";
+  
+  /**
+   * 
+   * @param host
+   * @param port
+   * @param sID
+   * @param username
+   *          This is the username associated with the database
+   * @param password
+   *          This is the required password to access the database
+   * @throws SQLException 
+   */
   public TableInfo (String host, String port, String sID, String username, 
           String password) throws SQLException {
-    conn = new DBConnection(host, port, sID).getDBConnection(username, 
+    conn = new dbaccess(host, port, sID).getDBConnection(username, 
             password);
   }
   
   public TableInfo(String username, String password) throws SQLException {
-      this.conn = new DBConnection(host, port, sID).getDBConnection(username, 
+      this.conn = new dbaccess(host, port, sID).getDBConnection(username, 
               password);
   }
   
@@ -42,18 +56,38 @@ public class TableInfo {
     this.conn = conn;
   }
   
+  /**
+   * 
+   * Executes a specific SQL statement with no predefined parameters
+   * @param str
+   * @return
+   * @throws SQLException 
+   */
   public int runUpdate (String str) throws SQLException {
     Statement stmt = conn.createStatement();
     return stmt.executeUpdate(str);
   }
   
+  /**
+   * 
+   * Executes a specific SQL statement with predefined parameters
+   * @param str
+   * @return
+   * @throws SQLException 
+   */
   public ResultSet runSQLQuery (String str) throws SQLException {
     Statement stmt = conn.createStatement();
     return stmt.executeQuery(str);
   }
   
+  /**
+   * 
+   * List the names of tables the user has created
+   * @return
+   * @throws SQLException 
+   */
   public String[] listTableName() throws SQLException {
-    String str = "select table_name from user_table";
+    String str = "select table_name from user_tables";
     Statement stmt = conn.createStatement();
     ResultSet rs = stmt.executeQuery(str);
     ArrayList al = new ArrayList();
@@ -67,6 +101,13 @@ public class TableInfo {
     return tn;
   }
   
+  /**
+   * 
+   * Returns the ResultSet of the of a QL statement run on a table
+   * @param tn
+   * @return
+   * @throws SQLException 
+   */
   public ResultSet getTables(String tn) throws SQLException {
     String str = "select * from " + tn;
     Statement stmt = conn.createStatement();
@@ -74,6 +115,13 @@ public class TableInfo {
     return rs;
   }
   
+  /**
+   * 
+   * Returns the column titles of a specified table
+   * @param rs
+   * @return
+   * @throws SQLException 
+   */
   public String[] getTitles (ResultSet rs) throws SQLException {
     ResultSetMetaData rsmd = rs.getMetaData();
     int col = rsmd.getColumnCount();
@@ -84,6 +132,14 @@ public class TableInfo {
     return title;
   }
   
+  /**
+   * 
+   * Returns the values stored in the columns of a table
+   * @param tableName
+   * @param colName
+   * @return
+   * @throws SQLException 
+   */
   public String[] getColumn (String tableName, String colName) throws 
           SQLException {
     ResultSet rs = runSQLQuery("select distinct " + colName + " from " + 
@@ -101,6 +157,15 @@ public class TableInfo {
     return result;
   }
   
+  /**
+   * 
+   * Returns the columns of a table in an order specified by the ResulSet
+   * @param tn
+   * @param values
+   * @param order
+   * @return
+   * @throws SQLException 
+   */
   public ResultSet getOrderedColumn (String tn, String values, String order) 
           throws SQLException {
     String str = "select " + values + " from " + tn + " order by " + order;
@@ -109,12 +174,29 @@ public class TableInfo {
     return rs;
   } 
   
+  /**
+   * 
+   * Returns a date column in it's SHORT format
+   * @param tableName
+   * @param colName
+   * @return
+   * @throws SQLException 
+   */
   public String[] getDateColumnInShort (String tableName, String colName) 
           throws SQLException {
     String[] result = getDateColumn(tableName, colName, DateFormat.SHORT);
     return result;
   }
   
+  /**
+   * 
+   * Returns a date column in a chosen format
+   * @param tableName
+   * @param colName
+   * @param form
+   * @return
+   * @throws SQLException 
+   */
   public String[] getDateColumn (String tableName, String colName, int form) 
           throws SQLException {
     ResultSet rs = runSQLQuery("select distinct " + colName + " from " + 
@@ -131,6 +213,13 @@ public class TableInfo {
     return result;
   }
   
+  /**
+   * 
+   * Returns the columns of a table as a vector
+   * @param rs
+   * @return
+   * @throws SQLException 
+   */
   public Vector getTitleAsVector (ResultSet rs) throws SQLException {
     ResultSetMetaData rsmd = rs.getMetaData();
     int col = rsmd.getColumnCount();
@@ -141,6 +230,13 @@ public class TableInfo {
     return title;
   }
   
+  /**
+   * 
+   * Returns the types of columns in the table
+   * @param rs
+   * @return
+   * @throws SQLException 
+   */
   public int[] getColumnTypes (ResultSet rs) throws SQLException {
     ResultSetMetaData rsmd = rs.getMetaData();
     int col = rsmd.getColumnCount();
@@ -151,6 +247,17 @@ public class TableInfo {
     return types;
   }
   
+  /**
+   * 
+   * Return the requested ResultSet from the table
+   * @param tn
+   * @param colName
+   * @param colType
+   * @param val
+   * @return
+   * @throws SQLException
+   * @throws ParseException 
+   */
   public ResultSet getSelectedResultSet (String tn, String colName, int colType, 
           String val) throws SQLException, ParseException {
     String whereClause;
@@ -172,6 +279,13 @@ public class TableInfo {
     return rs;
   }
   
+  /**
+   * 
+   * Converts th output of a ResultSet into a 2D array of strings
+   * @param rs
+   * @return
+   * @throws SQLException 
+   */
   public String[][] resultSet2DArray (ResultSet rs) throws SQLException {
     ResultSetMetaData rsmd = rs.getMetaData();
     int col = rsmd.getColumnCount();
@@ -195,6 +309,13 @@ public class TableInfo {
       return tab;
   }
   
+  /**
+   * 
+   * Converts the output of a ResultSet into an array of strings
+   * @param rs
+   * @return
+   * @throws SQLException 
+   */
   public String[] resultSet2Array (ResultSet rs) throws SQLException {
     ArrayList al = new ArrayList(1);
     String row;
@@ -213,6 +334,13 @@ public class TableInfo {
     return tab;
   }
   
+  /**
+   * 
+   * Converts a ResultSet into a Vector object
+   * @param rs
+   * @return
+   * @throws SQLException 
+   */
   public Vector resultSet2Vector (ResultSet rs) throws SQLException {
     ResultSetMetaData rsmd = rs.getMetaData();
     int col = rsmd.getColumnCount();
@@ -228,6 +356,13 @@ public class TableInfo {
     return vec;
   }
   
+  /**
+   * 
+   * Returns an array of strings of the column names
+   * @param rs
+   * @return
+   * @throws SQLException 
+   */
   public static String[] getColumn (ResultSet rs) throws SQLException {
     ResultSetMetaData rsmd = rs.getMetaData();
     int colNum = rsmd.getColumnCount();
@@ -240,6 +375,7 @@ public class TableInfo {
   
   /**
    *
+   * Returns a string array of the column types
    * @param rs
    * @return
    * @throws SQLException
@@ -254,13 +390,15 @@ public class TableInfo {
     return colType;
   }
   
+  /**
+   * 
+   * Tests the functionality of the above methods
+   * @param args
+   * @throws SQLException 
+   */
   public static void main (String[] args) throws SQLException {
-    if (args.length < 2) {
-      System.out.println("usage: Java TableInfo db-username db-password");
-      System.exit(1);
-    }
-    DBConnection tc = new DBConnection("XE");
-    Connection conn = tc.getDBConnection(args[0], args[1]);
+    dbaccess tc = new dbaccess();
+    Connection conn = tc.getDBConnection(username, password);
     TableInfo ti = new TableInfo(conn);
     System.out.println("\n Your tables are listed below.\n");
     String[] names = ti.listTableName();
