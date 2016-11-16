@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Vector;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -21,6 +23,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -143,7 +147,127 @@ public class EditTables extends javax.swing.JFrame {
       this.setSize(883, 485);
     } 
     catch (Exception e) {
-      e.printStackTrace();;
+      e.printStackTrace();
+    }
+  }
+  
+  private void tnJComboActionPerformed(ActionEvent evt) throws SQLException {
+   this.message.setVisible(false);
+   this.jbutton1.setVisible(false);
+   this.jbutton2.setVisible(false);
+   
+   for (int i = 0; i < this.numOfAtributes; i++) {
+     this.tableFields[i].setVisible(false);
+     this.tableLabesls[i].setVisible(false);
+   }
+   
+   String chosenFunction = (String) this.tnJCombo.getSelectedItem();
+   String chosenTable = null;
+   
+   if (chosenFunction.equals("New Person")) {
+     this.function = "person";
+     chosenTable = "Person";
+     Vector tableTitles = null;
+     
+     try {
+       rs = ti.getTable(chosenTable);
+       tableTitles = ti.getTitleAsVector(rs);
+       System.out.println(tableTitles);
+     } catch (SQLException sqle) {
+       sqle.printStackTrace();
+     }
+     
+     this.numOfAtributes = tableTitles.size();
+     
+     for (int i = 0; i < this.numOfAtributes; i++) {
+       this.tableLabesls[i].setText((String) tableTitles.elementAt(i));
+       this.tableLabesls[i].setVisible(true);
+       this.tableFields[i].setVisible(true);
+     }
+     
+     this.jbutton1.setText("Add Person");
+     this.jbutton1.setVisible(true);
+   }
+   else if (chosenFunction.equals("New Job Profile")) {
+     this.function = "job_profile";
+     chosenTable = "job_profile";
+     Vector tableTitles = null;
+     
+     try {
+       rs = ti.getTable(chosenTable);
+       tableTitles = ti.getTitleAsVector(rs);
+       System.out.println(tableTitles);
+     } catch (SQLException sqle) {
+       sqle.printStackTrace();
+     }
+     
+     this.numOfAtributes = tableTitles.size();
+     
+     for (int i = 0; i < this.numOfAtributes; i++) {
+       this.tableLabesls[i].setText((String) tableTitles.elementAt(i));
+       this.tableLabesls[i].setVisible(true);
+       this.tableFields[i].setVisible(true);
+     }
+     
+     this.jbutton1.setText("Add Job Profile");
+     this.jbutton1.setVisible(true);
+   }
+   else if (chosenFunction.equals("New Job")) {
+     this.function = "job";
+     chosenTable = "job";
+     Vector tableTitles = null;
+     String[] jobCodes = null;
+     
+     try {
+       rs = ti.getTable(chosenTable);
+       tableTitles = ti.getTitleAsVector(rs);
+       System.out.println(tableTitles);
+       jobCodes = ti.getColumn("job", "job_code");
+     }
+     catch (SQLException sqle) {
+       sqle.printStackTrace();
+     }
+     
+     ComboBoxModel jobComboModel = new DefaultComboBoxModel(jobCodes);
+     this.primaryCombo.setModel(jobComboModel);
+     this.primaryCombo.setVisible(true);
+     
+     this.numOfAtributes = tableTitles.size();
+     
+     for (int i = 0; i < this.numOfAtributes; i++) {
+       this.tableLabesls[i].setText((String) tableTitles.elementAt(i));
+       this.tableLabesls[i].setVisible(true);
+       this.tableFields[i].setVisible(true);
+     }
+     
+     this.jbutton1.setText("Add Course");
+     this.jbutton1.setVisible(true);
+     this.jbutton2.setText("Set Inactive");
+     this.jbutton2.setVisible(true);
+   }
+   
+   try {
+     Statement stmt = conn.createStatement();
+     rs = ti.getTable(chosenTable);
+     this.tableContent = ti.resultSet2Vector(rs);
+     Vector tableTitles = ti.getTitleAsVector(rs);
+     TableModel tableModel = new DefaultTableModel(this.tableContent, tableTitles);
+     this.table.setModel(tableModel);
+   }
+   catch (SQLException sqle) {
+     sqle.printStackTrace();
+   }
+  }
+  
+  private void primaryComboActionPerformed(ActionEvent evt) {}
+  
+  private void jbutton1ActionPerformed(ActionEvent evt) {
+    if (this.function.equals("person")) {
+      String[] tableValues = new String[this.numOfAtributes];
+      for (int i = 0; i < this.numOfAtributes; i++) {
+        tableValues[i] = this.tableFields[i].getText();
+      }
+      Person newPerson = new Person();
     }
   }
 }
