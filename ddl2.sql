@@ -96,38 +96,6 @@ create table company_specialty(
   foreign key (comp_code) references company
 );
   
-create table person_phone(
-  person_code char(7),
-  phone_num_code char(7),
-  primary key (person_code, phone_num_code),
-  foreign key (person_code) references person,
-  foreign key (phone_num_code) references phone_num
-);
-
-create table comp_phone(
-  comp_code char(7),
-  phone_num_code char(7),
-  primary key (comp_code, phone_num_code),
-  foreign key (comp_code) references company,
-  foreign key (phone_num_code) references phone_num
-);
-
-create table person_addr(
-  person_code char(7),
-  addr_code char(7),
-  primary key (person_code, addr_code),
-  foreign key (person_code) references person,
-  foreign key (addr_code) references address
-);
-
-create table comp_addr(
-  comp_code char(7),
-  addr_code char(7),
-  primary key (comp_code, addr_code),
-  foreign key (comp_code) references company,
-  foreign key (addr_code) references address
-);
-  
 create table person_skill(
   person_code char(7),
   ks_code char(7),
@@ -152,6 +120,13 @@ create table course(
   course_status varchar(15),
   cost number,
   primary key (course_code)
+);
+
+create table prereq(
+  prereq_code char(7),
+  course_code char(7),
+  primary key (prereq_code),
+  foreign key (course_code) references course
 );
   
 create table section(
