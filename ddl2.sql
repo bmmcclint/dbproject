@@ -1,3 +1,13 @@
+set autocommit on;
+show autocommit;
+create table skills(
+  ks_code char(7),
+  ks_name varchar(50),
+  ks_description varchar(100),
+  ks_level varchar(8) not null,
+  primary key (ks_code)
+);
+  
 create table address (
   addr_code char(7),
   addr_type varchar(10),
@@ -21,16 +31,29 @@ create table company(
   website varchar(20),
   addr_code char(7),
   phone_num_code char(7),
+  primary_sector varchar(30),
   primary key (comp_code),
   foreign key (addr_code) references address,
   foreign key (phone_num_code) references phone_num
 );
 
+create table required_skill(
+  req_skill_code char(7),
+  ks_code char(7),
+  jp_code char(7),
+  primary key (req_skill_code),
+  foreign key (ks_code) references skills,
+  foreign key (jp)code) references job_profile
+);
+ 
 create table job_profile(
   jp_code char(7),
   jp_title varchar(30) not null,
   jp_description varchar(50),
-  primary key (jp_code)
+  jp_avg_pay varchar(10),
+  req_skill_code char(7),
+  primary key (jp_code),
+  foreign key (req_skill_code) references required_skill
 );
   
 create table person(
@@ -103,14 +126,6 @@ create table comp_addr(
   primary key (comp_code, addr_code),
   foreign key (comp_code) references company,
   foreign key (addr_code) references address
-);
-  
-create table skills(
-  ks_code char(7),
-  ks_name varchar(50),
-  ks_description varchar(100),
-  ks_level varchar(8) not null,
-  primary key (ks_code)
 );
   
 create table person_skill(
@@ -204,5 +219,3 @@ create table employment(
   foreign key (person_code) references person,
   foreign key (job_code) references job
 );
-set autocommit on;
-show autocommit;
