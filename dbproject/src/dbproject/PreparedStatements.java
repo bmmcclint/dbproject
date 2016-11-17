@@ -24,7 +24,7 @@ public class PreparedStatements {
     this.conn = conn;
   }
 
-  public ResultSet getCompWorkers(String comp_code) throws SQLException {
+  public ResultSet query1(String comp_code) throws SQLException {
     //1.
     stmt = conn.prepareStatement("select last_name, first_name"
             + "from person inner join employment on person.perosn_code = "
@@ -35,7 +35,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getStaffSalary(String comp_code) throws SQLException {
+  public ResultSet query2(String comp_code) throws SQLException {
     //2.
     stmt = conn.prepareStatement("select distinct last_name, first_name, pay_rate"
             + "from person inner join employment on person.person_code ="
@@ -48,7 +48,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getLaborCosts(String comp_code) throws SQLException {
+  public ResultSet query3(String comp_code) throws SQLException {
     //3.
     stmt = conn.prepareStatement(
             "with salary as ("
@@ -76,7 +76,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getPersonsJobs(String person_code) throws SQLException {
+  public ResultSet query4(String person_code) throws SQLException {
     //4.
     stmt = conn.prepareStatement(
             "select job_code"
@@ -87,7 +87,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getPersonSkills(String person_code) throws SQLException {
+  public ResultSet query5(String person_code) throws SQLException {
     //5.
     stmt = conn.prepareStatement(
             "select ks_name"
@@ -99,7 +99,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getSkillGap(String person_code) throws SQLException {
+  public ResultSet query6(String person_code) throws SQLException {
     //6.
     stmt = conn.prepareStatement(
             "with person_skills as ("
@@ -123,7 +123,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getRequiredSkills(String jp_code) throws SQLException {
+  public ResultSet query7(String jp_code) throws SQLException {
     //7.
     stmt = conn.prepareStatement(
             "select ks_name"
@@ -135,7 +135,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getPersonsMissingSkills(String job_code) throws SQLException {
+  public ResultSet query8(String job_code) throws SQLException {
     //8. 
     stmt = conn.prepareStatement(
             "with has_skill as ("
@@ -159,8 +159,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getCoursesCoveringMissedSkills(String job_code, String 
-          person_code) throws SQLException {
+  public ResultSet query9(String job_code, String person_code) throws SQLException {
     //9.
     stmt = conn.prepareStatement(
             "with required_skills as ("
@@ -188,8 +187,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getQuickestPathToQualification(String jp_code, 
-          String person_code) throws SQLException {
+  public ResultSet query10(String jp_code, String person_code) throws SQLException {
     //10.
     stmt = conn.prepareStatement(
             "with needed_skills as ("
@@ -218,7 +216,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getCheapestCourse(String person_code) throws SQLException {
+  public ResultSet query11(String person_code) throws SQLException {
     //11.
     stmt = conn.prepareStatement(
             "select course_code, course_title, cost"
@@ -245,7 +243,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getCourseSets(String jp_code) throws SQLException {
+  public ResultSet query12(String jp_code) throws SQLException {
     //12.
     stmt = conn.prepareStatement(
             "with set_of_jobs as ("
@@ -303,7 +301,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getJobProfiles(String person_code) throws SQLException {
+  public ResultSet query13(String person_code) throws SQLException {
     //13.
     stmt = conn.prepareStatement(
             "with person_skill as ("
@@ -324,8 +322,8 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getHighestPayinhJob(String person_code) throws SQLException {
-//14.
+  public ResultSet query14(String person_code) throws SQLException {
+    //14.
     stmt = conn.prepareStatement(
             "with person_skills as ("
             + "   select ks_code"
@@ -363,7 +361,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getQualifiedPersons(String jp_code) throws SQLException {
+  public ResultSet query15(String jp_code) throws SQLException {
     //15.
     stmt = conn.prepareStatement(
             "with required_skills as ("
@@ -384,8 +382,8 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getPersonsMissingOne(String jp_code) throws SQLException {
-//16.
+  public ResultSet query16(String jp_code) throws SQLException {
+    //16.
     stmt = conn.prepareStatement(
             "with skill_codes as ("
             + "   select ks_code "
@@ -413,7 +411,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getMissingSkillCode(String jp_code) throws SQLException {
+  public ResultSet query17(String jp_code) throws SQLException {
     //17.
     stmt = conn.prepareStatement(
             "with skill_codes as ("
@@ -454,8 +452,8 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getPeopleNeedingOneNewJob(String jp_code) throws SQLException {
-//18.
+  public ResultSet query18(String jp_code) throws SQLException {
+    //18.
     stmt = conn.prepareStatement(
             "with needed_skill as ("
             + "   select ks_code"
@@ -481,7 +479,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getMissingSkillsUnderThree(String jp_code) throws SQLException {
+  public ResultSet query19(String jp_code) throws SQLException {
     //19.
     stmt = conn.prepareStatement(
             "with skill_list as ("
@@ -510,8 +508,8 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getSkillsMissingkList(String jp_code) throws SQLException {
-//20.
+  public ResultSet query20(String jp_code) throws SQLException {
+    //20.
     stmt = conn.prepareStatement(
             "with skill_codes as ("
             + "   select ks_code"
@@ -551,7 +549,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getPersonSpecialJob(String job_code) throws SQLException {
+  public ResultSet query21(String job_code) throws SQLException {
     //21.
     stmt = conn.prepareStatement(
             "select last_name, first_name, email"
@@ -563,8 +561,8 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getUnemployedPeople(String jp_code) throws SQLException {
-//22.
+  public ResultSet query22(String jp_code) throws SQLException {
+    //22.
     stmt = conn.prepareStatement(
             "with unemployed as ("
             + "   select person_code"
@@ -583,7 +581,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getBiggestEmployer(String status) throws SQLException {
+  public ResultSet query23(String status) throws SQLException {
     //23.
     stmt = conn.prepareStatement(
             "with employer_count as ("
@@ -600,8 +598,8 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getJobDistribution(String status) throws SQLException {
-//24.
+  public ResultSet query24(String status) throws SQLException {
+    //24.
     stmt = conn.prepareStatement(
             "with num_employees as ("
             + "   select count(pay_rate) as employee_count, comp_code"
@@ -623,7 +621,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getRatio(String status, String primary_sector) throws SQLException {
+  public ResultSet query25(String status, String primary_sector) throws SQLException {
     //25.
     stmt = conn.prepareStatement(
             "with old_salary as ("
@@ -654,8 +652,8 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getJobOpenings(String status) throws SQLException {
-//26.
+  public ResultSet query26(String status) throws SQLException {
+    //26.
     stmt = conn.prepareStatement(
             "with unemployed as ("
             + "   select distinct perso_code"
@@ -704,7 +702,7 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getCoursesForUnemployed(String status) throws SQLException {
+  public ResultSet query27(String status) throws SQLException {
     //27.
     stmt = conn.prepareStatement(
             "with unemployed as ("
@@ -790,9 +788,8 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet getCoursesNeededForQualification(String person_code, String 
-          jp_code) throws SQLException {
-//28.
+  public ResultSet query28(String person_code, String jp_code) throws SQLException {
+    //28.
     stmt = conn.prepareStatement(
             "with person_skills as ("
             + "   select ks_code"
