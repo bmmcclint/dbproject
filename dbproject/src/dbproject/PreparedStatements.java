@@ -19,6 +19,8 @@ public class PreparedStatements {
   private final Connection conn;
   private PreparedStatement stmt;
   private ResultSet rs;
+  private static final String username = "brandon";
+  private static final String password = "Obeytdojtyl7";
 
   public PreparedStatements(Connection conn) {
     this.conn = conn;
@@ -828,5 +830,13 @@ public class PreparedStatements {
     stmt.setString(3, jp_code);
     rs = stmt.executeQuery();
     return rs;
-  }  
+  }
+  public static void main(String[] args) throws SQLException {
+//    if (args.length < 2) {
+//      System.out.println("usage: PreSTMT db-username db-password");
+//      System.exit(1);
+//    }
+    dbaccess predba = new dbaccess();
+    Connection conn = predba.getDBConnection(username, password);
+  }
 }
