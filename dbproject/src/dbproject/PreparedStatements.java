@@ -35,15 +35,16 @@ public class PreparedStatements {
     return rs;
   }
 
-  public ResultSet query2(String comp_code) throws SQLException {
+  public ResultSet query2(String comp_code, String pay_type) throws SQLException {
     //2.
     stmt = conn.prepareStatement("select distinct last_name, first_name, pay_rate"
             + "from person inner join employment on person.person_code ="
             + "employment.person_code inner join job on employment.job_code = "
             + "job.job_code"
-            + "where comp_code = '1001001' and pay_type = 'salary'"
+            + "where comp_code = ? and pay_type = ?"
             + "order by (pay_rate) desc");
     stmt.setString(1, comp_code);
+    stmt.setString(2, pay_type);
     rs = stmt.executeQuery();
     return rs;
   }
@@ -81,7 +82,7 @@ public class PreparedStatements {
     stmt = conn.prepareStatement(
             "select job_code"
             + "from employment natural join person"
-            + "where person_code = '1018256'");
+            + "where person_code = ?");
     stmt.setString(1, person_code);
     rs = stmt.executeQuery();
     return rs;
@@ -92,7 +93,7 @@ public class PreparedStatements {
     stmt = conn.prepareStatement(
             "select ks_name"
             + "from person_skill natural join skills"
-            + "where person_code = '1536512'"
+            + "where person_code = ?"
             + "order by skills.ks_name asc;");
     stmt.setString(1, person_code);
     rs = stmt.executeQuery();
@@ -105,11 +106,11 @@ public class PreparedStatements {
             "with person_skills as ("
             +     "select ks_code, ks_level"
             +     "from person_skill natural join skills"
-            +     "where person_code = '1024701'),"
+            +     "where person_code = ?),"
             + "person_job as ("
             +     "select job_code"
             +     "from job natural join employment"
-            +     "where person_code = '1024701'),"
+            +     "where person_code = ?),"
             + "job_skills as ("
             +     "(select ks_code"
             +     "from person_skills)"
@@ -119,6 +120,7 @@ public class PreparedStatements {
             + "select distinct ks_level"
             + "from skills natural join skill_gap;");
     stmt.setString(1, person_code);
+    stmt.setString(2, person_code);
     rs = stmt.executeQuery();
     return rs;
   }
@@ -129,23 +131,23 @@ public class PreparedStatements {
             "select ks_name"
             + "from skills inner join jp_skill on skills.ks_code = "
             + "jp_skill.ks_code"
-            + "where jp_skill.jp_code = '100';");
+            + "where jp_skill.jp_code = ?;");
     stmt.setString(1, jp_code);
     rs = stmt.executeQuery();
     return rs;
   }
 
-  public ResultSet query8(String job_code) throws SQLException {
+  public ResultSet query8(String person_code, String job_code) throws SQLException {
     //8. 
     stmt = conn.prepareStatement(
             "with has_skill as ("
             +     "select ks_code"
             +     "from person_skill"
-            +     "where person_code = '1024701'),"
+            +     "where person_code = ?),"
             + "required_skill as ("
             +     "select ks_code"
             +     "from job_skill"
-            +     "where job_code = '3001001'),"
+            +     "where job_code = ?),"
             + "skill_gap as ("
             +     "(select *"
             +     "from has_skill)"
@@ -154,7 +156,8 @@ public class PreparedStatements {
             +     "from required_skill))"
             + "select ks_name"
             + "from skill_gap natural join skills;");
-    stmt.setString(1, job_code);
+    stmt.setString(1, person_code);
+    stmt.setString(2, job_code);
     rs = stmt.executeQuery();
     return rs;
   }
@@ -165,11 +168,11 @@ public class PreparedStatements {
             "with required_skills as ("
             +     "select ks_code, ks_name"
             +     "from job_skill natural join skills"
-            +     "where job_code = '3101001'),"
+            +     "where job_code = ?),"
             + "current_skills as ("
             +     "select ks_code, ks_name"
             +     "from person_skill natural join skills"
-            +     "where person_code = '1357909'),"
+            +     "where person_code = ?),"
             + "needed_course as ("
             +     "(select *"
             +     "from required_skills)"
@@ -193,11 +196,11 @@ public class PreparedStatements {
             "with needed_skills as ("
             + "   (select ks_code"
             + "   from jp_skill natural join job_profile"
-            + "   where jp_code = '300')"
+            + "   where jp_code = ?)"
             + "     minus"
             + "   (select ks_code"
             + "   from person_skill"
-            + "   where person_code = '6969696')),"
+            + "   where person_code = ?)),"
             + "course_skills as ("
             + "   select distinct c.course_code"
             + "   from course c"
@@ -227,7 +230,7 @@ public class PreparedStatements {
             + "where ks_code not in ("
             + "   select ks_code"
             + "   from job_profile natural join person_skill"
-            + "   where person_code = '1017145'))"
+            + "   where person_code = ?))"
             + "     and cost = ("
             + "       select min(cost)"
             + "       from course natural join section natural join course_skill"
@@ -237,8 +240,9 @@ public class PreparedStatements {
             + "         where ks_code not in ("
             + "           select ks_code"
             + "           from job_profile natural join person_skill"
-            + "           where person_code = '1017145')));");
+            + "           where person_code = ?)));");
     stmt.setString(1, person_code);
+    stmt.setString(2, person_code);
     rs = stmt.executeQuery();
     return rs;
   }
@@ -249,7 +253,7 @@ public class PreparedStatements {
             "with set_of_jobs as ("
             + "   select ks_code, job_code"
             + "   from job_skill natural join job"
-            + "   where jp_code = '666'),"
+            + "   where jp_code = ?),"
             + "course_sets as ("
             + "   select course_code as, null as b, null as c"
             + "   from course"
@@ -307,7 +311,7 @@ public class PreparedStatements {
             "with person_skill as ("
             + "   select ks_code"
             + "   from person_skill"
-            + "   where person_code = '2165778')"
+            + "   where person_code = ?)"
             + "select jp_code, jp_title"
             + "from job_profile j"
             + "where not exists ("
@@ -328,7 +332,7 @@ public class PreparedStatements {
             "with person_skills as ("
             + "   select ks_code"
             + "   from person_skill"
-            + "   where person_code = '6969696'"
+            + "   where person_code = ?"
             + "qualification as ("
             + "   select jp_ode, jp_title"
             + "   from job_profile j"
@@ -367,7 +371,7 @@ public class PreparedStatements {
             "with required_skills as ("
             + "   select ks_code"
             + "   from jp_skill"
-            + "   where jp_code = '100')"
+            + "   where jp_code = ?)"
             + "select last_name, first_name, email, person_code"
             + "from person p"
             + "where not exists ("
@@ -388,7 +392,7 @@ public class PreparedStatements {
             "with skill_codes as ("
             + "   select ks_code "
             + "   from jp_skill"
-            + "   where jp_code = '666'),"
+            + "   where jp_code = ?),"
             + "missing_one (person_code, num_missing) as ("
             + "   select person_code, count(ks_code)"
             + "   from person p,"
@@ -417,7 +421,7 @@ public class PreparedStatements {
             "with skill_codes as ("
             + "   select ks_code"
             + "   from jp_skill"
-            + "   where jp_code = '100'),"
+            + "   where jp_code = ?),"
             + "missing_one (person_code, num_missing) as ("
             + "   select person_code, count(ks_code)"
             + "   from person p, ("
@@ -458,7 +462,7 @@ public class PreparedStatements {
             "with needed_skill as ("
             + "   select ks_code"
             + "   from jp_skill"
-            + "   where jp_code ='302'),"
+            + "   where jp_code = ?),"
             + "missing_skill (person_code, num_missing) as (("
             + "   select person_code, count(ks_code)"
             + "   from person p, needed_skills"
@@ -485,7 +489,7 @@ public class PreparedStatements {
             "with skill_list as ("
             + "   select ks_code"
             + "   from jp_skill"
-            + "   where jp_code = '100'),"
+            + "   where jp_code = ?),"
             + "missing_skill (person_code, num_missing) as ("
             + "   select peron_code, count(ks_code)"
             + "   from person p, ("
@@ -514,7 +518,7 @@ public class PreparedStatements {
             "with skill_codes as ("
             + "   select ks_code"
             + "   from jp_skill"
-            + "   where jp_code = '100'),"
+            + "   where jp_code = ?),"
             + "missing_skills (person_code, num_missing) as ("
             + "   select person_code, count(ks_code)"
             + "   from person p, "
@@ -555,7 +559,7 @@ public class PreparedStatements {
             "select last_name, first_name, email"
             + "from person inner join employment in person.person_code ="
             + "employment.person_code"
-            + "where job_code = '9876543';");
+            + "where job_code = ?;");
     stmt.setString(1, job_code);
     rs = stmt.executeQuery();
     return rs;
@@ -574,7 +578,7 @@ public class PreparedStatements {
             + "select disting last_name, first_name, job_code, jp_code"
             + "from person inner join unemployed on person.person_code = "
             + "employment.person_code natural join job"
-            + "where jp_code = '300'"
+            + "where jp_code = ?"
             + "order by person.last_name asc;");
     stmt.setString(1, jp_code);
     rs = stmt.executeQuery();
@@ -588,7 +592,7 @@ public class PreparedStatements {
             + "   select comp_code, count(pay_rate) as num_employees"
             + "   from job inner koin employment on job.job_code = "
             + "   employment.job_code"
-            + "   where status = 'employed'"
+            + "   where status = ?"
             + "   group by comp_code)"
             + "select comp_code, comp_name, num_employees"
             + "from employer_count natural join company"
@@ -604,7 +608,7 @@ public class PreparedStatements {
             "with num_employees as ("
             + "   select count(pay_rate) as employee_count, comp_code"
             + "   from job natural join employment"
-            + "   where status = 'employed'"
+            + "   where status = ?"
             + "   group by comp_code),"
             + "employees_per_sector as ("
             + "   select primary_sector, sum(employee_count) as sector_count"
@@ -627,14 +631,14 @@ public class PreparedStatements {
             "with old_salary as ("
             + "   select distinct max(pay_rate) as old_pay, person_code"
             + "   from emplyment natural join job natural join company"
-            + "   where status = 'unemployed'"
-            + "     and primary sector = 'tourism'"
+            + "   where status = ?"
+            + "     and primary sector = ?"
             + "   group by person_code),"
             + "present_salary as ("
             + "   select distinct max(pay_rate) as present_pay, person_code"
             + "   from employment natural join job natural join company"
-            + "   where status = 'employed'"
-            + "     and primary_sector = 'tourism'"
+            + "   where status = ?"
+            + "     and primary_sector = ?"
             + "   group by person_code),"
             + "people_decrease as ("
             + "   select count(person_code) as decline"
@@ -648,6 +652,8 @@ public class PreparedStatements {
             + "from people_increase natural join people_decrease;");
     stmt.setString(1, status);
     stmt.setString(2, primary_sector);
+    stmt.setString(3, status);
+    stmt.setString(4, primary_sector);
     rs = stmt.executeQuery();
     return rs;
   }
@@ -658,11 +664,11 @@ public class PreparedStatements {
             "with unemployed as ("
             + "   select distinct perso_code"
             + "   from employment"
-            + "   where status = 'unemployed'),"
+            + "   where status = ?),"
             + "employed as ("
             + "   select distinct person_code"
             + "   from employment"
-            + "   where status = 'employed'),"
+            + "   where status = ?),"
             + "openings as ( "
             + "   select distinct job_code"
             + "   from ("
@@ -698,6 +704,7 @@ public class PreparedStatements {
             + "from missing_skill, max_missing"
             + "where unqualified = max_unqualified;");
     stmt.setString(1, status);
+    stmt.setString(2, status);
     rs = stmt.executeQuery();
     return rs;
   }
@@ -708,11 +715,11 @@ public class PreparedStatements {
             "with unemployed as ("
             + "   select distinct person_code"
             + "   from employment"
-            + "   where status = 'unemployed'),"
+            + "   where status = ?),"
             + "employed as ("
             + "   select distinct person_code"
             + "   from employment"
-            + "   where status = 'employed'),"
+            + "   where status = ?),"
             + "openings as ("
             + "   select distinct job_code"
             + "   from ("
@@ -784,6 +791,7 @@ public class PreparedStatements {
             + "select a, b, c, jp_code, ks_code"
             + "from course_sets_skills, max_lacking)));");
     stmt.setString(1, status);
+    stmt.setString(2, status);
     rs = stmt.executeQuery();
     return rs;
   }
@@ -794,15 +802,15 @@ public class PreparedStatements {
             "with person_skills as ("
             + "   select ks_code"
             + "   from person_skill"
-            + "   where person_code = '6969696'),"
+            + "   where person_code = ?),"
             + "person_courses as ("
             + "   select ks_code"
             + "   from attends natural join person_skil"
-            + "   where person_code = '6969696'),"
+            + "   where person_code = ?),"
             + "skills_needed as ("
             + "   select ks_code"
             + "   from jp_skill"
-            + "   where jp_code = '701'"
+            + "   where jp_code = ?"
             + "     minus"
             + "   select ks_code"
             + "   from person_skills),"
