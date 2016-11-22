@@ -6,6 +6,8 @@
 package dbproject;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -14,12 +16,15 @@ import java.sql.SQLException;
  */
 public class dbaccessTest {
 
-  private static String username = "brandon";
-  private static String password = "Obeytdojtyl7";
-  
+  private static final String username = "brandon";
+  private static final String password = "Obeytdojtyl7";
+    
   public static void main (String[] args) throws SQLException {
     dbaccess dbaccesstest = new dbaccess();
     Connection connTest = dbaccesstest.getDBConnection(username, password);
     System.out.println("test passed hopefully");
+    
+    
   }
-}
+ }
+

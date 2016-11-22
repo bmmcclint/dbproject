@@ -27,8 +27,6 @@ public class TableInfo {
   private final String port = "1521";
   private final String sID = "test";
   
-  private static String username = "brandon";
-  private static String password = "Obeytdojtyl7";
   
   /**
    * 
@@ -108,7 +106,7 @@ public class TableInfo {
    * @return
    * @throws SQLException 
    */
-  public ResultSet getTables(String tn) throws SQLException {
+  public ResultSet getTable(String tn) throws SQLException {
     String str = "select * from " + tn;
     Statement stmt = conn.createStatement();
     ResultSet rs = stmt.executeQuery(str);
@@ -266,7 +264,7 @@ public class TableInfo {
     }
     else {
       if (colType == Types.DATE) {
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd?yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
         Date dat = sdf.parse(val);
         sdf.applyPattern("dd-MMM-yyyy");
         val = "'" + val + "'";
@@ -396,37 +394,37 @@ public class TableInfo {
    * @param args
    * @throws SQLException 
    */
-  public static void main (String[] args) throws SQLException {
-    dbaccess tc = new dbaccess();
-    Connection conn = tc.getDBConnection(username, password);
-    TableInfo ti = new TableInfo(conn);
-    System.out.println("\n Your tables are listed below.\n");
-    String[] names = ti.listTableName();
-    if (names.length == 0) 
-      System.out.println("You don't have any table(s)");
-    else {
-      for (String name : names) {
-        System.out.println(name);
-      }
-       System.out.println("\n List your first table's contents. \n");
-       ResultSet rs = ti.getTables(names[0]);
-       String[] titles = ti.getTitles(rs);
-      for (String title : titles) {
-        System.out.println(title);
-      }
-       System.out.println("\n");
-       String[][] table = ti.resultSet2DArray(rs);
-      for (String[] table1 : table) {
-        for (int j = 0; j < table[0].length; j++) {
-          System.out.println(table1[j]);
-        }
-        System.out.println();
-      }
-    }
-    String[] dateS;
-    dateS = ti.getDateColumnInShort("employment", "start_date");
-    String[] dateL; 
-    dateL = ti.getDateColumn("employment", "start_date", 
-            DateFormat.MEDIUM);
-  }
+//  public static void main (String[] args) throws SQLException {
+//    dbaccess tc = new dbaccess();
+//    Connection conn = tc.getDBConnection(args[0], args[1]);
+//    TableInfo ti = new TableInfo(conn);
+//    System.out.println("\n Your queries are listed below.\n");
+//    String[] queries = ti.listTableName();
+//    for (String query : queries) {
+//      System.out.println(query);
+//    }
+//    if (queries.length == 0) 
+//      System.out.println("You don't have any table(s)");
+//    else {
+//      for (String name : queries) {
+//        System.out.println(name);
+//      }
+//       System.out.println("\n List your first table's contents. \n");
+//       ResultSet rs = ti.getTable(queries[1]);
+//       String[] titles = ti.getTitles(rs);
+//      for (String title : titles) {
+//        System.out.println(title);
+//      }
+//       System.out.println("\n");
+//       String[][] table = ti.resultSet2DArray(rs);
+//      for (String[] table1 : table) {
+//        for (int j = 0; j < table[0].length; j++) {
+//          System.out.println(table1[j]);
+//        }
+//        System.out.println();
+//      }
+//    }
+////    String[] dateS = ti.getDateColumnInShort("employment", "start_date");
+////    String[] dateL = ti.getDateColumn("employment", "start_date", DateFormat.MEDIUM);
+//  }
 }

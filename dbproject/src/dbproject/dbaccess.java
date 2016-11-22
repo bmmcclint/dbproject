@@ -17,7 +17,7 @@ import java.sql.SQLException;
  */
 public class dbaccess {
 
-  private String dblocation;
+  private final String dblocation;
   final String oraThinProtocol = "jdbc:oracle:thin";
   
   public dbaccess (String sID) {

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -832,11 +833,13 @@ public class PreparedStatements {
     return rs;
   }
   public static void main(String[] args) throws SQLException {
-//    if (args.length < 2) {
-//      System.out.println("usage: PreSTMT db-username db-password");
-//      System.exit(1);
-//    }
-    dbaccess predba = new dbaccess();
+     dbaccess predba = new dbaccess();
     Connection conn = predba.getDBConnection(username, password);
+    Statement stmt = conn.createStatement();
+    ResultSet test = stmt.executeQuery("select * from person");
+    while (test.next()) {
+      System.out.println(test.getString("person_code") + ", " + test.getString("email"));
+    }
+    test.close();
   }
 }

@@ -11,10 +11,10 @@ import java.util.HashMap;
  *
  * @author bmcclint
  */
-public class dbQueries {
-  private ArrayList<String> queries;
-  private ArrayList<String> sqlstmts;
-  HashMap<String, String> map;
+public final class dbQueries {
+  private final ArrayList<String> queries;
+  private final ArrayList<String> sqlstmts;
+  private final HashMap<String, String> map;
   
   public dbQueries() {
     this.queries = new ArrayList();

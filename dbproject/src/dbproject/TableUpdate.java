@@ -129,9 +129,9 @@ public class TableUpdate {
     }
     
     dbaccess tc = new dbaccess("test");
-    Connection conn = tc.getDBConnection(args[2], args[3]);
+    Connection conn = tc.getDBConnection(args[0], args[1]);
     TableUpdate tu = new TableUpdate(conn);
-    int rowIns = tu.copyTable(args[0], args[1]);
+    int rowIns = tu.copyTable(args[2], args[3]);
     System.out.println(rowIns + " rows were inserted.");
   }
 }
