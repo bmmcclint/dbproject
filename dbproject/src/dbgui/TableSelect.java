@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
@@ -42,7 +44,7 @@ public class TableSelect extends javax.swing.JFrame {
   private ResultSet rs;
   private int[] columnTypes;
   private int chosenColumnTypes;
-  private TableModel emptyTableModel - new DefaultTableModel(new String[][] {{" ", " "}}, new String[] {""});
+  private TableModel emptyTableModel = new DefaultTableModel(new String[][] {{" ", " "}}, new String[] {""});
   private ComboBoxModel emptyComboBoxModel = new DefaultComboBoxModel(new String[] { "", ""});;
   
   public TableSelect(TableInfo ti) {
@@ -67,7 +69,11 @@ public class TableSelect extends javax.swing.JFrame {
       this.tnJCombo.setBounds(126, 14, 266, 28);
       this.tnJCombo.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-          tnJComboActionPerformed(evt);
+          try {
+            tnJComboActionPerformed(evt);
+          } catch (SQLException ex) {
+            Logger.getLogger(TableSelect.class.getName()).log(Level.SEVERE, null, ex);
+          }
         }
       });
     }
@@ -96,7 +102,11 @@ public class TableSelect extends javax.swing.JFrame {
       this.columnNameCombo.setBounds(126, 56, 266, 28);
       this.columnNameCombo.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-          columnNameComboActionPerformed(evt);
+          try {
+            columnNameComboActionPerformed(evt);
+          } catch (SQLException ex) {
+            Logger.getLogger(TableSelect.class.getName()).log(Level.SEVERE, null, ex);
+          }
         }
       });
     }
@@ -114,7 +124,13 @@ public class TableSelect extends javax.swing.JFrame {
       this.valueCombo.setBounds(434, 56, 343, 28);
       this.valueCombo.addActionListener(new ActionListener() {
         public void actionPerformed(ActionEvent evt) {
-          valueComboActionPerformed(evt);
+          try {
+            valueComboActionPerformed(evt);
+          } catch (SQLException ex) {
+            Logger.getLogger(TableSelect.class.getName()).log(Level.SEVERE, null, ex);
+          } catch (ParseException ex) {
+            Logger.getLogger(TableSelect.class.getName()).log(Level.SEVERE, null, ex);
+          }
         }
       });
     }

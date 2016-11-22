@@ -7,6 +7,7 @@ package dbgui;
 
 import dbproject.TableInfo;
 import dbproject.TableUpdate;
+import dbproject.dbaccess;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
@@ -14,6 +15,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -55,7 +58,7 @@ public class EditTables extends javax.swing.JFrame {
   JLabel[] tableLabesls = null;
   JTextField message;
   
-  private EditTables(TableUpdate tu, java.sql.Connection conn) {
+  public EditTables(TableUpdate tu, Connection conn) {
     super();
     this.tu = tu;
     this.ti = tu.getTableInfo();
@@ -98,7 +101,11 @@ public class EditTables extends javax.swing.JFrame {
         this.tnJCombo.setBounds(91, 14, 455, 28);
         this.tnJCombo.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
-            tnJComboActionPerformed(evt);
+            try {
+              tnJComboActionPerformed(evt);
+            } catch (SQLException ex) {
+              Logger.getLogger(EditTables.class.getName()).log(Level.SEVERE, null, ex);
+            }
           }
         });
       }
@@ -125,7 +132,11 @@ public class EditTables extends javax.swing.JFrame {
         this.jbutton1.setVisible(false);
         this.jbutton1.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
-            jbutton1ActionPerformed(evt);
+            try {
+              jbutton1ActionPerformed(evt);
+            } catch (SQLException ex) {
+              Logger.getLogger(EditTables.class.getName()).log(Level.SEVERE, null, ex);
+            }
           }
         });
       }
@@ -137,7 +148,11 @@ public class EditTables extends javax.swing.JFrame {
         this.jbutton2.setVisible(false);
         this.jbutton2.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
-            jbutton2ActionPerformed(evt);
+            try {
+              jbutton2ActionPerformed(evt);
+            } catch (SQLException ex) {
+              Logger.getLogger(EditTables.class.getName()).log(Level.SEVERE, null, ex);
+            }
           }
         });
       }
@@ -261,13 +276,107 @@ public class EditTables extends javax.swing.JFrame {
   
   private void primaryComboActionPerformed(ActionEvent evt) {}
   
-  private void jbutton1ActionPerformed(ActionEvent evt) {
+  private void jbutton1ActionPerformed(ActionEvent evt) throws SQLException {
     if (this.function.equals("person")) {
       String[] tableValues = new String[this.numOfAtributes];
       for (int i = 0; i < this.numOfAtributes; i++) {
         tableValues[i] = this.tableFields[i].getText();
       }
       Person newPerson = new Person();
+      Statement stmt = null;
+      try {
+        stmt = conn.createStatement();
+      } catch (SQLException sqle) {
+        sqle.printStackTrace();
+      }
+      if (!newPerson.create(conn, stmt, tableValues)) {
+        this.message.setText("Failed to add new person");
+      }
+      else {
+        this.message.setText("New person was added successfully to database");
+      }
+      this.message.setVisible(true);
+    }
+    
+    else if (this.function.equals("job_profile")) {
+      String[] tableValues = new String[this.numOfAtributes];
+      for (int i = 0; i < this.numOfAtributes; i++) {
+        tableValues[i] = this.tableFields[i].getText();
+      }
+      Job_profile profile = new Job_profile();
+      Statement stmt = null;
+      try {
+        stmt = conn.createStatement();
+      }
+      catch (SQLException sqle) {
+        sqle.printStackTrace();
+      }
+      
+      if(!profile.create(conn, stmt, tableValues)) {
+        this.message.setText("Failed to add new job profile");
+      }
+      else {
+        this.message.setText("New job profile successfull added to database");
+      }
+      this.message.setVisible(true);
+    }
+    
+    else if (this.function.equals("course")) {
+      String[] tableValues = new String[this.numOfAtributes];
+      for (int i = 0; i < this.numOfAtributes; i++) {
+        tableValues[i] = this.tableFields[i].getText();
+      }
+      Course course = new Course();
+      Statement stmt = null;
+      try {
+        stmt = conn.createStatement();
+      }
+      catch (SQLException sqle) {
+        sqle.printStackTrace();
+      }
+      
+      if (!course.create(conn, stmt, tableValues)) {
+        this.message.setText("Failed to add new course to database");
+      }
+      else {
+        this.message.setText("New course was successfully added to database");
+      }
+      this.message.setVisible(true);
     }
   }
+  
+  private void jbutton2ActionPerformed(ActionEvent evt) throws SQLException {
+     if (function.equals("Course")) {
+       Course course = new Course();
+       String inactiveCourse = (String) primaryCombo.getSelectedItem();
+       Statement stmt = null;
+       try {
+         stmt = conn.createStatement();
+       }
+       catch (SQLException sqle) {
+         sqle.printStackTrace();
+       }
+       
+       if (!course.inactive(stmt, inactiveCourse)) {
+         this.message.setText("Failed to set \ncourse " + inactiveCourse +
+                 " to inactive");
+       }
+       else {
+         this.message.setText("Added course " + inactiveCourse + " to inactive courses");
+       }
+       this.message.setVisible(true);
+     }
+   }
+  
+//  public static void main(String[] args) throws SQLException {
+//    if (args.length < 2) {
+//      System.out.println("usage: java TableInfo db-username db-password");
+//      System.exit(1);
+//    }
+//    dbaccess tc = new dbaccess("windowsplex.mynetgear.com", "1521", "test");
+//    Connection conn = tc.getDBConnection(args[0], args[1]);
+//    TableUpdate tu = new TableUpdate(conn);
+//    EditTables inst = new EditTables(tu, conn);
+//    inst.setVisible(true);
+//  }
 }

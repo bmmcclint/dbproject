@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -98,7 +100,11 @@ public class LoginMenu extends javax.swing.JFrame {
         this.loginButton.setBounds(14, 91, 175, 28);
         this.loginButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
-            loginButtonActionPerformed(evt);
+            try {
+              loginButtonActionPerformed(evt);
+            } catch (SQLException ex) {
+              Logger.getLogger(LoginMenu.class.getName()).log(Level.SEVERE, null, ex);
+            }
           }
         });
       }
@@ -122,7 +128,7 @@ public class LoginMenu extends javax.swing.JFrame {
         this.tableSelectButton.setEnabled(false);
         this.tableSelectButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
-            tbaleSelctButtonActionPerformed(evt);
+            tableSelectButtonActionPerformed(evt);
           }
         });
       }
@@ -158,7 +164,7 @@ public class LoginMenu extends javax.swing.JFrame {
         this.queriesButton.setEnabled(false);
         this.queriesButton.addActionListener(new ActionListener(){
           public void actionPerformed( ActionEvent evt) {
-            queriesButtonActonPerformed(evt);
+            queriesButtonActionPerformed(evt);
           }
         });
       }

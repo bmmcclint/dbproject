@@ -120,9 +120,10 @@ public class TableView extends JFrame {
       System.out.println("usage: TableInfo db-username db-password");
       System.exit(1);
     }
-    TableInfo ti = new TableInfo(args[0], args[1]);
+    String username = "brandon";
+    String password = "Obeytdojtyl7";
+    TableInfo ti = new TableInfo(username, password);
     TableView inst = new TableView(ti);
     inst.setVisible(true);
   }
-  
 }

@@ -234,24 +234,7 @@ class QueryView extends javax.swing.JFrame {
   }
   
   private String queryParser(String chosenQuery) throws SQLException {
-    if (chosenQuery.equals("Query 1")) {
-      queryNum = 1;
-      String[] columnValue = null;
-      try {
-        columnValue = ti.getColumn("Company", comp_code);
-      }
-      catch (SQLException sqle) {
-        sqle.printStackTrace();;
-      }
-      ComboBoxModel compCombo = new DefaultComboBoxModel(columnValue);
-      valueList.setModel(compCombo);
-      valueList.setVisible(true);
-      this.valueListLabel.setText("company");
-      this.valueListLabel.setVisible(true);
-      
-      query1();
-    }
-    return queryValue;
+    return chosenQuery;
   }
   
   private void valueListActionPerformed(ActionEvent evt) {
@@ -925,15 +908,15 @@ class QueryView extends javax.swing.JFrame {
             + "   where c.course_code = course_code);";
   }
   
-  public void main(String[] args) throws SQLException {
-    if (args.length < 2) {
-      System.out.println("usage: java TableInfo db-username db-password");
-      System.exit(1);
-    }
-    dbaccess tc = new dbaccess();
-    Connection conn = tc.getDBConnection(args[0], args[1]);
-    TableUpdate tu = new TableUpdate(conn);
-    EditTables inst = new EditTables(tu, conn);
-    inst.setVisible(true);
-  }
+//  public void main(String[] args) throws SQLException {
+//    if (args.length < 2) {
+//      System.out.println("usage: java TableInfo db-username db-password");
+//      System.exit(1);
+//    }
+//    dbaccess tc = new dbaccess();
+//    Connection conn = tc.getDBConnection(args[0], args[1]);
+//    TableUpdate tu = new TableUpdate(conn);
+//    EditTables inst = new EditTables(tu, conn);
+//    inst.setVisible(true);
+//  }
 }
