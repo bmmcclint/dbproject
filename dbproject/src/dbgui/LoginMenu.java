@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -41,12 +42,13 @@ public class LoginMenu extends javax.swing.JFrame {
   private JButton logout;
   
   private JTextField usernameField;
-  private JTextField passwordField;
   private JTextField hostField;
   private JTextField portField;
   private JTextField sidField;
   
   private JTextArea msgBox;
+  
+  private JPasswordField passwordField;
   
   private Connection conn;
   private TableInfo ti;
@@ -80,6 +82,7 @@ public class LoginMenu extends javax.swing.JFrame {
       {
         this.usernameField = new JTextField();
         this.getContentPane().add(this.usernameField);
+        this.usernameField.setText("brandon");
         this.usernameField.setBounds(133, 14, 119, 28);
       }
       { 
@@ -89,8 +92,10 @@ public class LoginMenu extends javax.swing.JFrame {
         this.passwordLabel.setBounds(35, 49, 105, 28);
       }
       {
-        this.passwordField = new JTextField();
+        this.passwordField = new JPasswordField();
         this.getContentPane().add(this.passwordField);
+        this.passwordField.setEchoChar('*');
+        this.passwordField.setText("Obeytdojtyl7");
         this.passwordField.setBounds(133, 49, 119, 28);
       }
       {
@@ -184,7 +189,7 @@ public class LoginMenu extends javax.swing.JFrame {
       {
         this.hostField = new JTextField();
         this.getContentPane().add(this.hostField);
-//        this.hostField.setText("windowsplex.mynetgear.com");
+        this.hostField.setText("windowsplex.mynetgear.com");
         this.hostField.setBounds(392, 14, 200, 28);
       }
       {
