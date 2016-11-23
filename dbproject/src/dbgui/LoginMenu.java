@@ -12,9 +12,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
@@ -39,6 +38,7 @@ public class LoginMenu extends javax.swing.JFrame {
   private JButton tableViewButton;
   private JButton loginButton;
   private JButton queriesButton;
+  private JButton logout;
   
   private JTextField usernameField;
   private JTextField passwordField;
@@ -48,7 +48,7 @@ public class LoginMenu extends javax.swing.JFrame {
   
   private JTextArea msgBox;
   
-  private java.sql.Connection conn;
+  private Connection conn;
   private TableInfo ti;
   private TableUpdate tu;
   
@@ -97,10 +97,21 @@ public class LoginMenu extends javax.swing.JFrame {
         this.loginButton = new JButton();
         this.getContentPane().add(this.loginButton);
         this.loginButton.setText("Login");
-        this.loginButton.setBounds(14, 91, 175, 28);
+        this.loginButton.setBounds(20, 91, 70, 28);
         this.loginButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
               loginButtonActionPerformed(evt);
+          }
+        });
+      }
+      {
+        this.logout = new JButton();
+        this.getContentPane().add(this.logout);
+        this.logout.setText("Exit");
+        this.logout.setBounds(120, 91, 70, 28);
+        this.logout.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent evt) {
+            logoutActionPerformed(evt);
           }
         });
       }
@@ -173,8 +184,8 @@ public class LoginMenu extends javax.swing.JFrame {
       {
         this.hostField = new JTextField();
         this.getContentPane().add(this.hostField);
-        this.hostField.setText("windowsplex.mynetgear.com");
-        this.hostField.setBounds(392, 14, 147, 28);
+//        this.hostField.setText("windowsplex.mynetgear.com");
+        this.hostField.setBounds(392, 14, 200, 28);
       }
       {
         this.portLabel = new JLabel();
@@ -186,7 +197,7 @@ public class LoginMenu extends javax.swing.JFrame {
         this.portField = new JTextField();
         this.getContentPane().add(this.portField);
         this.portField.setText("1521");
-        this.portField.setBounds(392, 49, 70, 28);
+        this.portField.setBounds(392, 49, 50, 28);
       }
       {
         this.sidLabel = new JLabel();
@@ -198,7 +209,7 @@ public class LoginMenu extends javax.swing.JFrame {
         this.sidField = new JTextField();
         this.getContentPane().add(this.sidField);
         this.sidField.setText("xe");
-        this.sidField.setBounds(392, 119, 462, 231);
+        this.sidField.setBounds(392, 84, 50, 20);
       }
       {
         this.msgBox = new JTextArea();
@@ -261,6 +272,10 @@ public class LoginMenu extends javax.swing.JFrame {
   private void queriesButtonActionPerformed(ActionEvent evt) {
     QueryView query = new QueryView(tu, conn);
     query.setVisible(true);
+  }
+  
+  private void logoutActionPerformed(ActionEvent evt) {
+    System.exit(0);
   }
 }
 
