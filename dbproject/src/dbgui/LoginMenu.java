@@ -82,11 +82,11 @@ public class LoginMenu extends javax.swing.JFrame {
         this.getContentPane().add(this.usernameField);
         this.usernameField.setBounds(133, 14, 119, 28);
       }
-      {
+      { 
         this.passwordLabel = new JLabel();
         this.getContentPane().add(this.passwordLabel);
         this.passwordLabel.setText("Password");
-        this.passwordLabel.setBounds(133, 49, 105, 28);
+        this.passwordLabel.setBounds(35, 49, 105, 28);
       }
       {
         this.passwordField = new JTextField();
@@ -100,11 +100,7 @@ public class LoginMenu extends javax.swing.JFrame {
         this.loginButton.setBounds(14, 91, 175, 28);
         this.loginButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
-            try {
               loginButtonActionPerformed(evt);
-            } catch (SQLException ex) {
-              Logger.getLogger(LoginMenu.class.getName()).log(Level.SEVERE, null, ex);
-            }
           }
         });
       }
@@ -218,7 +214,7 @@ public class LoginMenu extends javax.swing.JFrame {
     e.printStackTrace();
     } 
   }
-  private void loginButtonActionPerformed(ActionEvent evt) throws SQLException {
+  private void loginButtonActionPerformed(ActionEvent evt) {
     String username = this.usernameField.getText();
     String password = this.passwordField.getText();
     String host = this.hostField.getText();
