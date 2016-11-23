@@ -30,11 +30,16 @@ import javax.swing.table.TableModel;
 public class SQLPLUS extends JFrame {
   private JTextArea stmt;
   private JTextArea message;
+  
   private JScrollPane msgPane;
   private JScrollPane rsPane;
   private JScrollPane stmtPane;
+  
   private JLabel stmtLabel;
+  
   private JButton exec;
+  private JButton returnB;
+  
   private JTable rsTable;
   
   private TableInfo ti;
@@ -65,12 +70,18 @@ public class SQLPLUS extends JFrame {
         this.exec = new JButton();
         this.getContentPane().add(this.exec);
         this.exec.setText("Execute");
-        this.setBounds(35, 595, 161, 35);
+        this.exec.setBounds(35, 595, 161, 35);
         this.exec.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
             execActionPerformed(evt);
           }
         });
+      }
+      {
+        this.returnB = new JButton();
+        this.getContentPane().add(this.returnB);
+        this.returnB.setText("Return to Menu");
+        this.returnB.setBounds(100, 595, 161, 35);
       }
       {
         this.rsPane = new JScrollPane();
@@ -100,7 +111,7 @@ public class SQLPLUS extends JFrame {
           this.stmtPane.setViewportView(this.stmt);
           this.stmt.setText("");
           this.stmt.setBounds(35, 112, 651, 28);
-          this.stmt.setPreferredSize(new Dimension(654, 102));
+          this.stmt.setPreferredSize(new Dimension(670, 102));
         }
       }
       setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
