@@ -68,18 +68,14 @@ public class SQLPLUS extends JFrame {
         this.setBounds(35, 595, 161, 35);
         this.exec.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
-            try {
-              execActionPerformed(evt);
-            } catch (SQLException ex) {
-              Logger.getLogger(SQLPLUS.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            execActionPerformed(evt);
           }
         });
       }
       {
         this.rsPane = new JScrollPane();
         this.getContentPane().add(this.rsPane);
-        this.rsPane.setBounds(35, 252, 658, 329);
+        this.rsPane.setBounds(40, 252, 658, 329);
         {
           TableModel tablModel = new DefaultTableModel(
                   new String[][] {{" ", " "}}, new String[] {"", ""});
@@ -117,7 +113,7 @@ public class SQLPLUS extends JFrame {
     }
   }
   
-  private void execActionPerformed(ActionEvent evt) throws SQLException {
+  private void execActionPerformed(ActionEvent evt) {
     String stmt2 = stmt.getText();
     String command = stmt2.trim().split(" ")[0];
     int numRow = 0;
@@ -151,7 +147,6 @@ public class SQLPLUS extends JFrame {
       }
     }
     catch (SQLException sqle) {
-      sqle.printStackTrace();
     }
   }
     
