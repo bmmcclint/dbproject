@@ -106,11 +106,7 @@ class QueryView extends javax.swing.JFrame {
         this.queryCombo.setBounds(200, 0, 455, 20);
         this.queryCombo.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
-            try {
               queryComboActionPerformed(evt);
-            } catch (SQLException ex) {
-              Logger.getLogger(QueryView.class.getName()).log(Level.SEVERE, null, ex);
-            }
           }
         });
       }
@@ -165,12 +161,8 @@ class QueryView extends javax.swing.JFrame {
         this.jbutton2.setVisible(false);
         this.jbutton2.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
-            try {
               jbutton2ActionPerformed(evt);
-            } catch (SQLException ex) {
-              Logger.getLogger(QueryView.class.getName()).log(Level.SEVERE, null, ex);
             }
-          }
         });
       }
       setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -183,7 +175,7 @@ class QueryView extends javax.swing.JFrame {
     }
   }
   
-  private void queryComboActionPerformed(ActionEvent evt) throws SQLException {
+  private void queryComboActionPerformed(ActionEvent evt) {
     String chosenTable = (String) queryCombo.getSelectedItem();
     this.valueList.setVisible(false);
     this.valueListLabel.setVisible(false);
@@ -205,7 +197,7 @@ class QueryView extends javax.swing.JFrame {
     }
   }
   
-  private void ibutton1ActionPerformed(ActionEvent evt) throws SQLException {
+  private void ibutton1ActionPerformed(ActionEvent evt) {
     try {
       Vector titles = ti.getTitleAsVector(rs);
       this.newRow = new Vector(table.getColumnCount());
@@ -218,7 +210,7 @@ class QueryView extends javax.swing.JFrame {
     }
   }
   
-  private void jbutton2ActionPerformed(ActionEvent evt) throws SQLException {
+  private void jbutton2ActionPerformed(ActionEvent evt) {
     int numRow = 0;
     try {
       String tableName = (String) this.queryCombo.getSelectedItem();
@@ -908,15 +900,15 @@ class QueryView extends javax.swing.JFrame {
             + "   where c.course_code = course_code);";
   }
   
-//  public void main(String[] args) throws SQLException {
-//    if (args.length < 2) {
-//      System.out.println("usage: java TableInfo db-username db-password");
-//      System.exit(1);
-//    }
-//    dbaccess tc = new dbaccess();
-//    Connection conn = tc.getDBConnection(args[0], args[1]);
-//    TableUpdate tu = new TableUpdate(conn);
-//    EditTables inst = new EditTables(tu, conn);
-//    inst.setVisible(true);
-//  }
+  public void main(String[] args) throws SQLException {
+    if (args.length < 2) {
+      System.out.println("usage: java TableInfo db-username db-password");
+      System.exit(1);
+    }
+    dbaccess tc = new dbaccess();
+    Connection conn = tc.getDBConnection(args[0], args[1]);
+    TableUpdate tu = new TableUpdate(conn);
+    EditTables inst = new EditTables(tu, conn);
+    inst.setVisible(true);
+  }
 }

@@ -11,8 +11,6 @@ import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -30,7 +28,7 @@ import javax.swing.table.TableModel;
  * @author bmcclint
  */
 public class TableView extends JFrame {
-  private TableInfo ti;
+  private final TableInfo ti;
   private JLabel tnLabel;
   private JComboBox tnJCombo;
   private JTable table;
@@ -60,12 +58,8 @@ public class TableView extends JFrame {
         this.tnJCombo.setBounds(7, 28, 211, 28);
         this.tnJCombo.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
-            try {
-              tnJComboActionPerformed(evt);
-            } catch (SQLException ex) {
-              Logger.getLogger(TableView.class.getName()).log(Level.SEVERE, null, ex);
+            tnJComboActionPerformed(evt);
             }
-          }
         });
       }
       {
@@ -101,7 +95,7 @@ public class TableView extends JFrame {
     }
   }
   
-  private void tnJComboActionPerformed(ActionEvent evt) throws SQLException {
+  private void tnJComboActionPerformed(ActionEvent evt) {
     String chosenTable = (String) this.tnJCombo.getSelectedItem();
     try {
       ResultSet rs = ti.getTable(chosenTable);
