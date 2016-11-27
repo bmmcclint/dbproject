@@ -11,6 +11,7 @@ import dbproject.dbaccess;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,6 +20,7 @@ import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,7 +32,7 @@ import javax.swing.table.TableModel;
  *
  * @author bmcclint
  */
-class QueryView extends javax.swing.JFrame {
+class QueryView extends JFrame {
   private JLabel qnLabel;
   private JLabel valueListLabel;
   private JLabel secondaryValueList;
@@ -89,7 +91,7 @@ class QueryView extends javax.swing.JFrame {
         this.valueListLabel = new JLabel();
         this.getContentPane().add(this.valueListLabel);
         this.valueListLabel.setText("Primary");
-        this.valueListLabel.setBounds(50, 20, 125, 28);
+        this.valueListLabel.setBounds(75, 20, 125, 28);
         this.valueListLabel.setVisible(false);
       }
       {
@@ -114,7 +116,7 @@ class QueryView extends javax.swing.JFrame {
       {
         this.valueList = new JComboBox();
         this.getContentPane().add(this.valueList);
-        this.valueList.setBounds(91, 26, 300, 20);
+        this.valueList.setBounds(200, 26, 300, 20);
         this.valueList.setVisible(false);
         this.valueList.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
@@ -232,7 +234,7 @@ class QueryView extends javax.swing.JFrame {
         queryNum = 1;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("Company", "comp_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -240,7 +242,7 @@ class QueryView extends javax.swing.JFrame {
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("Company Code");
         this.valueListLabel.setVisible(true);
         query1();
     }
@@ -622,12 +624,116 @@ class QueryView extends javax.swing.JFrame {
   
   private void valueListActionPerformed(ActionEvent evt) {
     if (queryNum == 1) {
-      comp_code = (String) valueList.getSelectedItem();
-      
-      query1();
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query1();
     }
     else if (queryNum == 2) {
-      comp_code = (String) this.valueList.getSelectedItem();
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query2();
+    }
+    else if (queryNum == 3) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query3();
+    }
+    else if (queryNum == 4) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query4();
+    }
+    else if (queryNum == 5) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query5();
+    }
+    else if (queryNum == 6) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query6();
+    }
+    else if (queryNum == 7) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query7();
+    }
+    else if (queryNum == 8) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query8();
+    }
+    else if (queryNum == 9) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query9();
+    }
+    else if (queryNum == 10) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query10();
+    }
+    else if (queryNum == 11) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query11();
+    }
+    else if (queryNum == 12) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query12();
+    }
+    else if (queryNum == 13) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query13();
+    }
+    else if (queryNum == 14) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query14();
+    }
+    else if (queryNum == 15) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query15();
+    }
+    else if (queryNum == 16) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query16();
+    }
+    else if (queryNum == 17) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query17();
+    }
+    else if (queryNum == 18) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query18();
+    }
+    else if (queryNum == 19) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query19();
+    }
+    else if (queryNum == 20) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query20();
+    }
+    else if (queryNum == 21) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query21();
+    }
+    else if (queryNum == 22) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query22();
+    }
+    else if (queryNum == 23) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query23();
+    }
+    else if (queryNum == 24) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query24();
+    }
+    else if (queryNum == 25) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query25();
+    }
+    else if (queryNum == 26) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query26();
+    }
+    else if (queryNum == 27) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query27();
+    }
+    else if (queryNum == 28) {
+        this.comp_code = (String) this.valueList.getSelectedItem();
+        query28();
     }
   }
   
@@ -643,7 +749,8 @@ class QueryView extends javax.swing.JFrame {
     queryValue = 
             "select last_name, first_name "
             + "from person inner join employment on person.person_code = employment.person_code inner join job on employment.job_code = job.job_code "
-            + "where comp_code =" + comp_code;
+            + "where comp_code =" + comp_code 
+            + "and status = 'employed'";
   }
   
   private void query2() {
