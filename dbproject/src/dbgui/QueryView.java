@@ -228,122 +228,395 @@ class QueryView extends javax.swing.JFrame {
   }
   
   private String queryParser(String chosenQuery) throws SQLException {
-    switch (chosenQuery) {
-      case "Query 1":
+    if (chosenQuery.equals("Query 1")) {
         queryNum = 1;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
         query1();
-        break;
-      case "Query 2":
-        queryNum = 2;
-        query2();
-        break;
-      case "Query 3":
-        queryNum = 3;
-        query3();
-        break;
-      case "Query 4":
-        queryNum = 4;
-        query4();
-        break;
-      case "Query 5":
-        queryNum = 5;
-        query5();
-        break;
-      case "Query 6":
-        queryNum = 6;
-        query6();
-        break;
-      case "Query 7":
-        queryNum = 7;
-        query7();
-        break;
-      case "Query 8":
-        queryNum = 8;
-        query8();
-        break;
-      case "Query 9":
-        queryNum = 9;
-        query9();
-        break;
-      case "Query 10":
-        queryNum = 10;
-        query10();
-        break;
-      case "Query 11":
-        queryNum = 11;
-        query11();
-        break;
-      case "Query 12":
-        queryNum = 12;
-        query12();
-        break;
-      case "Query 13":
-        queryNum = 13;
-        query13();
-        break;
-      case "Query 14":
-        queryNum = 14;
-        query14();
-        break;
-      case "Query 15":
-        queryNum = 15;
-        query15();
-        break;
-      case "Query 16":
-        queryNum = 16;
-        query16();
-        break;
-      case "Query 17":
-        queryNum = 17;
-        query17();
-        break;
-      case "Query 18":
-        queryNum = 18;
-        query18();
-        break;
-      case "Query 19":
-        queryNum = 19;
-        query19();
-        break;
-      case "Query 20":
-        queryNum = 20;
-        query20();
-        break;
-      case "Query 21":
-        queryNum = 21;
-        query21();
-        break;
-      case "Query 22":
-        queryNum = 22;
-        query22();
-        break;
-      case "Query 23":
-        queryNum = 23;
-        query23();
-        break;
-      case "Query 24":
-        queryNum = 24;
-        query24();
-        break;
-      case "Query 25":
-        queryNum = 25;
-        query25();
-        break;
-      case "Query 26":
-        queryNum = 26;
-        query26();
-        break;
-      case "Query 27":
-        queryNum = 27;
-        query27();
-        break;
-      case "Query 28":
-        queryNum = 28;
-        query28();
-        break;
-      default:
-        break;
     }
+    else if (chosenQuery.equals("Query 2")) {
+        queryNum = 2;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query2();
+    }
+    else if (chosenQuery.equals("Query 3")) {
+        queryNum = 3;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query3();
+    }
+    else if (chosenQuery.equals("Query 4")) {
+        queryNum = 4;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        query4();
+    }
+    else if (chosenQuery.equals("Query 5")) {
+        queryNum = 5;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query5();
+    }
+    else if (chosenQuery.equals("Query 6")) {
+        queryNum = 6;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        query6();
+    }
+    else if (chosenQuery.equals("Query 7")) {
+        queryNum = 7;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query7();
+    }
+    else if (chosenQuery.equals("Query 8")) {
+        queryNum = 8;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        query8();
+    }
+    else if (chosenQuery.equals("Query 9")) {
+        queryNum = 9;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query9();
+    }
+    else if (chosenQuery.equals("Query 10")) {
+        queryNum = 10;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        query10();
+    }
+    else if (chosenQuery.equals("Query 11")) {
+        queryNum = 11;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query11();
+    }
+    else if (chosenQuery.equals("Query 12")) {
+        queryNum = 12;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        query12();
+    }
+    else if (chosenQuery.equals("Query 13")) {
+        queryNum = 13;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query13();
+    }
+    else if (chosenQuery.equals("Query 14")) {
+        queryNum = 14;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        query14();
+    }
+    else if (chosenQuery.equals("Query 15")) {
+        queryNum = 15;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query15();
+    }
+    else if (chosenQuery.equals("Query 16")) {
+        queryNum = 16;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        query16();
+    }
+    else if (chosenQuery.equals("Query 17")) {
+        queryNum = 17;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query17();
+    }
+    else if (chosenQuery.equals("Query 18")) {
+        queryNum = 18;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        query18();
+    }
+    else if (chosenQuery.equals("Query 19")) {
+        queryNum = 19;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query19();
+    }
+    else if (chosenQuery.equals("Query 20")) {
+        queryNum = 20;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        query20();
+    }
+    else if (chosenQuery.equals("Query 21")) {
+        queryNum = 21;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query21();
+    }
+    else if (chosenQuery.equals("Query 22")) {
+        queryNum = 22;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        query22();
+    }
+    else if (chosenQuery.equals("Query 23")) {
+        queryNum = 23;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query23();
+    }
+    else if (chosenQuery.equals("Query 24")) {
+        queryNum = 24;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        query24();
+    }
+    else if (chosenQuery.equals("Query 25")) {
+        queryNum = 25;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query25();
+    }
+    else if (chosenQuery.equals("Query 26")) {
+        queryNum = 26;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        query26();
+    }
+    else if (chosenQuery.equals("Query 27")) {
+        queryNum = 27;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query27();
+    }
+    else if (chosenQuery.equals("Query 28")) {
+        queryNum = 28;
+        String[] colVal = null;
+        try {
+            colVal = ti.getColumn("company", comp_code);
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
+        query28();
+    }
+    
     return queryValue;
   }
   
@@ -370,7 +643,7 @@ class QueryView extends javax.swing.JFrame {
     queryValue = 
             "select last_name, first_name "
             + "from person inner join employment on person.person_code = employment.person_code inner join job on employment.job_code = job.job_code "
-            + "where comp_code ='1001001'";
+            + "where comp_code =" + comp_code;
   }
   
   private void query2() {
