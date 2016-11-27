@@ -809,24 +809,24 @@ class QueryView extends javax.swing.JFrame {
   }
 
   private void query24() {
-    queryValue = "with num_employees as ( "
-            + "   select count(pay_rate) as employee_count, comp_code "
-            + "   from job natural join employment "
-            + "   where status = 'employed' "
-            + "   group by comp_code), "
+    queryValue = "with employer_count as ( "
+            + "     select count(pay_rate) as num_employees, comp_code "
+            + "     from job join employment using(job_code) "
+            + "     where status = 'employed' "
+            + "     group by comp_code), "
             + ""
-            + "employees_per_sector as ( "
-            + "   select primary_sector, sum(employee_count) as sector_count "
-            + "   from num_employees natural join company "
-            + "   group by primary_sector), "
+            + "count_per_sector as ( "
+            + "     select primary_sector, sum(num_employees) as sector_employee_count "
+            + "     from employer_count natural join company "
+            + "     group by primary_sector), "
             + ""
-            + "majority_count as ( "
-            + "   select max(sector_count) as biggest_sector "
-            + "   from employees_per_sector) "
+            + "max_count as ( "
+            + "     select max(sector_employee_count) as max "
+            + "     from count_per_sector) "
             + ""
             + "select primary_sector "
-            + "from majority_count, employees_per_sector "
-            + "where biggest_sector = sector_count";
+            + "from max_count, count_per_sector "
+            + "where max = sector_employee_count";
   }
 
   private void query25() {
