@@ -24,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -44,6 +45,11 @@ class QueryView extends JFrame {
   private JComboBox queryCombo;
   
   private JScrollPane jScrollPane1;
+  private JScrollPane stmtdisplaypane;
+  private JScrollPane querydisplaypane;
+  
+  private JTextArea stmtdisplay;
+  private JTextArea querydisplay;
   
   private Vector tableContent;
   private ResultSet rs;
@@ -102,6 +108,20 @@ class QueryView extends JFrame {
         this.secondaryValueList.setVisible(false);
       }
       {
+        this.stmtdisplay = new JTextArea();
+        this.stmtdisplaypane = new JScrollPane(this.stmtdisplay);
+        this.getContentPane().add(this.stmtdisplaypane);
+        this.stmtdisplaypane.setBounds(7, 50, 880, 40);
+        this.stmtdisplay.setVisible(false);
+        this.stmtdisplaypane.setVisible(false);
+      }
+      {
+        this.querydisplay = new JTextArea();
+        this.querydisplaypane = new JScrollPane(this.querydisplay);
+        this.getContentPane().add(this.querydisplaypane);
+        this.querydisplaypane.setBounds(7, 305, 880, 200);
+      }
+      {
         ComboBoxModel queryComboModel = new DefaultComboBoxModel(this.queryList);
         this.queryCombo = new JComboBox();
         this.getContentPane().add(this.queryCombo);
@@ -143,7 +163,7 @@ class QueryView extends JFrame {
       {
         this.jScrollPane1 = new JScrollPane(table);
         this.getContentPane().add(this.jScrollPane1);
-        this.jScrollPane1.setBounds(7, 49, 861, 378);
+        this.jScrollPane1.setBounds(7, 100, 880, 200);
       }
       {
         this.jbutton1 = new JButton();
@@ -153,7 +173,7 @@ class QueryView extends JFrame {
         this.jbutton1.setVisible(false);
         this.jbutton1.addActionListener(new ActionListener () {
           public void actionPerformed(ActionEvent evt) {
-            jbutton1ActionPerformed(evt);
+            ibutton1ActionPerformed(evt);
           }
         });
       }
@@ -245,6 +265,9 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Company Code");
         this.valueListLabel.setVisible(true);
         query1();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("1. List a company's workers in descending order");
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 2")) {
         queryNum = 2;
@@ -261,16 +284,25 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("company");
         this.valueListLabel.setVisible(true);
         query2();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("2. List a company's staff by salary in descending order");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 3")) {
         queryNum = 3;
         query3();
+        this.stmtdisplay.setText("3. List companies' labor costs (total salaries and wage rates "
+            + "by 1920 hours) in descending order");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
+        this.querydisplay.setText(queryValue.toString());
     }
     else if (chosenQuery.equals("Query 4")) {
         queryNum = 4;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("person", "person_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -278,9 +310,14 @@ class QueryView extends JFrame {
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("person code");
+        this.valueListLabel.setText("Person Code");
         this.valueListLabel.setVisible(true);
         query4();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("4. Find all the jobs a person is currently holding and worked "
+            + "in the past");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 5")) {
         queryNum = 5;
@@ -297,6 +334,11 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("person code");
         this.valueListLabel.setVisible(true);
         query5();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("5. List a person's knowledge/skills for a specific job profile"
+            + "in a readable format.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 6")) {
         queryNum = 6;
@@ -313,6 +355,11 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("person code");
         this.valueListLabel.setVisible(true);
         query6();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("6. List the skill gap of a worker between his/her job(s) and "
+            + "his/her skills.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 7")) {
         queryNum = 7;
@@ -329,6 +376,11 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Job Profile Code");
         this.valueListLabel.setVisible(true);
         query7();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("7. List the required knowledge/skill of a job profile in a "
+            + "readable format");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 8")) {
         queryNum = 8;
@@ -352,6 +404,11 @@ class QueryView extends JFrame {
         this.secondaryValueList.setText("Job Code");
         this.secondaryValueList.setVisible(true);
         query8();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("8. List a person's missing knowledge/skills for a specific job"
+            + " in a readable format.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 9")) {
         queryNum = 9;
@@ -375,6 +432,12 @@ class QueryView extends JFrame {
         this.secondaryValueList.setText("Person Code");
         this.secondaryValueList.setVisible(true);
         query9();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("9. List the courses (course id and title) that each alone "
+            + "teaches all the missing knowledge/skills fro a person to pursue "
+            + "a specific job.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 10")) {
         queryNum = 10;
@@ -398,6 +461,13 @@ class QueryView extends JFrame {
         this.secondaryValueList.setText("Person Code");
         this.secondaryValueList.setVisible(true);
         query10();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("10. Suppose the skill gap of a worker and the requirement of a"
+            + " desired job can be covered by one course. Find the 'quickest' "
+            + "solution for this worker. Show the course, section information "
+            + "and the complate date");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 11")) {
         queryNum = 11;
@@ -414,6 +484,11 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("person_code");
         this.valueListLabel.setVisible(true);
         query11();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("11. Find the cheapest course to make up one's skill gap by "
+            + "showing the course to take and the cost (of the section price)");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 12")) {
         queryNum = 12;
@@ -430,6 +505,16 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("");
         this.valueListLabel.setVisible(true);
         query12();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("12. If query #9 returns nothing, then find the course sets "
+            + "that their combination covers all the missing knowledge/skills "
+            + "for a person to pursue a specific job. The considered course "
+            + "sets will not include more than three courses. If multiple "
+            + "course sets are found, list the course sets (with their course "
+            + "IDs) in the order of the ascending order of the course sets' "
+            + "total costs.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 13")) {
         queryNum = 13;
@@ -446,6 +531,10 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Person Code");
         this.valueListLabel.setVisible(true);
         query13();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("13. List all the job profiles that a person is qualified for.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 14")) {
         queryNum = 14;
@@ -462,6 +551,11 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Person Code");
         this.valueListLabel.setVisible(true);
         query14();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("14. Find the job with the highest pay rate for a person "
+            + "according to his/her skill qualifications.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 15")) {
         queryNum = 15;
@@ -478,6 +572,11 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Job Profile Code");
         this.valueListLabel.setVisible(true);
         query15();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("15. List all the names along with the emails of the persons "
+            + "who are qualified for a job profile.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 16")) {
         queryNum = 16;
@@ -495,6 +594,13 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Job Profile Code");
         this.valueListLabel.setVisible(true);
         query16();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("16. When a company cannot find any qualified person for a job,"
+            + " secondary solution is to find a person who is almost qualified"
+            + " to the job. Make a 'missing-one' list that lists people who"
+            + " miss only one skill for a specified job profile.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 17")) {
         queryNum = 17;
@@ -512,6 +618,12 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Job Profile Code");
         this.valueListLabel.setVisible(true);
         query17();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("17. List the skillID and the number of people in the missing"
+            + " one list for a given job profile in the ascending order of the"
+            + " people counts.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 18")) {
         queryNum = 18;
@@ -528,6 +640,12 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Job Profile Code");
         this.valueListLabel.setVisible(true);
         query18();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("18. Suppose there is a new job profile that no one is"
+            + " qualified. List the persons who miss the least number of skills"
+            + " and report the 'least number'.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 19")) {
         queryNum = 19;
@@ -545,6 +663,13 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Job Profile Code");
         this.valueListLabel.setVisible(true);
         query19();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("19. For a specified job profile and a given small number k,"
+            + " make a 'missing-k' list that lists the people's IDs and the"
+            + " number of missing skills for the people who miss only up to k"
+            + " skills in the ascending order of missing skills.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 20")) {
         queryNum = 20;
@@ -562,6 +687,14 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Job Profile Code");
         this.valueListLabel.setVisible(true);
         query20();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("20. Given a job profile and its corresponding missing-k list"
+            + " specified Question 19. Find every skill that is needed by at"
+            + " least one person in the given missing-k list. List each skillID"
+            + " and the number of people who need it in the descending order of"
+            + " the people counts.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 21")) {
         queryNum = 21;
@@ -578,6 +711,12 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Job Code");
         this.valueListLabel.setVisible(true);
         query21();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("21. In a local or national crisis, we need to find all the"
+            + " people who once held a job of the special job-profile"
+            + " identifier.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 22")) {
         queryNum = 22;
@@ -601,6 +740,11 @@ class QueryView extends JFrame {
         this.secondaryValueList.setText("Job Profile Code");
         this.secondaryValueList.setVisible(true);
         query22();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("22. Find all the unemployed people who once held a job of the"
+            + " given job-profile identifier.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 23")) {
         queryNum = 23;
@@ -617,6 +761,11 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Status");
         this.valueListLabel.setVisible(true);
         query23();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("23. Find the biggest employer in terms of number of employees"
+            + " or the total amount of salaries and wages paid to employees.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 24")) {
         queryNum = 24;
@@ -633,23 +782,23 @@ class QueryView extends JFrame {
         this.valueListLabel.setText("Status");
         this.valueListLabel.setVisible(true);
         query24();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("24. Find out the job distribution among business sectors; find"
+            + " out the biggest sector in terms of number of employes or the"
+            + " total amount of salaries and wages paid to employees.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 25")) {
         queryNum = 25;
-        String[] colVal = null;
-        String[] secVal = null;
-        try {
-            colVal = ti.getColumn("company", comp_code);
-        }
-        catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
-        this.valueList.setModel(compModel);
-        this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
-        this.valueListLabel.setVisible(true);
         query25();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("25. Find out the ratio between the people whose earnings"
+            + " increase and those whose earnings decrease; find the average"
+            + " rate of earning improvement for the workers in a specific"
+            + " business sector.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 26")) {
         queryNum = 26;
@@ -657,7 +806,7 @@ class QueryView extends JFrame {
         String[] secVal = null;
         try {
             colVal = ti.getColumn("employment", "status");
-            secVal = ti.getColumn("employment", "stauts");
+            secVal = ti.getColumn("employment", "status");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -672,7 +821,19 @@ class QueryView extends JFrame {
         this.secondaryList.setVisible(true);
         this.secondaryValueList.setText("Status");
         this.secondaryValueList.setVisible(true);
+        this.querydisplay.setText(queryValue.toString());
         query26();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("26. Find the job profiles that have the most openings due to"
+            + " lack of qualified workers. If there are many opening jobs of a"
+            + " job profile but at the same time there are many qualified"
+            + " jobless people. Then training cannot help fill up this type of"
+            + " job. What we want to find is such a job profile that has the"
+            + " largest differences between vacancies (the unfilled jobs of"
+            + " this job profile) and the number of jobless that has the"
+            + " largest difference between vacancies.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 27")) {
         queryNum = 27;
@@ -689,6 +850,12 @@ class QueryView extends JFrame {
 //        this.valueListLabel.setText("");
 //        this.valueListLabel.setVisible(true);
         query27();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("27. Find the courses that can help the most jobless people"
+            + " find a job by training them toward the job profiles that have"
+            + " the most openings due to lack of qualified workes.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     else if (chosenQuery.equals("Query 28")) {
         queryNum = 28;
@@ -712,6 +879,13 @@ class QueryView extends JFrame {
         this.secondaryValueList.setText("Job Profile Code");
         this.secondaryValueList.setVisible(true);
         query28();
+        this.stmtdisplaypane.setVisible(true);
+        this.stmtdisplay.setText("28. List all the courses, directly or indirectly required,"
+            + " that a person has to take in order to be qualified for a job of"
+            + " the given profile, according to his/her skills possessed and"
+            + " courses taken.");
+        this.stmtdisplay.setLineWrap(true);
+        this.stmtdisplay.setVisible(true);
     }
     
     return queryValue;
@@ -727,7 +901,7 @@ class QueryView extends JFrame {
         query2();
     }
     else if (queryNum == 4) {
-      this.comp_code = (String) this.valueList.getSelectedItem();
+      this.person_code = (String) this.valueList.getSelectedItem();
       query4();
     }
     else if (queryNum == 5) {
@@ -815,7 +989,6 @@ class QueryView extends JFrame {
         query24();
     }
     else if (queryNum == 25) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
         query25();
     }
     else if (queryNum == 26) {
@@ -832,192 +1005,245 @@ class QueryView extends JFrame {
         this.jp_code = (String) this.secondaryList.getSelectedItem();
         query28();
     }
+    try {
+      Statement stmt = conn.createStatement();
+      System.out.println(queryValue);
+      rs = stmt.executeQuery(queryValue);
+      tableContent = ti.resultSet2Vector(rs);
+      Vector tableTitles = ti.getTitleAsVector(rs);
+      TableModel tableModel = new DefaultTableModel(tableContent, tableTitles);
+      table.setModel(tableModel);
+      this.querydisplay.setText(queryValue.toString());
+    }
+    catch (SQLException sqle) {
+      sqle.printStackTrace();
+    }
   }
   
   private void secondaryListActionPerformed(ActionEvent evt) {
-    
+    if (queryNum == 8) {
+      this.person_code = (String) this.valueList.getSelectedItem();
+      this.job_code = (String) this.secondaryList.getSelectedItem();
+      query8();
+    }
+    else if (queryNum == 9) {
+      this.job_code = (String) this.valueList.getSelectedItem();
+      this.person_code = (String) this.secondaryList.getSelectedItem();
+      query9();
+    }
+    else if (queryNum == 10) {
+      this.jp_code = (String) this.valueList.getSelectedItem();
+      this.person_code = (String) this.secondaryList.getSelectedItem();
+      query10();
+    }
+    else if (queryNum == 22) {
+      this.status = (String) this.valueList.getSelectedItem();
+      this.jp_code = (String) this.secondaryList.getSelectedItem();
+      query22();
+    }
+    else if (queryNum == 26) {
+      this.status = (String) this.valueList.getSelectedItem();
+      this.status = (String) this.secondaryList.getSelectedItem();
+      query26();
+    }
+    else if (queryNum == 28) {
+      this.person_code = (String) this.valueList.getSelectedItem();
+      this.jp_code = (String) this.secondaryList.getSelectedItem();
+      query28();
+    }
+    try {
+      Statement stmt = conn.createStatement();
+      System.out.println(queryValue);
+      rs = stmt.executeQuery(queryValue);
+      tableContent = ti.resultSet2Vector(rs);
+      Vector tableTitles = ti.getTitleAsVector(rs);
+      TableModel tableModel = new DefaultTableModel(tableContent, tableTitles);
+      table.setModel(tableModel);
+      this.querydisplay.setText(queryValue.toString());
+    }
+    catch (SQLException sqle) {
+      sqle.printStackTrace();
+    }
   }
   
-  private void jbutton1ActionPerformed(ActionEvent evt) {
-    
-  }
-
   private void query1() {
     queryValue = 
-            "select last_name, first_name "
-            + "from person inner join employment on person.person_code = employment.person_code inner join job on employment.job_code = job.job_code "
-            + "where comp_code =" + comp_code + "and status = 'employed'";
+            "select last_name, first_name \n"
+            + "from person inner join employment on person.person_code = \n"
+            + "employment.person_code inner join job on employment.job_code = \n"
+            + "job.job_code \n"
+            + "where comp_code =" + comp_code + " and status = 'employed'";
   }
   
   private void query2() {
-    queryValue = "select distinct last_name, first_name, pay_rate "
-            + "from person inner join employment on person.person_code = employment.person_code "
-            + "inner join job on employment.job_code = job.job_code "
-            + "where comp_code = " + comp_code + " and pay_type = 'salary' ";
+    queryValue = "select distinct last_name, first_name, pay_rate \n"
+            + "from person inner join employment on person.person_code = employment.person_code \n"
+            + "inner join job on employment.job_code = job.job_code \n"
+            + "where comp_code = " + comp_code + " and pay_type = 'salary' \n";
   }
   
   private void query3() {
-    queryValue = "with salary as ( "
-            + "   select comp_code, sum(pay_rate) worker_salary "
-            + "   from job inner join employment on job.job_code = employment.job_code "
-            + "   where pay_type = 'salary' "
-            + "   group by (job.comp_code)), "
+    queryValue = "with salary as ( \n"
+            + "   select comp_code, sum(pay_rate) worker_salary \n"
+            + "   from job inner join employment on job.job_code = employment.job_code \n"
+            + "   where pay_type = 'salary' \n"
+            + "   group by (job.comp_code)), \n"
             + ""
-            + "wage as ( "
-            + "   select comp_code, sum(pay_rate*1920) worker_salary "
-            + "   from job inner join employment on job.job_code = employment.job_code "
-            + "   where pay_type = 'wages' "
-            + "   group by (job.comp_code)), "
+            + "wage as ( \n"
+            + "   select comp_code, sum(pay_rate*1920) worker_salary \n"
+            + "   from job inner join employment on job.job_code = employment.job_code \n"
+            + "   where pay_type = 'wages' \n"
+            + "   group by (job.comp_code)), \n"
             + ""
-            + "cost as ( "
-            + "   ((select * "
-            + "   from salary) "
-            + "      union "
-            + "   (select * "
-            + "   from wage))) "
+            + "cost as ( \n"
+            + "   ((select * \n"
+            + "   from salary) \n"
+            + "      union \n"
+            + "   (select * \n"
+            + "   from wage))) \n"
             + ""
-            + "select comp_code, sum(worker_salary) as total_cost "
-            + "from cost "
-            + "group by comp_code "
+            + "select comp_code, sum(worker_salary) as total_cost \n"
+            + "from cost \n"
+            + "group by comp_code \n"
             + "order by total_cost desc";
   }
   
   private void query4() {
-    queryValue = "select job_code "
-            + "from employment "
+    queryValue = "select job_code \n"
+            + "from employment \n"
             + "where person_code =" + person_code;
   }
   
   private void query5() {
-    queryValue = "select ks_name, ks_code "
-            + "from person_skill natural join skills "
-            + "where person_code = " + person_code
+    queryValue = "select ks_name, ks_code \n"
+            + "from person_skill natural join skills \n"
+            + "where person_code = \n" + person_code
             + "order by ks_name asc";
   }  
   
   private void query6() {
-    queryValue = "with person_skills as ( "
-            + "   select ks_name, ks_level, ks_code "
-            + "   from person_skill natural join skills "
-            + "   where person_code = " + person_code + "), "
+    queryValue = "with person_skills as ( \n"
+            + "   select ks_name, ks_level, ks_code \n"
+            + "   from person_skill natural join skills \n"
+            + "   where person_code = " + person_code + "), \n"
             + ""
-            + "person_jobs as ( "
-            + "   select job_code "
-            + "   from job natural join employment "
-            + "   where person_code =" + person_code + "), "
+            + "person_jobs as ( \n"
+            + "   select job_code \n"
+            + "   from job natural join employment \n"
+            + "   where person_code =" + person_code + "), \n"
             + ""
-            + "job_skills as ( "
+            + "job_skills as ( \n"
             + "   select ks_code "
-            + "   from job_skill natural join person_jobs), "
+            + "   from job_skill natural join person_jobs), \n"
             + ""
-            + "skill_gap as ( "
-            + "   (select ks_code "
-            + "   from person_skills) "
-            + "     minus "
-            + "   (select ks_code "
-            + "   from job_skills)) "
+            + "skill_gap as ( \n"
+            + "   (select ks_code \n"
+            + "   from person_skills) \n"
+            + "     minus \n"
+            + "   (select ks_code \n"
+            + "   from job_skills)) \n"
             + ""
-            + "select distinct ks_level "
+            + "select distinct ks_level \n"
             + "from skills natural join skill_gap";
   }
   
   private void query7() {
-    queryValue = "select ks_name, ks_code "
-            + "from skills natural join jp_skill "
+    queryValue = "select ks_name, ks_code \n"
+            + "from skills natural join jp_skill \n"
             + "where jp_skill.jp_code =" + jp_code;
   }
   
   private void query8() {
-    queryValue = "with has_skill as ( "
-            + "   select ks_code "
-            + "   from person_skill "
-            + "   where person_code =" + person_code + "), "
+    queryValue = "with has_skill as ( \n"
+            + "   select ks_code \n"
+            + "   from person_skill \n"
+            + "   where person_code =" + person_code + "), \n"
             + ""
-            + "required_skill as ( "
-            + "   select ks_code "
-            + "   from job_skill "
-            + "   where job_code =" + job_code + "), "
+            + "required_skill as ( \n"
+            + "   select ks_code \n"
+            + "   from job_skill \n"
+            + "   where job_code =" + job_code + "), \n"
             + ""
-            + "skill_gap as ( "
-            + "   (select ks_code "
-            + "   from has_skill) "
-            + "     union "
-            + "   (select ks_code "
-            + "   from required_skill)) "
+            + "skill_gap as ( \n"
+            + "   (select ks_code \n"
+            + "   from has_skill) \n"
+            + "     union \n"
+            + "   (select ks_code \n"
+            + "   from required_skill)) \n"
             + ""
-            + "select ks_name "
+            + "select ks_name \n"
             + "from skill_gap natural join skills";
   }
   private void query9() {
-    queryValue = "with required_skills as ( "
-            + "   select ks_code, ks_name "
-            + "   from job_skill natural join skills "
-            + "   where job_code =" + job_code + "), "
+    queryValue = "with required_skills as ( \n"
+            + "   select ks_code, ks_name \n"
+            + "   from job_skill natural join skills \n"
+            + "   where job_code =" + job_code + "), \n"
             + ""
-            + "current_skills as ( "
-            + "   select ks_code, ks_name "
-            + "   from person_skill natural join skills "
-            + "   where person_code =" + person_code + "), "
+            + "current_skills as ( \n"
+            + "   select ks_code, ks_name \n"
+            + "   from person_skill natural join skills \n"
+            + "   where person_code =" + person_code + "), \n"
             + ""
-            + "needed_course as ( "
-            + "   (select ks_code, ks_name "
-            + "   from required_skills) "
-            + "     minus "
-            + "   (select ks_code, ks_name "
-            + "   from current_skills)), "
+            + "needed_course as ( \n"
+            + "   (select ks_code, ks_name \n"
+            + "   from required_skills) \n"
+            + "     minus \n"
+            + "   (select ks_code, ks_name \n"
+            + "   from current_skills)), \n"
             + ""
-            + "missing_skills as ( "
-            + "   select ks_code "
-            + "   from needed_course) "
+            + "missing_skills as ( \n"
+            + "   select ks_code \n"
+            + "   from needed_course) \n"
             + ""
-            + "select course_code, course_title "
+            + "select course_code, course_title \n"
             + "from missing_skills natural join course_skill natural join course";
   }
 
   private void query10() {
-    queryValue = "with needed_skills as ( "
-            + "   (select ks_code "
-            + "   from jp_skill "
-            + "   where jp_code =" + jp_code + ") "
-            + "     minus "
-            + "   (select ks_code "
-            + "   from person_skill "
-            + "   where person_code =" + person_code + ")), "
+    queryValue = "with needed_skills as ( \n"
+            + "   (select ks_code \n"
+            + "   from jp_skill \n"
+            + "   where jp_code =" + jp_code + ") \n"
+            + "     minus \n"
+            + "   (select ks_code \n"
+            + "   from person_skill \n"
+            + "   where person_code =" + person_code + ")), \n"
             + ""
-            + "course_skills as ( "
-            + "   select distinct c.course_code "
-            + "   from course c "
-            + "   where not exists ( "
-            + "     select ks_code "
-            + "     from needed_skills "
-            + "       minus "
-            + "     select ks_code "
-            + "     from course_skill "
-            + "     where course_code = c.course_code)) "
+            + "course_skills as ( \n"
+            + "   select distinct c.course_code \n"
+            + "   from course c \n"
+            + "   where not exists ( \n"
+            + "     select ks_code \n"
+            + "     from needed_skills \n"
+            + "       minus \n"
+            + "     select ks_code \n"
+            + "     from course_skill \n"
+            + "     where course_code = c.course_code)) \n"
             + ""
-            + "select course_code, course_title "
+            + "select course_code, course_title \n"
             + "from course_skills natural join course";
   }
 
   private void query11() {
-    queryValue = "select course_code, course_title, cost "
-            + "from course natural join section natural join course_skill "
-            + "where ks_code in ( "
-            + "   select ks_code "
-            + "   from jp_skill natural join skills natural join job "
-            + "   where ks_code not in ( "
-            + "     select ks_code "
-            + "     from job_profile natural join person_skill "
-            + "     where person_code =" + person_code + ")) "
-            + "       and cost = ( "
-            + "       select min(cost) "
-            + "       from course natural join section natural join course_skill "
-            + "       where ks_code in ( "
-            + "         select ks_code "
-            + "         from jp_skill natural join skills natural join job "
-            + "         where ks_code not in ( "
-            + "           select ks_code "
-            + "           from job_profile natural join person_skill"
+    queryValue = "select course_code, course_title, cost \n"
+            + "from course natural join section natural join course_skill \n"
+            + "where ks_code in ( \n"
+            + "   select ks_code \n"
+            + "   from jp_skill natural join skills natural join job \n"
+            + "   where ks_code not in ( \n"
+            + "     select ks_code \n"
+            + "     from job_profile natural join person_skill \n"
+            + "     where person_code =" + person_code + ")) \n"
+            + "       and cost = ( \n"
+            + "       select min(cost) \n"
+            + "       from course natural join section natural join course_skill \n"
+            + "       where ks_code in ( \n"
+            + "         select ks_code \n"
+            + "         from jp_skill natural join skills natural join job \n"
+            + "         where ks_code not in ( \n"
+            + "           select ks_code \n"
+            + "           from job_profile natural join person_skill \n"
             + "           where person_code =" + person_code + ")))";
   }
 
@@ -1026,360 +1252,360 @@ class QueryView extends JFrame {
   }
 
   private void query13() {
-    queryValue = "with person_skills as ( "
-            + "select ks_code "
-            + "from person_skill "
-            + "where person_code =" + person_code + ") "
+    queryValue = "with person_skills as ( \n"
+            + "select ks_code \n"
+            + "from person_skill \n"
+            + "where person_code =" + person_code + ") \n"
             + ""
-            + "select jp_code, jp_title "
-            + "from job_profile j"
-            + "where not exists ( "
-            + "   (select ks_code "
-            + "   from jp_skill "
-            + "   where j.jp_code = jp_skill.jp_code) "
-            + "     minus "
-            + "   (select ks_code "
+            + "select jp_code, jp_title \n"
+            + "from job_profile j \n"
+            + "where not exists ( \n"
+            + "   (select ks_code \n"
+            + "   from jp_skill \n"
+            + "   where j.jp_code = jp_skill.jp_code) \n"
+            + "     minus \n"
+            + "   (select ks_code \n"
             + "   from person_skills))";
   }
 
   private void query14() {
-    queryValue = "with person_skills as ( "
-            + "     select ks_code "
-            + "     from person_skill "
-            + "     where person_code =" + person_code + "), "
+    queryValue = "with person_skills as ( \n"
+            + "     select ks_code \n"
+            + "     from person_skill \n"
+            + "     where person_code =" + person_code + "), \n"
             + ""
-            + "qualifications as ( "
-            + "     select job_code "
-            + "     from job "
-            + "     where not exists ("
-            + "         (select ks_code"
-            + "         from jp_skill"
-            + "         where job.jp_code = jp_code) "
-            + "             intersect "
-            + "         (select ks_code "
-            + "         from person_skills))), "
+            + "qualifications as ( \n"
+            + "     select job_code \n"
+            + "     from job \n"
+            + "     where not exists ( \n"
+            + "         (select ks_code \n"
+            + "         from jp_skill \n"
+            + "         where job.jp_code = jp_code) \n"
+            + "             intersect \n"
+            + "         (select ks_code \n"
+            + "         from person_skills))), \n"
             + ""
-            + "job_qualifications as ( "
-            + "     select distinct job_code "
-            + "     from qualifications), "
+            + "job_qualifications as ( \n"
+            + "     select distinct job_code \n"
+            + "     from qualifications), \n"
             + ""
             + "pay as ( "
-            + "     select distinct job_code, ("
-            + "         case "
-            + "             when pay_type = 'salary' then pay_rate "
-            + "             when pay_type = 'wage' then pay_rate * 1920 "
-            + "         end) as total_earnings "
-            + "     from job_qualifications natural join job) "
+            + "     select distinct job_code, (\n"
+            + "         case \n"
+            + "             when pay_type = 'salary' then pay_rate \n"
+            + "             when pay_type = 'wage' then pay_rate * 1920 \n"
+            + "         end) as total_earnings \n"
+            + "     from job_qualifications natural join job) \n"
             + ""
-            + "select job_code, total_earnings "
-            + "from pay "
-            + "where total_earnings = ( "
-            + "     select max(total_earnings) "
-            + "     from pay) ";
+            + "select job_code, total_earnings \n"
+            + "from pay \n"
+            + "where total_earnings = ( \n"
+            + "     select max(total_earnings) \n"
+            + "     from pay)";
   }
 
   private void query15() {
-    queryValue = "with required_skills as ( "
-            + "   select ks_code "
-            + "   from jp_skill "
-            + "   where jp_code =" + jp_code + ") "
+    queryValue = "with required_skills as ( \n"
+            + "   select ks_code \n"
+            + "   from jp_skill \n"
+            + "   where jp_code =" + jp_code + ") \n"
             + ""
-            + "select last_name, first_name, email, person_code "
-            + "from person p "
-            + "where not exists ( "
-            + "   (select ks_code "
-            + "   from required_skills) "
-            + "     minus "
-            + "   (select ks_code "
-            + "   from person_skill "
+            + "select last_name, first_name, email, person_code \n"
+            + "from person p \n"
+            + "where not exists ( \n"
+            + "   (select ks_code \n"
+            + "   from required_skills) \n"
+            + "     minus \n"
+            + "   (select ks_code \n"
+            + "   from person_skill \n"
             + "   where p.person_code = person_code))";
   }
 
   private void query16() {
-    queryValue = "with skill_codes as ( "
-            + "   select ks_code "
-            + "   from jp_skill "
-            + "   where jp_code =" + jp_code + "), "
+    queryValue = "with skill_codes as ( \n"
+            + "   select ks_code \n"
+            + "   from jp_skill \n"
+            + "   where jp_code =" + jp_code + "), \n"
             + ""
-            + "missing_one (person_code, num_missing) as ( "
-            + "   select person_code, count(ks_code) "
-            + "   from person p, "
-            + "     (select ks_code "
-            + "     from skill_codes) sc "
-            + "     where sc.ks_code in ( "
-            + "       select ks_code "
-            + "       from skill_codes "
-            + "         minus "
-            + "       select ks_code "
-            + "       from person_skill "
-            + "       where p.person_code = person_code) "
-            + "     group by person_code) "
+            + "missing_one (person_code, num_missing) as ( \n"
+            + "   select person_code, count(ks_code) \n"
+            + "   from person p, \n"
+            + "     (select ks_code \n"
+            + "     from skill_codes) sc \n"
+            + "     where sc.ks_code in ( \n"
+            + "       select ks_code \n"
+            + "       from skill_codes \n"
+            + "         minus \n"
+            + "       select ks_code \n"
+            + "       from person_skill \n"
+            + "       where p.person_code = person_code) \n"
+            + "     group by person_code) \n"
             + ""
-            + "select person_code, num_missing "
-            + "from missing_one "
-            + "where num_missing =" + missingNum + " "
+            + "select person_code, num_missing \n"
+            + "from missing_one \n"
+            + "where num_missing =" + missingNum + " \n"
             + "order by num_missing desc";
   }
 
   private void query17() {
-    queryValue = "with skill_codes as ( "
-            + "   select ks_code "
-            + "   from jp_skill "
-            + "   where jp_code =" + jp_code + "), "
+    queryValue = "with skill_codes as ( \n"
+            + "   select ks_code \n"
+            + "   from jp_skill \n"
+            + "   where jp_code =" + jp_code + "), \n"
             + ""
-            + "missing_one (person_code, num_missing) as ( "
-            + "   select person_code, count(ks_code) "
-            + "   from person p, ( "
-            + "     select ks_code "
-            + "     from skill_codes) sc "
-            + "   where sc.ks_code in ( "
-            + "     select ks_code "
-            + "     from skill_codes "
-            + "       minus "
-            + "     select ks_code "
-            + "     from person_skill "
-            + "     where p.person_code = person_code) "
-            + "   group by person_code), "
+            + "missing_one (person_code, num_missing) as ( \n"
+            + "   select person_code, count(ks_code) \n"
+            + "   from person p, ( \n"
+            + "     select ks_code \n"
+            + "     from skill_codes) sc \n"
+            + "   where sc.ks_code in ( \n"
+            + "     select ks_code \n"
+            + "     from skill_codes \n"
+            + "       minus \n"
+            + "     select ks_code \n"
+            + "     from person_skill \n"
+            + "     where p.person_code = person_code) \n"
+            + "   group by person_code), \n"
             + ""
-            + "person_missing_one (person_code) as ( "
-            + "   select person_code "
-            + "   from missing_one "
-            + "   where num_missing =" + missingNum + ") "
+            + "person_missing_one (person_code) as ( \n"
+            + "   select person_code \n"
+            + "   from missing_one \n"
+            + "   where num_missing =" + missingNum + ") \n"
             + ""
-            + "select ks_code, count(person_code) as num_persons_missing "
-            + "from person_missing_one p, ( "
-            + "   select ks_code "
-            + "   from skill_codes) sc "
-            + "   where sc.ks_code in ( "
-            + "     select ks_code "
-            + "     from skill_codes "
-            + "       minus "
-            + "     select ks_code "
-            + "     from person_skill "
-            + "     where p.person_code = person_code) "
+            + "select ks_code, count(person_code) as num_persons_missing \n"
+            + "from person_missing_one p, ( \n"
+            + "   select ks_code \n"
+            + "   from skill_codes) sc \n"
+            + "   where sc.ks_code in ( \n"
+            + "     select ks_code \n"
+            + "     from skill_codes \n"
+            + "       minus \n"
+            + "     select ks_code \n"
+            + "     from person_skill \n"
+            + "     where p.person_code = person_code) \n"
             + "   group by ks_code"; 
   }
 
   private void query18() {
-    queryValue = "with needed_skills as ( "
-            + "   select ks_code "
-            + "   from jp_skill"
-            + "   where jp_code =" + jp_code + "), "
+    queryValue = "with needed_skills as ( \n"
+            + "   select ks_code \n"
+            + "   from jp_skill \n"
+            + "   where jp_code =" + jp_code + "), \n"
             + ""
-            + "missing_skill (person_code, num_missing) as ( "
-            + "   (select person_code, count(ks_code) "
-            + "   from person p, needed_skills "
-            + "   where ks_code in ( "
-            + "     (select ks_code "
-            + "     from needed_skills) "
-            + "       minus "
-            + "     (select ks_code "
-            + "     from person_skill "
-            + "     where p.person_code = person_code)) "
-            + "   group by person_code)) "
+            + "missing_skill (person_code, num_missing) as ( \n"
+            + "   (select person_code, count(ks_code) \n"
+            + "   from person p, needed_skills \n"
+            + "   where ks_code in ( \n"
+            + "     (select ks_code \n"
+            + "     from needed_skills) \n"
+            + "       minus \n"
+            + "     (select ks_code \n"
+            + "     from person_skill \n"
+            + "     where p.person_code = person_code)) \n"
+            + "   group by person_code)) \n"
             + ""
-            + "select person_code, num_missing as smallest "
-            + "from missing_skill "
-            + "where num_missing = ( "
-            + "   select min(num_missing) "
-            + "   from missing_skill) "
+            + "select person_code, num_missing as smallest \n"
+            + "from missing_skill \n"
+            + "where num_missing = ( \n"
+            + "   select min(num_missing) \n"
+            + "   from missing_skill) \n"
             + "order by person_code asc"; 
   }
 
   private void query19() {
-    queryValue = "with skill_list as ( "
-            + "   select ks_code "
-            + "   from jp_skill "
-            + "   where jp_code =" + jp_code + "), "
+    queryValue = "with skill_list as ( \n"
+            + "   select ks_code \n"
+            + "   from jp_skill \n"
+            + "   where jp_code =" + jp_code + "), \n"
             + ""
-            + "missing_skills (person_code, num_missing) as ( "
-            + "   select person_code, count(ks_code) "
-            + "   from person p, ( "
-            + "     select ks_code "
-            + "     from skill_list) j "
-            + "   where j.ks_code in ( "
-            + "     select ks_code "
-            + "     from skill_list "
-            + "       minus "
-            + "     select ks_code "
-            + "     from person_skill "
-            + "     where p.person_code = person_code) "
-            + "     group by person_code) "
+            + "missing_skills (person_code, num_missing) as ( \n"
+            + "   select person_code, count(ks_code) \n"
+            + "   from person p, ( \n"
+            + "     select ks_code \n"
+            + "     from skill_list) j \n"
+            + "   where j.ks_code in ( \n"
+            + "     select ks_code \n"
+            + "     from skill_list \n"
+            + "       minus \n"
+            + "     select ks_code \n"
+            + "     from person_skill \n"
+            + "     where p.person_code = person_code) \n"
+            + "     group by person_code) \n"
             + ""
-            + "select person_code, num_missing "
-            + "from missing_skills "
-            + "where num_missing <=" + missingNum + " "
+            + "select person_code, num_missing \n"
+            + "from missing_skills \n"
+            + "where num_missing <=" + missingNum + " \n"
             + "order by num_missing desc";
   }
 
   private void query20() {
-    queryValue = "with skill_codes as ( "
-            + "   select ks_code "
-            + "   from jp_skill "
-            + "   where jp_code =" + jp_code + "), "
+    queryValue = "with skill_codes as ( \n"
+            + "   select ks_code \n"
+            + "   from jp_skill \n"
+            + "   where jp_code =" + jp_code + "), \n"
             + ""
-            + "missing_skills (person_code, num_missing) as ( "
-            + "   select person_code, count(ks_code) "
-            + "   from person p, ( "
-            + "     select ks_code "
-            + "     from skill_codes) j "
-            + "   where j.ks_code in ( "
-            + "     select ks_code "
-            + "     from skill_codes "
-            + "       minus "
-            + "     select ks_code "
-            + "     from person_skill "
-            + "     where p.person_code = person_code) "
-            + "   group by person_code), "
+            + "missing_skills (person_code, num_missing) as ( \n"
+            + "   select person_code, count(ks_code) \n"
+            + "   from person p, ( \n"
+            + "     select ks_code \n"
+            + "     from skill_codes) j \n"
+            + "   where j.ks_code in ( \n"
+            + "     select ks_code \n"
+            + "     from skill_codes \n"
+            + "       minus \n"
+            + "     select ks_code \n"
+            + "     from person_skill \n"
+            + "     where p.person_code = person_code) \n"
+            + "   group by person_code), \n"
             + ""
-            + "missing_one (person_code) as ( "
-            + "   select person_code "
-            + "   from missing_skills "
-            + "   where num_missing =" + missingNum + ") "
+            + "missing_one (person_code) as ( \n"
+            + "   select person_code \n"
+            + "   from missing_skills \n"
+            + "   where num_missing =" + missingNum + ") \n"
             + ""
-            + "select ks_code, count(person_code) as num_missing_one "
-            + "from missing_one m, ( "
-            + "   select ks_code "
-            + "   from skill_codes) s "
-            + "where s.ks_code in ( "
-            + "   select ks_code "
-            + "   from skill_codes "
-            + "     minus "
-            + "   select ks_code "
-            + "   from person_skill "
-            + "   where m.person_code = person_code) "
+            + "select ks_code, count(person_code) as num_missing_one \n"
+            + "from missing_one m, ( \n"
+            + "   select ks_code \n"
+            + "   from skill_codes) s \n"
+            + "where s.ks_code in ( \n"
+            + "   select ks_code \n"
+            + "   from skill_codes \n"
+            + "     minus \n"
+            + "   select ks_code \n"
+            + "   from person_skill \n"
+            + "   where m.person_code = person_code) \n"
             + "group by ks_code";
   }
 
   private void query21() {
-    queryValue = "select last_name, first_name, email "
-            + "from person inner join employment on person.person_code = employment.person_code "
+    queryValue = "select last_name, first_name, email \n"
+            + "from person inner join employment on person.person_code = employment.person_code \n"
             + "where job_code =" + job_code;
   }
 
   private void query22() {
-    queryValue = "with unemployed as ( "
-            + "   select person_code "
-            + "   from person "
-            + "     minus "
-            + "   select distinct person_code "
-            + "   from employment "
-            + "   where status =" + status + ") "
+    queryValue = "with unemployed as ( \n"
+            + "   select person_code \n"
+            + "   from person \n"
+            + "     minus \n"
+            + "   select distinct person_code \n"
+            + "   from employment \n"
+            + "   where status =" + status + ") \n"
             + ""
-            + "select distinct last_name, first_name, job_code, jp_code "
-            + "from person inner join unemployed on person.person_code = unemployed.person_code natural join job "
-            + "where jp_code =" + jp_code + " "
+            + "select distinct last_name, first_name, job_code, jp_code \n"
+            + "from person inner join unemployed on person.person_code = unemployed.person_code natural join job \n"
+            + "where jp_code =" + jp_code + " \n"
             + "order by person.last_name asc";
   }
 
   private void query23() {
-    queryValue = "with employer_count as ( "
-            + "   select comp_code, count(pay_rate) as num_employees "
-            + "   from job inner join employment on job.job_code = employment.job_code "
-            + "   where status =" + status + " "
-            + "   group by comp_code) "
+    queryValue = "with employer_count as ( \n"
+            + "   select comp_code, count(pay_rate) as num_employees \n"
+            + "   from job inner join employment on job.job_code = employment.job_code \n"
+            + "   where status =" + status + " \n"
+            + "   group by comp_code) \n"
             + ""
-            + "select comp_code, comp_name, num_employees "
-            + "from employer_count natural join company "
+            + "select comp_code, comp_name, num_employees \n"
+            + "from employer_count natural join company \n"
             + "order by (num_employees) desc";
   }
 
   private void query24() {
-    queryValue = "with employer_count as ( "
-            + "     select count(pay_rate) as num_employees, comp_code "
-            + "     from job join employment using(job_code) "
-            + "     where status =" + status + " "
-            + "     group by comp_code), "
+    queryValue = "with employer_count as ( \n"
+            + "     select count(pay_rate) as num_employees, comp_code \n"
+            + "     from job join employment using(job_code) \n"
+            + "     where status =" + status + " \n"
+            + "     group by comp_code), \n"
             + ""
-            + "count_per_sector as ( "
-            + "     select primary_sector, sum(num_employees) as sector_employee_count "
-            + "     from employer_count natural join company "
-            + "     group by primary_sector), "
+            + "count_per_sector as ( \n"
+            + "     select primary_sector, sum(num_employees) as sector_employee_count \n"
+            + "     from employer_count natural join company \n"
+            + "     group by primary_sector), \n"
             + ""
-            + "max_count as ( "
-            + "     select max(sector_employee_count) as max "
-            + "     from count_per_sector) "
+            + "max_count as ( \n"
+            + "     select max(sector_employee_count) as max \n"
+            + "     from count_per_sector) \n"
             + ""
-            + "select primary_sector "
-            + "from max_count, count_per_sector "
+            + "select primary_sector \n"
+            + "from max_count, count_per_sector \n"
             + "where max = sector_employee_count";
   }
 
   private void query25() {
-    queryValue = "with old_salary as ( "
-            + "   select distinct max(pay_rate) as old_pay, person_code "
-            + "   from employment natural join job natural join company "
-            + "   where status = 'unemployed' and primary_sector = 'tourism' "
-            + "   group by person_code), "
+    queryValue = "with old_salary as ( \n"
+            + "   select distinct max(pay_rate) as old_pay, person_code \n"
+            + "   from employment natural join job natural join company \n"
+            + "   where status = 'unemployed' and primary_sector = 'tourism' \n"
+            + "   group by person_code), \n"
             + ""
-            + "present_salary as ( "
-            + "   select distinct max(pay_rate) as present_pay, person_code "
-            + "   from employment natural join job natural join company "
-            + "   where status = 'employed' and primary_sector = 'tourism' "
-            + "   group by person_code), "
+            + "present_salary as ( \n"
+            + "   select distinct max(pay_rate) as present_pay, person_code \n"
+            + "   from employment natural join job natural join company \n"
+            + "   where status = 'employed' and primary_sector = 'tourism' \n"
+            + "   group by person_code), \n"
             + ""
-            + "people_decrease as ( "
-            + "   select count(person_code) as decline "
-            + "   from old_salary natural join present_salary "
-            + "   where present_pay < old_pay), "
+            + "people_decrease as ( \n"
+            + "   select count(person_code) as decline \n"
+            + "   from old_salary natural join present_salary \n"
+            + "   where present_pay < old_pay), \n"
             + ""
-            + "people_increase as ( "
-            + "   select count(person_code) as incline "
-            + "   from old_salary natural join present_salary "
-            + "   where present_pay > old_pay) "
+            + "people_increase as ( \n"
+            + "   select count(person_code) as incline \n"
+            + "   from old_salary natural join present_salary \n"
+            + "   where present_pay > old_pay) \n"
             + ""
-            + "select sum(incline) inc_ratio, sum(decline) dec_ratio "
+            + "select sum(incline) inc_ratio, sum(decline) dec_ratio \n"
             + "from people_increase natural join people_decrease";
   }
 
   private void query26() {
-    queryValue = "with unemployed as ( "
-            + "   select distinct person_code"
-            + "   from employment "
-            + "   where status =" + status + "), "
+    queryValue = "with unemployed as ( \n"
+            + "   select distinct person_code \n"
+            + "   from employment \n"
+            + "   where status =" + status + "), \n"
             + ""
-            + "employed as ( "
-            + "   select distinct person_code "
-            + "   from employment "
-            + "   where status =" + status + "), "
+            + "employed as ( \n"
+            + "   select distinct person_code \n"
+            + "   from employment \n"
+            + "   where status =" + status + "), \n"
             + ""
-            + "openings as ( "
-            + "   select distinct job_code "
-            + "   from ( "
-            + "     select job_code "
-            + "     from unemployed natural join employment "
-            + "       minus "
-            + "     select job_code "
-            + "     from employed natural join employment)), "
+            + "openings as ( \n"
+            + "   select distinct job_code \n"
+            + "   from ( \n"
+            + "     select job_code \n"
+            + "     from unemployed natural join employment \n"
+            + "       minus \n"
+            + "     select job_code \n"
+            + "     from employed natural join employment)), \n"
             + ""
-            + "num_of_profiles as ( "
-            + "   select jp_code, count(job_code) as num_of_openings "
-            + "   from openings natural join job "
-            + "   group by jp_code), "
+            + "num_of_profiles as ( \n"
+            + "   select jp_code, count(job_code) as num_of_openings \n"
+            + "   from openings natural join job \n"
+            + "   group by jp_code), \n"
             + ""
-            + "people_qualified as ( "
-            + "   select jp_code, count(person_code) as num_qualified "
-            + "   from num_of_profiles n, person p"
-            + "   where not exists ( "
-            + "     select ks_code "
-            + "     from num_of_profiles natural join jp_skill "
-            + "     where n.jp_code = jp_code "
-            + "       minus "
-            + "     select ks_code "
-            + "     from num_of_profiles natural join jp_skill natural join person_skill "
-            + "     where p.person_code = person_code) "
-            + "   group by jp_code), "
+            + "people_qualified as ( \n"
+            + "   select jp_code, count(person_code) as num_qualified \n"
+            + "   from num_of_profiles n, person p \n"
+            + "   where not exists ( \n"
+            + "     select ks_code \n"
+            + "     from num_of_profiles natural join jp_skill \n"
+            + "     where n.jp_code = jp_code \n"
+            + "       minus \n"
+            + "     select ks_code \n"
+            + "     from num_of_profiles natural join jp_skill natural join person_skill \n"
+            + "     where p.person_code = person_code) \n"
+            + "   group by jp_code), \n"
             + ""
-            + "missing_skill as ( "
-            + "   select jp_code, (num_of_openings - num_qualified) as unqualified "
-            + "   from people_qualified natural join num_of_profiles), "
+            + "missing_skill as ( \n"
+            + "   select jp_code, (num_of_openings - num_qualified) as unqualified \n"
+            + "   from people_qualified natural join num_of_profiles), \n"
             + ""
-            + "max_missing as ( "
-            + "   select max(unqualified) as max_unqualified "
-            + "   from missing_skill) "
+            + "max_missing as ( \n"
+            + "   select max(unqualified) as max_unqualified \n"
+            + "   from missing_skill) \n"
             + ""
-            + "select jp_code "
-            + "from missing_skill, max_missing "
+            + "select jp_code \n"
+            + "from missing_skill, max_missing \n"
             + "where unqualified = max_unqualified";
   }
 
@@ -1388,33 +1614,33 @@ class QueryView extends JFrame {
   }
 
   private void query28() {
-    queryValue = "with person_skills as ( "
-            + "   select ks_code "
-            + "   from person_skill "
-            + "   where person_code =" + person_code + "), "
+    queryValue = "with person_skills as ( \n"
+            + "   select ks_code \n"
+            + "   from person_skill \n"
+            + "   where person_code =" + person_code + "), \n"
             + ""
-            + "person_courses as ( "
-            + "   select ks_code "
-            + "   from attends natural join person_skill "
-            + "   where person_code =" + person_code + "), "
+            + "person_courses as ( \n"
+            + "   select ks_code \n"
+            + "   from attends natural join person_skill \n"
+            + "   where person_code =" + person_code + "), \n"
             + ""
-            + "skills_needed as ( "
-            + "   select ks_code "
-            + "   from jp_skill "
-            + "   where jp_code =" + jp_code + " "
-            + "     minus "
-            + "   select ks_code "
-            + "   from person_skills), "
+            + "skills_needed as ( \n"
+            + "   select ks_code \n"
+            + "   from jp_skill \n"
+            + "   where jp_code =" + jp_code + " \n"
+            + "     minus \n"
+            + "   select ks_code \n"
+            + "   from person_skills), \n"
             + ""
-            + "courses_needed as ( "
-            + "   select course_code, course_title "
-            + "   from skills_needed natural join course_skill natural join course) "
+            + "courses_needed as ( \n"
+            + "   select course_code, course_title \n"
+            + "   from skills_needed natural join course_skill natural join course) \n"
             + ""
-            + "select distinct course_code, course_title "
-            + "from courses_needed c "
-            + "where not exists ( "
-            + "   select course_code "
-            + "   from person_courses "
+            + "select distinct course_code, course_title \n"
+            + "from courses_needed c \n"
+            + "where not exists ( \n"
+            + "   select course_code \n"
+            + "   from person_courses \n"
             + "   where c.course_code = course_code)";
   }
   public void main(String[] args) throws SQLException {
