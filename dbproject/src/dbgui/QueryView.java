@@ -695,8 +695,8 @@ class QueryView extends JFrame {
         String[] colVal = null;
         String[] secVal = null;
         try {
-            colVal = ti.getColumn("employment", "status");
-            secVal = ti.getColumn("employment", "status");
+            colVal = ti.getColumn("person_skill", "person_code");
+            secVal = ti.getColumn("jp_skill", "jp_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -705,11 +705,11 @@ class QueryView extends JFrame {
         ComboBoxModel secoModel = new DefaultComboBoxModel(secVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("Status");
+        this.valueListLabel.setText("Person Code");
         this.valueListLabel.setVisible(true);
         this.secondaryList.setModel(secoModel);
         this.secondaryList.setVisible(true);
-        this.secondaryValueList.setText("Status");
+        this.secondaryValueList.setText("Job Profile Code");
         this.secondaryValueList.setVisible(true);
         query28();
     }
@@ -828,8 +828,8 @@ class QueryView extends JFrame {
         query27();
     }
     else if (queryNum == 28) {
-        this.status = (String) this.valueList.getSelectedItem();
-        this.status = (String) this.secondaryList.getSelectedItem();
+        this.person_code = (String) this.valueList.getSelectedItem();
+        this.jp_code = (String) this.secondaryList.getSelectedItem();
         query28();
     }
   }
@@ -885,13 +885,13 @@ class QueryView extends JFrame {
   private void query4() {
     queryValue = "select job_code "
             + "from employment "
-            + "where person_code = '1018256'";
+            + "where person_code =" + person_code;
   }
   
   private void query5() {
     queryValue = "select ks_name, ks_code "
             + "from person_skill natural join skills "
-            + "where person_code = '1536512' "
+            + "where person_code = " + person_code
             + "order by ks_name asc";
   }  
   
@@ -899,12 +899,12 @@ class QueryView extends JFrame {
     queryValue = "with person_skills as ( "
             + "   select ks_name, ks_level, ks_code "
             + "   from person_skill natural join skills "
-            + "   where person_code = '1024701'), "
+            + "   where person_code = " + person_code + "), "
             + ""
             + "person_jobs as ( "
             + "   select job_code "
             + "   from job natural join employment "
-            + "   where person_code = '1024701'), "
+            + "   where person_code =" + person_code + "), "
             + ""
             + "job_skills as ( "
             + "   select ks_code "
@@ -924,19 +924,19 @@ class QueryView extends JFrame {
   private void query7() {
     queryValue = "select ks_name, ks_code "
             + "from skills natural join jp_skill "
-            + "where jp_skill.jp_code = '100'";
+            + "where jp_skill.jp_code =" + jp_code;
   }
   
   private void query8() {
     queryValue = "with has_skill as ( "
             + "   select ks_code "
             + "   from person_skill "
-            + "   where person_code = '1024701'), "
+            + "   where person_code =" + person_code + "), "
             + ""
             + "required_skill as ( "
             + "   select ks_code "
             + "   from job_skill "
-            + "   where job_code = '3001001'), "
+            + "   where job_code =" + job_code + "), "
             + ""
             + "skill_gap as ( "
             + "   (select ks_code "
@@ -952,12 +952,12 @@ class QueryView extends JFrame {
     queryValue = "with required_skills as ( "
             + "   select ks_code, ks_name "
             + "   from job_skill natural join skills "
-            + "   where job_code = '3101001'), "
+            + "   where job_code =" + job_code + "), "
             + ""
             + "current_skills as ( "
             + "   select ks_code, ks_name "
             + "   from person_skill natural join skills "
-            + "   where person_code = '1357909'), "
+            + "   where person_code =" + person_code + "), "
             + ""
             + "needed_course as ( "
             + "   (select ks_code, ks_name "
@@ -978,11 +978,11 @@ class QueryView extends JFrame {
     queryValue = "with needed_skills as ( "
             + "   (select ks_code "
             + "   from jp_skill "
-            + "   where jp_code = '300') "
+            + "   where jp_code =" + jp_code + ") "
             + "     minus "
             + "   (select ks_code "
             + "   from person_skill "
-            + "   where person_code = '6969696')), "
+            + "   where person_code =" + person_code + ")), "
             + ""
             + "course_skills as ( "
             + "   select distinct c.course_code "
@@ -1008,7 +1008,7 @@ class QueryView extends JFrame {
             + "   where ks_code not in ( "
             + "     select ks_code "
             + "     from job_profile natural join person_skill "
-            + "     where person_code = '1017145')) "
+            + "     where person_code =" + person_code + ")) "
             + "       and cost = ( "
             + "       select min(cost) "
             + "       from course natural join section natural join course_skill "
@@ -1018,7 +1018,7 @@ class QueryView extends JFrame {
             + "         where ks_code not in ( "
             + "           select ks_code "
             + "           from job_profile natural join person_skill"
-            + "           where person_code = '1017145')))";
+            + "           where person_code =" + person_code + ")))";
   }
 
   private void query12() {
@@ -1029,7 +1029,7 @@ class QueryView extends JFrame {
     queryValue = "with person_skills as ( "
             + "select ks_code "
             + "from person_skill "
-            + "where person_code = '2165778') "
+            + "where person_code =" + person_code + ") "
             + ""
             + "select jp_code, jp_title "
             + "from job_profile j"
@@ -1046,7 +1046,7 @@ class QueryView extends JFrame {
     queryValue = "with person_skills as ( "
             + "     select ks_code "
             + "     from person_skill "
-            + "     where person_code = '6969696'), "
+            + "     where person_code =" + person_code + "), "
             + ""
             + "qualifications as ( "
             + "     select job_code "
@@ -1082,7 +1082,7 @@ class QueryView extends JFrame {
     queryValue = "with required_skills as ( "
             + "   select ks_code "
             + "   from jp_skill "
-            + "   where jp_code = '100') "
+            + "   where jp_code =" + jp_code + ") "
             + ""
             + "select last_name, first_name, email, person_code "
             + "from person p "
@@ -1099,7 +1099,7 @@ class QueryView extends JFrame {
     queryValue = "with skill_codes as ( "
             + "   select ks_code "
             + "   from jp_skill "
-            + "   where jp_code = '100'), "
+            + "   where jp_code =" + jp_code + "), "
             + ""
             + "missing_one (person_code, num_missing) as ( "
             + "   select person_code, count(ks_code) "
@@ -1117,7 +1117,7 @@ class QueryView extends JFrame {
             + ""
             + "select person_code, num_missing "
             + "from missing_one "
-            + "where num_missing = 1 "
+            + "where num_missing =" + missingNum + " "
             + "order by num_missing desc";
   }
 
@@ -1125,7 +1125,7 @@ class QueryView extends JFrame {
     queryValue = "with skill_codes as ( "
             + "   select ks_code "
             + "   from jp_skill "
-            + "   where jp_code = '100'), "
+            + "   where jp_code =" + jp_code + "), "
             + ""
             + "missing_one (person_code, num_missing) as ( "
             + "   select person_code, count(ks_code) "
@@ -1144,7 +1144,7 @@ class QueryView extends JFrame {
             + "person_missing_one (person_code) as ( "
             + "   select person_code "
             + "   from missing_one "
-            + "   where num_missing = 1) "
+            + "   where num_missing =" + missingNum + ") "
             + ""
             + "select ks_code, count(person_code) as num_persons_missing "
             + "from person_missing_one p, ( "
@@ -1164,7 +1164,7 @@ class QueryView extends JFrame {
     queryValue = "with needed_skills as ( "
             + "   select ks_code "
             + "   from jp_skill"
-            + "   where jp_code = '302'), "
+            + "   where jp_code =" + jp_code + "), "
             + ""
             + "missing_skill (person_code, num_missing) as ( "
             + "   (select person_code, count(ks_code) "
@@ -1190,7 +1190,7 @@ class QueryView extends JFrame {
     queryValue = "with skill_list as ( "
             + "   select ks_code "
             + "   from jp_skill "
-            + "   where jp_code = '100'), "
+            + "   where jp_code =" + jp_code + "), "
             + ""
             + "missing_skills (person_code, num_missing) as ( "
             + "   select person_code, count(ks_code) "
@@ -1208,7 +1208,7 @@ class QueryView extends JFrame {
             + ""
             + "select person_code, num_missing "
             + "from missing_skills "
-            + "where num_missing <= 3 "
+            + "where num_missing <=" + missingNum + " "
             + "order by num_missing desc";
   }
 
@@ -1216,7 +1216,7 @@ class QueryView extends JFrame {
     queryValue = "with skill_codes as ( "
             + "   select ks_code "
             + "   from jp_skill "
-            + "   where jp_code = '100'), "
+            + "   where jp_code =" + jp_code + "), "
             + ""
             + "missing_skills (person_code, num_missing) as ( "
             + "   select person_code, count(ks_code) "
@@ -1235,7 +1235,7 @@ class QueryView extends JFrame {
             + "missing_one (person_code) as ( "
             + "   select person_code "
             + "   from missing_skills "
-            + "   where num_missing = 1) "
+            + "   where num_missing =" + missingNum + ") "
             + ""
             + "select ks_code, count(person_code) as num_missing_one "
             + "from missing_one m, ( "
@@ -1254,7 +1254,7 @@ class QueryView extends JFrame {
   private void query21() {
     queryValue = "select last_name, first_name, email "
             + "from person inner join employment on person.person_code = employment.person_code "
-            + "where job_code = '9876543'";
+            + "where job_code =" + job_code;
   }
 
   private void query22() {
@@ -1264,11 +1264,11 @@ class QueryView extends JFrame {
             + "     minus "
             + "   select distinct person_code "
             + "   from employment "
-            + "   where status = 'employed') "
+            + "   where status =" + status + ") "
             + ""
             + "select distinct last_name, first_name, job_code, jp_code "
             + "from person inner join unemployed on person.person_code = unemployed.person_code natural join job "
-            + "where jp_code = '300' "
+            + "where jp_code =" + jp_code + " "
             + "order by person.last_name asc";
   }
 
@@ -1276,7 +1276,7 @@ class QueryView extends JFrame {
     queryValue = "with employer_count as ( "
             + "   select comp_code, count(pay_rate) as num_employees "
             + "   from job inner join employment on job.job_code = employment.job_code "
-            + "   where status = 'employed' "
+            + "   where status =" + status + " "
             + "   group by comp_code) "
             + ""
             + "select comp_code, comp_name, num_employees "
@@ -1288,7 +1288,7 @@ class QueryView extends JFrame {
     queryValue = "with employer_count as ( "
             + "     select count(pay_rate) as num_employees, comp_code "
             + "     from job join employment using(job_code) "
-            + "     where status = 'employed' "
+            + "     where status =" + status + " "
             + "     group by comp_code), "
             + ""
             + "count_per_sector as ( "
@@ -1336,12 +1336,12 @@ class QueryView extends JFrame {
     queryValue = "with unemployed as ( "
             + "   select distinct person_code"
             + "   from employment "
-            + "   where status = 'unemployed'), "
+            + "   where status =" + status + "), "
             + ""
             + "employed as ( "
             + "   select distinct person_code "
             + "   from employment "
-            + "   where status = 'employed'), "
+            + "   where status =" + status + "), "
             + ""
             + "openings as ( "
             + "   select distinct job_code "
@@ -1391,17 +1391,17 @@ class QueryView extends JFrame {
     queryValue = "with person_skills as ( "
             + "   select ks_code "
             + "   from person_skill "
-            + "   where person_code = '6969696'), "
+            + "   where person_code =" + person_code + "), "
             + ""
             + "person_courses as ( "
             + "   select ks_code "
             + "   from attends natural join person_skill "
-            + "   where person_code = '6969696'), "
+            + "   where person_code =" + person_code + "), "
             + ""
             + "skills_needed as ( "
             + "   select ks_code "
             + "   from jp_skill "
-            + "   where jp_code = '701' "
+            + "   where jp_code =" + jp_code + " "
             + "     minus "
             + "   select ks_code "
             + "   from person_skills), "
