@@ -54,16 +54,16 @@ class QueryView extends JFrame {
   private Connection conn;
   private JComboBox valueList = new JComboBox();
   private JComboBox secondaryList = new JComboBox();
-  private final String person_code = null;
+  private String person_code = null;
   private String comp_code = null;
-  private final String jp_code = null;
-  private final String job_code = null;
+  private String jp_code = null;
+  private String job_code = null;
   private String queryValue = null;
-  private final String pay_type = null;
-  private final String status = null;
-  private final String primary_sector = null;
+  private String pay_type = null;
+  private String status = null;
+  private String primary_sector = null;
   private int queryNum = 0;
-  private final String missingNum = "0";
+  private String missingNum = "0";
   
   private final String[] queryList = {"Query 1", "Query 2", "Query 3", "Query 4", 
     "Query 5", "Query 6", "Query 7", "Query 8", "Query 9", "Query 10", 
@@ -116,7 +116,7 @@ class QueryView extends JFrame {
       {
         this.valueList = new JComboBox();
         this.getContentPane().add(this.valueList);
-        this.valueList.setBounds(200, 26, 300, 20);
+        this.valueList.setBounds(200, 26, 150, 20);
         this.valueList.setVisible(false);
         this.valueList.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
@@ -127,7 +127,7 @@ class QueryView extends JFrame {
       {
         this.secondaryList = new JComboBox();
         this.getContentPane().add(this.secondaryList);
-        this.secondaryList.setBounds(536, 26, 300, 20);
+        this.secondaryList.setBounds(536, 26, 150, 20);
         this.secondaryList.setVisible(false);
         this.secondaryList.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent evt) {
@@ -250,7 +250,7 @@ class QueryView extends JFrame {
         queryNum = 2;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("company", "comp_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -258,24 +258,12 @@ class QueryView extends JFrame {
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("company");
         this.valueListLabel.setVisible(true);
         query2();
     }
     else if (chosenQuery.equals("Query 3")) {
         queryNum = 3;
-        String[] colVal = null;
-        try {
-            colVal = ti.getColumn("company", comp_code);
-        }
-        catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
-        this.valueList.setModel(compModel);
-        this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
-        this.valueListLabel.setVisible(true);
         query3();
     }
     else if (chosenQuery.equals("Query 4")) {
@@ -287,13 +275,18 @@ class QueryView extends JFrame {
         catch (SQLException sqle) {
             sqle.printStackTrace();
         }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("person code");
+        this.valueListLabel.setVisible(true);
         query4();
     }
     else if (chosenQuery.equals("Query 5")) {
         queryNum = 5;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("person", "person_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -301,7 +294,7 @@ class QueryView extends JFrame {
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("person code");
         this.valueListLabel.setVisible(true);
         query5();
     }
@@ -309,18 +302,23 @@ class QueryView extends JFrame {
         queryNum = 6;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("person", "person_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
         }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("person code");
+        this.valueListLabel.setVisible(true);
         query6();
     }
     else if (chosenQuery.equals("Query 7")) {
         queryNum = 7;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("job", "jp_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -328,53 +326,84 @@ class QueryView extends JFrame {
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("Job Profile Code");
         this.valueListLabel.setVisible(true);
         query7();
     }
     else if (chosenQuery.equals("Query 8")) {
         queryNum = 8;
         String[] colVal = null;
+        String[] secVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
-        }
-        catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-        query8();
-    }
-    else if (chosenQuery.equals("Query 9")) {
-        queryNum = 9;
-        String[] colVal = null;
-        try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("person", "person_code");
+            secVal = ti.getColumn("job", "job_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
         }
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        ComboBoxModel secoModel = new DefaultComboBoxModel(secVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("Person Code");
         this.valueListLabel.setVisible(true);
+        this.secondaryList.setModel(secoModel);
+        this.secondaryList.setVisible(true);
+        this.secondaryValueList.setText("Job Code");
+        this.secondaryValueList.setVisible(true);
+        query8();
+    }
+    else if (chosenQuery.equals("Query 9")) {
+        queryNum = 9;
+        String[] colVal = null;
+        String[] secVal = null;
+        try {
+            colVal = ti.getColumn("job", "job_code");
+            secVal = ti.getColumn("person", "person_code");
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        ComboBoxModel secoModel = new DefaultComboBoxModel(secVal); 
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("Job Code");
+        this.valueListLabel.setVisible(true);
+        this.secondaryList.setModel(secoModel);
+        this.secondaryList.setVisible(true);
+        this.secondaryValueList.setText("Person Code");
+        this.secondaryValueList.setVisible(true);
         query9();
     }
     else if (chosenQuery.equals("Query 10")) {
         queryNum = 10;
         String[] colVal = null;
+        String[] secVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("job_profile", "jp_code");
+            secVal = ti.getColumn("person", "person_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
         }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        ComboBoxModel secoModel = new DefaultComboBoxModel(secVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("Job Profile Code");
+        this.valueListLabel.setVisible(true);
+        this.secondaryList.setModel(secoModel);
+        this.secondaryList.setVisible(true);
+        this.secondaryValueList.setText("Person Code");
+        this.secondaryValueList.setVisible(true);
         query10();
     }
     else if (chosenQuery.equals("Query 11")) {
         queryNum = 11;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("person", "person_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -382,7 +411,7 @@ class QueryView extends JFrame {
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("person_code");
         this.valueListLabel.setVisible(true);
         query11();
     }
@@ -395,13 +424,18 @@ class QueryView extends JFrame {
         catch (SQLException sqle) {
             sqle.printStackTrace();
         }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("");
+        this.valueListLabel.setVisible(true);
         query12();
     }
     else if (chosenQuery.equals("Query 13")) {
         queryNum = 13;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("person", "person_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -409,7 +443,7 @@ class QueryView extends JFrame {
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("Person Code");
         this.valueListLabel.setVisible(true);
         query13();
     }
@@ -417,18 +451,23 @@ class QueryView extends JFrame {
         queryNum = 14;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("person", "person_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
         }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("Person Code");
+        this.valueListLabel.setVisible(true);
         query14();
     }
     else if (chosenQuery.equals("Query 15")) {
         queryNum = 15;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("job_profile", "jp_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -436,26 +475,16 @@ class QueryView extends JFrame {
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("Job Profile Code");
         this.valueListLabel.setVisible(true);
         query15();
     }
     else if (chosenQuery.equals("Query 16")) {
         queryNum = 16;
         String[] colVal = null;
+        missingNum = "1";
         try {
-            colVal = ti.getColumn("company", comp_code);
-        }
-        catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-        query16();
-    }
-    else if (chosenQuery.equals("Query 17")) {
-        queryNum = 17;
-        String[] colVal = null;
-        try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("jp_skill", "jp_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -463,7 +492,24 @@ class QueryView extends JFrame {
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("Job Profile Code");
+        this.valueListLabel.setVisible(true);
+        query16();
+    }
+    else if (chosenQuery.equals("Query 17")) {
+        queryNum = 17;
+        String[] colVal = null;
+        missingNum = "1";
+        try {
+            colVal = ti.getColumn("jp_skill", "jp_code");
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("Job Profile Code");
         this.valueListLabel.setVisible(true);
         query17();
     }
@@ -471,18 +517,7 @@ class QueryView extends JFrame {
         queryNum = 18;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
-        }
-        catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-        query18();
-    }
-    else if (chosenQuery.equals("Query 19")) {
-        queryNum = 19;
-        String[] colVal = null;
-        try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("jp_skill", "jp_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -490,26 +525,49 @@ class QueryView extends JFrame {
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("Job Profile Code");
+        this.valueListLabel.setVisible(true);
+        query18();
+    }
+    else if (chosenQuery.equals("Query 19")) {
+        queryNum = 19;
+        String[] colVal = null;
+        missingNum = "3";
+        try {
+            colVal = ti.getColumn("jp_skill", "jp_code");
+        }
+        catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("Job Profile Code");
         this.valueListLabel.setVisible(true);
         query19();
     }
     else if (chosenQuery.equals("Query 20")) {
         queryNum = 20;
         String[] colVal = null;
+        missingNum = "1";
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("jp_skill", "jp_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
         }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("Job Profile Code");
+        this.valueListLabel.setVisible(true);
         query20();
     }
     else if (chosenQuery.equals("Query 21")) {
         queryNum = 21;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("employment", "job_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -517,26 +575,38 @@ class QueryView extends JFrame {
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("Job Code");
         this.valueListLabel.setVisible(true);
         query21();
     }
     else if (chosenQuery.equals("Query 22")) {
         queryNum = 22;
         String[] colVal = null;
+        String[] secVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("employment", "status");
+            secVal = ti.getColumn("employment", "jp_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
         }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        ComboBoxModel secoModel = new DefaultComboBoxModel(secVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("Status");
+        this.valueListLabel.setVisible(true);
+        this.secondaryList.setModel(secoModel);
+        this.secondaryList.setVisible(true);
+        this.secondaryValueList.setText("Job Profile Code");
+        this.secondaryValueList.setVisible(true);
         query22();
     }
     else if (chosenQuery.equals("Query 23")) {
         queryNum = 23;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("employment", "status");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -544,7 +614,7 @@ class QueryView extends JFrame {
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("Status");
         this.valueListLabel.setVisible(true);
         query23();
     }
@@ -552,16 +622,22 @@ class QueryView extends JFrame {
         queryNum = 24;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("employment", "status");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
         }
+        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        this.valueList.setModel(compModel);
+        this.valueList.setVisible(true);
+        this.valueListLabel.setText("Status");
+        this.valueListLabel.setVisible(true);
         query24();
     }
     else if (chosenQuery.equals("Query 25")) {
         queryNum = 25;
         String[] colVal = null;
+        String[] secVal = null;
         try {
             colVal = ti.getColumn("company", comp_code);
         }
@@ -578,44 +654,63 @@ class QueryView extends JFrame {
     else if (chosenQuery.equals("Query 26")) {
         queryNum = 26;
         String[] colVal = null;
+        String[] secVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
-        }
-        catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-        query26();
-    }
-    else if (chosenQuery.equals("Query 27")) {
-        queryNum = 27;
-        String[] colVal = null;
-        try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("employment", "status");
+            secVal = ti.getColumn("employment", "stauts");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
         }
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        ComboBoxModel secoModel = new DefaultComboBoxModel(secVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("Status");
         this.valueListLabel.setVisible(true);
+        this.secondaryList.setModel(secoModel);
+        this.secondaryList.setVisible(true);
+        this.secondaryValueList.setText("Status");
+        this.secondaryValueList.setVisible(true);
+        query26();
+    }
+    else if (chosenQuery.equals("Query 27")) {
+        queryNum = 27;
+//        String[] colVal = null;
+//        try {
+//            colVal = ti.getColumn("company", comp_code);
+        
+//        catch (SQLException sqle) {
+//            sqle.printStackTrace();
+//        }
+//        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+//        this.valueList.setModel(compModel);
+//        this.valueList.setVisible(true);
+//        this.valueListLabel.setText("");
+//        this.valueListLabel.setVisible(true);
         query27();
     }
     else if (chosenQuery.equals("Query 28")) {
         queryNum = 28;
         String[] colVal = null;
+        String[] secVal = null;
         try {
-            colVal = ti.getColumn("company", comp_code);
+            colVal = ti.getColumn("employment", "status");
+            secVal = ti.getColumn("employment", "status");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
         }
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
+        ComboBoxModel secoModel = new DefaultComboBoxModel(secVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("");
+        this.valueListLabel.setText("Status");
         this.valueListLabel.setVisible(true);
+        this.secondaryList.setModel(secoModel);
+        this.secondaryList.setVisible(true);
+        this.secondaryValueList.setText("Status");
+        this.secondaryValueList.setVisible(true);
         query28();
     }
     
@@ -631,40 +726,39 @@ class QueryView extends JFrame {
         this.comp_code = (String) this.valueList.getSelectedItem();
         query2();
     }
-    else if (queryNum == 3) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
-        query3();
-    }
     else if (queryNum == 4) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
-        query4();
+      this.comp_code = (String) this.valueList.getSelectedItem();
+      query4();
     }
     else if (queryNum == 5) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.person_code = (String) this.valueList.getSelectedItem();
         query5();
     }
     else if (queryNum == 6) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.person_code = (String) this.valueList.getSelectedItem();
         query6();
     }
     else if (queryNum == 7) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.job_code = (String) this.valueList.getSelectedItem();
         query7();
     }
     else if (queryNum == 8) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.person_code = (String) this.valueList.getSelectedItem();
+        this.job_code = (String) this.secondaryList.getSelectedItem();
         query8();
     }
     else if (queryNum == 9) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.job_code = (String) this.valueList.getSelectedItem();
+        this.person_code = (String) this.secondaryList.getSelectedItem();
         query9();
     }
     else if (queryNum == 10) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.jp_code = (String) this.valueList.getSelectedItem();
+        this.person_code = (String) this.secondaryList.getSelectedItem();
         query10();
     }
     else if (queryNum == 11) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.person_code = (String) this.valueList.getSelectedItem();
         query11();
     }
     else if (queryNum == 12) {
@@ -672,51 +766,52 @@ class QueryView extends JFrame {
         query12();
     }
     else if (queryNum == 13) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.person_code = (String) this.valueList.getSelectedItem();
         query13();
     }
     else if (queryNum == 14) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.person_code = (String) this.valueList.getSelectedItem();
         query14();
     }
     else if (queryNum == 15) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.jp_code = (String) this.valueList.getSelectedItem();
         query15();
     }
     else if (queryNum == 16) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.jp_code = (String) this.valueList.getSelectedItem();
         query16();
     }
     else if (queryNum == 17) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.jp_code = (String) this.valueList.getSelectedItem();
         query17();
     }
     else if (queryNum == 18) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.jp_code = (String) this.valueList.getSelectedItem();
         query18();
     }
     else if (queryNum == 19) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.jp_code = (String) this.valueList.getSelectedItem();
         query19();
     }
     else if (queryNum == 20) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.jp_code = (String) this.valueList.getSelectedItem();
         query20();
     }
     else if (queryNum == 21) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.job_code = (String) this.valueList.getSelectedItem();
         query21();
     }
     else if (queryNum == 22) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.status = (String) this.valueList.getSelectedItem();
+        this.jp_code = (String) this.secondaryList.getSelectedItem();
         query22();
     }
     else if (queryNum == 23) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.status = (String) this.valueList.getSelectedItem();
         query23();
     }
     else if (queryNum == 24) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.status = (String) this.valueList.getSelectedItem();
         query24();
     }
     else if (queryNum == 25) {
@@ -724,7 +819,8 @@ class QueryView extends JFrame {
         query25();
     }
     else if (queryNum == 26) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.status = (String) this.valueList.getSelectedItem();
+        this.status = (String) this.secondaryList.getSelectedItem();
         query26();
     }
     else if (queryNum == 27) {
@@ -732,7 +828,8 @@ class QueryView extends JFrame {
         query27();
     }
     else if (queryNum == 28) {
-        this.comp_code = (String) this.valueList.getSelectedItem();
+        this.status = (String) this.valueList.getSelectedItem();
+        this.status = (String) this.secondaryList.getSelectedItem();
         query28();
     }
   }
@@ -749,15 +846,14 @@ class QueryView extends JFrame {
     queryValue = 
             "select last_name, first_name "
             + "from person inner join employment on person.person_code = employment.person_code inner join job on employment.job_code = job.job_code "
-            + "where comp_code =" + comp_code 
-            + "and status = 'employed'";
+            + "where comp_code =" + comp_code + "and status = 'employed'";
   }
   
   private void query2() {
     queryValue = "select distinct last_name, first_name, pay_rate "
             + "from person inner join employment on person.person_code = employment.person_code "
             + "inner join job on employment.job_code = job.job_code "
-            + "where comp_code = '1001001' and pay_type = 'salary' ";
+            + "where comp_code = " + comp_code + " and pay_type = 'salary' ";
   }
   
   private void query3() {
