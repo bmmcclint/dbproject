@@ -11,7 +11,6 @@ import dbproject.dbaccess;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -104,14 +103,14 @@ class QueryView extends JFrame {
         this.secondaryValueList = new JLabel();
         this.getContentPane().add(this.secondaryValueList);
         this.secondaryValueList.setText("Secondary");
-        this.secondaryValueList.setBounds(460, 20, 125, 28);
+        this.secondaryValueList.setBounds(440, 20, 125, 28);
         this.secondaryValueList.setVisible(false);
       }
       {
         this.stmtdisplay = new JTextArea();
         this.stmtdisplaypane = new JScrollPane(this.stmtdisplay);
         this.getContentPane().add(this.stmtdisplaypane);
-        this.stmtdisplaypane.setBounds(7, 50, 880, 40);
+        this.stmtdisplaypane.setBounds(7, 50, 880, 70);
         this.stmtdisplay.setVisible(false);
         this.stmtdisplaypane.setVisible(false);
       }
@@ -158,12 +157,12 @@ class QueryView extends JFrame {
       {
         this.table = new JTable(new String[][] {{" ", " "}}, 
                 new String[] {"Column 1", "Column 2"});
-        this.table.setBounds(45, 200, 826, 357);
+        this.table.setBounds(45, 200, 826, 250);
       }
       {
         this.jScrollPane1 = new JScrollPane(table);
         this.getContentPane().add(this.jScrollPane1);
-        this.jScrollPane1.setBounds(7, 100, 880, 200);
+        this.jScrollPane1.setBounds(7, 120, 880, 180);
       }
       {
         this.jbutton1 = new JButton();
@@ -365,7 +364,7 @@ class QueryView extends JFrame {
         queryNum = 7;
         String[] colVal = null;
         try {
-            colVal = ti.getColumn("job", "jp_code");
+            colVal = ti.getColumn("jp_skill", "jp_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -721,24 +720,17 @@ class QueryView extends JFrame {
     else if (chosenQuery.equals("Query 22")) {
         queryNum = 22;
         String[] colVal = null;
-        String[] secVal = null;
         try {
-            colVal = ti.getColumn("employment", "status");
-            secVal = ti.getColumn("employment", "jp_code");
+            colVal = ti.getColumn("job", "jp_code");
         }
         catch (SQLException sqle) {
             sqle.printStackTrace();
         }
         ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
-        ComboBoxModel secoModel = new DefaultComboBoxModel(secVal);
         this.valueList.setModel(compModel);
         this.valueList.setVisible(true);
-        this.valueListLabel.setText("Status");
+        this.valueListLabel.setText("Job Profile Code");
         this.valueListLabel.setVisible(true);
-        this.secondaryList.setModel(secoModel);
-        this.secondaryList.setVisible(true);
-        this.secondaryValueList.setText("Job Profile Code");
-        this.secondaryValueList.setVisible(true);
         query22();
         this.stmtdisplaypane.setVisible(true);
         this.stmtdisplay.setText("22. Find all the unemployed people who once held a job of the"
@@ -748,39 +740,18 @@ class QueryView extends JFrame {
     }
     else if (chosenQuery.equals("Query 23")) {
         queryNum = 23;
-        String[] colVal = null;
-        try {
-            colVal = ti.getColumn("employment", "status");
-        }
-        catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
-        this.valueList.setModel(compModel);
-        this.valueList.setVisible(true);
-        this.valueListLabel.setText("Status");
-        this.valueListLabel.setVisible(true);
+        
         query23();
         this.stmtdisplaypane.setVisible(true);
         this.stmtdisplay.setText("23. Find the biggest employer in terms of number of employees"
             + " or the total amount of salaries and wages paid to employees.");
         this.stmtdisplay.setLineWrap(true);
         this.stmtdisplay.setVisible(true);
+        this.querydisplay.setText(queryValue.toString());
     }
     else if (chosenQuery.equals("Query 24")) {
         queryNum = 24;
-        String[] colVal = null;
-        try {
-            colVal = ti.getColumn("employment", "status");
-        }
-        catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
-        this.valueList.setModel(compModel);
-        this.valueList.setVisible(true);
-        this.valueListLabel.setText("Status");
-        this.valueListLabel.setVisible(true);
+        
         query24();
         this.stmtdisplaypane.setVisible(true);
         this.stmtdisplay.setText("24. Find out the job distribution among business sectors; find"
@@ -788,9 +759,11 @@ class QueryView extends JFrame {
             + " total amount of salaries and wages paid to employees.");
         this.stmtdisplay.setLineWrap(true);
         this.stmtdisplay.setVisible(true);
+        this.querydisplay.setText(queryValue.toString());
     }
     else if (chosenQuery.equals("Query 25")) {
         queryNum = 25;
+        
         query25();
         this.stmtdisplaypane.setVisible(true);
         this.stmtdisplay.setText("25. Find out the ratio between the people whose earnings"
@@ -799,29 +772,11 @@ class QueryView extends JFrame {
             + " business sector.");
         this.stmtdisplay.setLineWrap(true);
         this.stmtdisplay.setVisible(true);
+        this.querydisplay.setText(queryValue.toString());
     }
     else if (chosenQuery.equals("Query 26")) {
         queryNum = 26;
-        String[] colVal = null;
-        String[] secVal = null;
-        try {
-            colVal = ti.getColumn("employment", "status");
-            secVal = ti.getColumn("employment", "status");
-        }
-        catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-        ComboBoxModel compModel = new DefaultComboBoxModel(colVal);
-        ComboBoxModel secoModel = new DefaultComboBoxModel(secVal);
-        this.valueList.setModel(compModel);
-        this.valueList.setVisible(true);
-        this.valueListLabel.setText("Status");
-        this.valueListLabel.setVisible(true);
-        this.secondaryList.setModel(secoModel);
-        this.secondaryList.setVisible(true);
-        this.secondaryValueList.setText("Status");
-        this.secondaryValueList.setVisible(true);
-        this.querydisplay.setText(queryValue.toString());
+        
         query26();
         this.stmtdisplaypane.setVisible(true);
         this.stmtdisplay.setText("26. Find the job profiles that have the most openings due to"
@@ -834,6 +789,7 @@ class QueryView extends JFrame {
             + " largest difference between vacancies.");
         this.stmtdisplay.setLineWrap(true);
         this.stmtdisplay.setVisible(true);
+        this.querydisplay.setText(queryValue.toString());
     }
     else if (chosenQuery.equals("Query 27")) {
         queryNum = 27;
@@ -913,7 +869,7 @@ class QueryView extends JFrame {
         query6();
     }
     else if (queryNum == 7) {
-        this.job_code = (String) this.valueList.getSelectedItem();
+        this.jp_code = (String) this.valueList.getSelectedItem();
         query7();
     }
     else if (queryNum == 8) {
@@ -976,8 +932,7 @@ class QueryView extends JFrame {
         query21();
     }
     else if (queryNum == 22) {
-        this.status = (String) this.valueList.getSelectedItem();
-        this.jp_code = (String) this.secondaryList.getSelectedItem();
+        this.jp_code = (String) this.valueList.getSelectedItem();
         query22();
     }
     else if (queryNum == 23) {
@@ -1037,8 +992,7 @@ class QueryView extends JFrame {
       query10();
     }
     else if (queryNum == 22) {
-      this.status = (String) this.valueList.getSelectedItem();
-      this.jp_code = (String) this.secondaryList.getSelectedItem();
+      this.jp_code = (String) this.valueList.getSelectedItem();
       query22();
     }
     else if (queryNum == 26) {
@@ -1070,15 +1024,14 @@ class QueryView extends JFrame {
     queryValue = 
             "select last_name, first_name \n"
             + "from person inner join employment on person.person_code = \n"
-            + "employment.person_code inner join job on employment.job_code = \n"
-            + "job.job_code \n"
+            + "   employment.person_code inner join job on employment.job_code = job.job_code \n"
             + "where comp_code =" + comp_code + " and status = 'employed'";
   }
   
   private void query2() {
     queryValue = "select distinct last_name, first_name, pay_rate \n"
             + "from person inner join employment on person.person_code = employment.person_code \n"
-            + "inner join job on employment.job_code = job.job_code \n"
+            + "   inner join job on employment.job_code = job.job_code \n"
             + "where comp_code = " + comp_code + " and pay_type = 'salary' \n";
   }
   
@@ -1117,7 +1070,7 @@ class QueryView extends JFrame {
   private void query5() {
     queryValue = "select ks_name, ks_code \n"
             + "from person_skill natural join skills \n"
-            + "where person_code = \n" + person_code
+            + "where person_code =" + person_code + " \n"
             + "order by ks_name asc";
   }  
   
@@ -1150,7 +1103,7 @@ class QueryView extends JFrame {
   private void query7() {
     queryValue = "select ks_name, ks_code \n"
             + "from skills natural join jp_skill \n"
-            + "where jp_skill.jp_code =" + jp_code;
+            + "where jp_code =" + jp_code;
   }
   
   private void query8() {
@@ -1204,7 +1157,7 @@ class QueryView extends JFrame {
     queryValue = "with needed_skills as ( \n"
             + "   (select ks_code \n"
             + "   from jp_skill \n"
-            + "   where jp_code =" + jp_code + ") \n"
+            + "   where jp_code =" + jp_code + ")\n"
             + "     minus \n"
             + "   (select ks_code \n"
             + "   from person_skill \n"
@@ -1215,14 +1168,14 @@ class QueryView extends JFrame {
             + "   from course c \n"
             + "   where not exists ( \n"
             + "     select ks_code \n"
-            + "     from needed_skills \n"
+            + "     from course_skill \n"
+            + "     where course_code = c.course_code \n"
             + "       minus \n"
             + "     select ks_code \n"
-            + "     from course_skill \n"
-            + "     where course_code = c.course_code)) \n"
+            + "     from needed_skills)) \n"
             + ""
             + "select course_code, course_title \n"
-            + "from course_skills natural join course";
+            + "from course_skills join course using(course_code)";
   }
 
   private void query11() {
@@ -1404,8 +1357,8 @@ class QueryView extends JFrame {
             + "     where p.person_code = person_code)) \n"
             + "   group by person_code)) \n"
             + ""
-            + "select person_code, num_missing as smallest \n"
-            + "from missing_skill \n"
+            + "select person_code, last_name, first_name, num_missing as smallest \n"
+            + "from missing_skill natural join person\n"
             + "where num_missing = ( \n"
             + "   select min(num_missing) \n"
             + "   from missing_skill) \n"
@@ -1432,8 +1385,8 @@ class QueryView extends JFrame {
             + "     where p.person_code = person_code) \n"
             + "     group by person_code) \n"
             + ""
-            + "select person_code, num_missing \n"
-            + "from missing_skills \n"
+            + "select person_code, last_name, first_name, num_missing \n"
+            + "from missing_skills natural join person \n"
             + "where num_missing <=" + missingNum + " \n"
             + "order by num_missing desc";
   }
@@ -1490,7 +1443,7 @@ class QueryView extends JFrame {
             + "     minus \n"
             + "   select distinct person_code \n"
             + "   from employment \n"
-            + "   where status =" + status + ") \n"
+            + "   where status ='unemployed') \n"
             + ""
             + "select distinct last_name, first_name, job_code, jp_code \n"
             + "from person inner join unemployed on person.person_code = unemployed.person_code natural join job \n"
@@ -1502,7 +1455,7 @@ class QueryView extends JFrame {
     queryValue = "with employer_count as ( \n"
             + "   select comp_code, count(pay_rate) as num_employees \n"
             + "   from job inner join employment on job.job_code = employment.job_code \n"
-            + "   where status =" + status + " \n"
+            + "   where status ='employed' \n"
             + "   group by comp_code) \n"
             + ""
             + "select comp_code, comp_name, num_employees \n"
@@ -1514,7 +1467,7 @@ class QueryView extends JFrame {
     queryValue = "with employer_count as ( \n"
             + "     select count(pay_rate) as num_employees, comp_code \n"
             + "     from job join employment using(job_code) \n"
-            + "     where status =" + status + " \n"
+            + "     where status ='employed' \n"
             + "     group by comp_code), \n"
             + ""
             + "count_per_sector as ( \n"
@@ -1562,12 +1515,12 @@ class QueryView extends JFrame {
     queryValue = "with unemployed as ( \n"
             + "   select distinct person_code \n"
             + "   from employment \n"
-            + "   where status =" + status + "), \n"
+            + "   where status = 'unemployed'), \n"
             + ""
             + "employed as ( \n"
             + "   select distinct person_code \n"
             + "   from employment \n"
-            + "   where status =" + status + "), \n"
+            + "   where status = 'employed'), \n"
             + ""
             + "openings as ( \n"
             + "   select distinct job_code \n"
