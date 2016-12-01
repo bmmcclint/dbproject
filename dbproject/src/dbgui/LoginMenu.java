@@ -40,6 +40,7 @@ public class LoginMenu extends javax.swing.JFrame {
   private JButton loginButton;
   private JButton queriesButton;
   private JButton logout;
+  private JButton services;
   
   private JTextField usernameField;
   private JTextField hostField;
@@ -108,6 +109,18 @@ public class LoginMenu extends javax.swing.JFrame {
               loginButtonActionPerformed(evt);
           }
         });
+      }
+      {
+       this.services = new JButton();
+       this.getContentPane().add(this.services);
+       this.services.setText("Database Services");
+       this.services.setBounds(14, 336, 175, 28);
+       this.services.setEnabled(false);
+       this.services.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent evt) {
+               servicesActionPerforemed(evt);
+           }
+       });
       }
       {
         this.logout = new JButton();
@@ -246,6 +259,7 @@ public class LoginMenu extends javax.swing.JFrame {
       this.tableSelectButton.setEnabled(true);
       this.sqlButton.setEnabled(true);
       this.queriesButton.setEnabled(true);
+      this.services.setEnabled(true);
     } catch (SQLException sqle) {
       StringWriter strMsg = new StringWriter();
       PrintWriter prtMsg = new PrintWriter(strMsg);
@@ -281,6 +295,11 @@ public class LoginMenu extends javax.swing.JFrame {
   
   private void logoutActionPerformed(ActionEvent evt) {
     System.exit(0);
+  }
+  
+  private void servicesActionPerforemed(ActionEvent evt) {
+      DBServices dbs = new DBServices(conn);
+      dbs.setVisible(true);
   }
 }
 
