@@ -238,7 +238,7 @@ public class LoginMenu extends javax.swing.JFrame {
       this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
       this.getContentPane().setLayout(null);
       this.pack();
-      this.setSize(680, 390);
+      this.setSize(680, 410);
    } catch (Exception e) {
     e.printStackTrace();
     } 
@@ -298,7 +298,7 @@ public class LoginMenu extends javax.swing.JFrame {
   }
   
   private void servicesActionPerforemed(ActionEvent evt) {
-      DBServices dbs = new DBServices(conn);
+      DBServices dbs = new DBServices(conn, tu);
       dbs.setVisible(true);
   }
 }
