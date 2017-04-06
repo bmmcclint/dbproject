@@ -28,8 +28,8 @@ public class dbaccess {
     this.dblocation = "@" + host + ":" + port + ":" + sID;
   }
   
-  public dbaccess() {
-    this.dblocation = "@windowsplex.mynetgear.com:1521:xe";
+  public dbaccess() { 
+    this.dblocation = "";
   }
   
   public Connection getDBConnection (String username, String password) 
