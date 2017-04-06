@@ -14,9 +14,9 @@ import java.sql.SQLException;
 public class jdbctest {
 
 	private static final String DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
-	private static final String DB_CONNECTION = "jdbc:oracle:thin:@windowsplex.mynetgear.com:1521:xe";
-	private static final String DB_USER = "brandon";
-	private static final String DB_PASSWORD = "Obeytdojtyl7";
+	private static final String DB_CONNECTION = "jdbc:oracle:thin:";
+	private static final String DB_USER = "";
+	private static final String DB_PASSWORD = "";
     
     public static void main(String[] args) throws SQLException {
       String query = "select email from person wehre person_code = ?";
