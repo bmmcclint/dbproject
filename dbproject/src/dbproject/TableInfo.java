@@ -23,9 +23,9 @@ import java.util.Vector;
  */
 public class TableInfo {
   private final Connection conn;
-  private final String host = "windowsplex.mynetgear.com";
+  private final String host = "";
   private final String port = "1521";
-  private final String sID = "test";
+  private final String sID = "";
   
   
   /**
